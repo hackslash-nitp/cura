@@ -1,0 +1,12 @@
+This folder is to contain all the source code files relevant to the individual user of the application. The screens to be included here are:
+	- Profile Setup for Individual 
+	- Home Screen
+	- Adoption
+	- Health
+	- Donation
+	- Payment
+	- Spend Time
+	- Posts Feed
+	- Chat Section and Screens
+	- Profile Information Screen
+	

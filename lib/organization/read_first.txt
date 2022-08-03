@@ -1,0 +1,7 @@
+This folder is to include all the source code files relevant to the organization using the application. The screens to be included are:
+	
+	- Profile Setup for Organization
+	- Organisation Profile
+	- Settings Slide Window
+	- Doner contacts
+	- Doner Detail

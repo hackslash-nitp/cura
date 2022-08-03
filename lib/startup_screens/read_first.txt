@@ -1,0 +1,5 @@
+This folder is to contain the source code files for the startup screens of the Cura App, which include the following:
+
+	- Preview Page and Splash Screens (including Terms and Conditions)
+	- Login and Sign up 
+	- Create Account
