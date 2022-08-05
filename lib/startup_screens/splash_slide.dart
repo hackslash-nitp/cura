@@ -19,11 +19,10 @@ class SplashSlide extends StatelessWidget {
         children: <Widget>[
           Image(
             image: AssetImage(imgUrl),
-            width: 238.w,
-            height: 232.h,
+            width: 450.w,
+            height: 340.h,
             fit: BoxFit.fill,
           ),
-          SizedBox(height: 20.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -46,7 +45,7 @@ class SplashSlide extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 33.h),
+          SizedBox(height: 20.h),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 30.w),
             child: Text(
