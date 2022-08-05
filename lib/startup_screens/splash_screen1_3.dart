@@ -80,35 +80,38 @@ fundraising.''',
                     },
                   ),
                   const Spacer(),
-                  TextButton(
-                      onPressed: () {
-                        controller.jumpToPage(2);
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                          const Color.fromARGB(87, 219, 246, 248),
-                        ),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.0),
-                            side: const BorderSide(
-                              color: const Color.fromARGB(103, 162, 221, 241),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 12.0, 0),
+                    child: TextButton(
+                        onPressed: () {
+                          controller.jumpToPage(2);
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                            const Color.fromARGB(87, 219, 246, 248),
+                          ),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50.0),
+                              side: const BorderSide(
+                                color: const Color.fromARGB(103, 162, 221, 241),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      child: Text(
-                        "Skip",
-                        style: TextStyle(
-                            color: const Color(0xFF645B5B),
-                            fontSize: 15.sp,
-                            fontWeight: FontWeight.w400),
-                        softWrap: true,
-                      )),
+                        child: Text(
+                          "Skip",
+                          style: TextStyle(
+                              color: const Color(0xFF645B5B),
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.w400),
+                          softWrap: true,
+                        )),
+                  ),
                 ],
               ),
-              SizedBox(height: 78.h),
+              SizedBox(height: 30.h),
               Expanded(
                   flex: 4,
                   child: PageView.builder(
