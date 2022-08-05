@@ -1,0 +1,19 @@
+initial commit
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is up to date with 'origin/master'.
+#
+# Changes to be committed:
+#	new file:   lib/startup_screens/TermsAndConditions.dart
+#
+# Changes not staged for commit:
+#	modified:   linux/flutter/generated_plugin_registrant.cc
+#	modified:   linux/flutter/generated_plugin_registrant.h
+#	modified:   linux/flutter/generated_plugins.cmake
+#	modified:   macos/Flutter/GeneratedPluginRegistrant.swift
+#	modified:   windows/flutter/generated_plugin_registrant.cc
+#	modified:   windows/flutter/generated_plugin_registrant.h
+#	modified:   windows/flutter/generated_plugins.cmake
+#
