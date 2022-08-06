@@ -15,7 +15,11 @@ class _OrgloginState extends State<Orglogin> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Profile Setup'),
+        title: const Text(
+          'Profile Setup',
+          //   style: TextStyle(
+          //       fontWeight: FontWeight.bold, color: Colors.black, height: 24),
+        ),
         centerTitle: true,
         titleTextStyle: TextStyle(
           color: Colors.black,
@@ -25,9 +29,10 @@ class _OrgloginState extends State<Orglogin> {
       ),
       body: Stack(
         children: [
-          const Icon(Icons.keyboard_arrow_left),
           Container(
             decoration: const BoxDecoration(
+              // image: DecorationImage(
+              //     image: AssetImage('lib/assets/Vectorprofilepic.png')),
               gradient: LinearGradient(colors: [
                 Color.fromARGB(255, 101, 167, 221),
                 Colors.white,
@@ -36,8 +41,58 @@ class _OrgloginState extends State<Orglogin> {
                 1.00
               ], begin: Alignment.topCenter, end: Alignment.center),
             ),
+            padding:
+                const EdgeInsets.only(right: 32.99, top: 151, left: 187.01),
+            child: Column(
+              children: [
+                TextField(
+                  decoration: InputDecoration(
+                      fillColor: Colors.cyan.shade100,
+                      filled: true,
+                      hintText: 'Upload Profile Picture',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Expanded(
+                //         child: ListView(
+                //       children: [
+                //         TextField(
+                //           decoration: InputDecoration(
+                //               fillColor: Colors.cyan.shade100,
+                //               filled: true,
+                //               hintText: 'From Gallery',
+                //               border: OutlineInputBorder(
+                //                   borderRadius: BorderRadius.circular(10))),
+                //         ),
+                //         TextField(
+                //           decoration: InputDecoration(
+                //               fillColor: Colors.cyan.shade100,
+                //               filled: true,
+                //               hintText: 'Take Now',
+                //               border: OutlineInputBorder(
+                //                   borderRadius: BorderRadius.circular(10))),
+                //         ),
+                //       ],
+                //     ))
+                //   ],
+                // ),
+              ],
+            ),
           ),
-          Text('Enter Organisation Details'),
+          Container(
+            padding: const EdgeInsets.only(right: 32, top: 265, left: 200),
+            child: Text(
+              'Enter Organisation Details',
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+            ),
+          ),
           SingleChildScrollView(
             child: Container(
               padding: const EdgeInsets.only(right: 31, top: 322, left: 32),
@@ -195,6 +250,7 @@ class _OrgloginState extends State<Orglogin> {
               ),
             ),
           ),
+          const Icon(Icons.keyboard_arrow_left),
         ],
       ),
     );
