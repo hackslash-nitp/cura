@@ -3,12 +3,23 @@ import 'package:cura/startup_screens/preview_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'shared/services/firebase_authentication.dart';
+import 'package:cura/login.dart';
 
-Future main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
-  runApp(const ScreenDecider());
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    initialRoute: 'login',
+    routes: {'login': (context) => MyLogin()},
+
+  ));
 }
+
+ // Future main() async {
+ // WidgetsFlutterBinding.ensureInitialized();
+ // await
+ // Firebase.initializeApp();
+ // runApp(const ScreenDecider());
+//}
 
 class ScreenDecider extends StatelessWidget {
   const ScreenDecider({Key? key}) : super(key: key);
@@ -27,3 +38,4 @@ class ScreenDecider extends StatelessWidget {
     );
   }
 }
+
