@@ -3,7 +3,7 @@ import 'package:cura/startup_screens/preview_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'shared/services/firebase_authentication.dart';
-import 'package:cura/login.dart';
+import 'package:cura/startup_screens/login.dart';
 
 Future<void> main() async {
   //Don't change the following code
@@ -26,9 +26,8 @@ class ScreenDecider extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: auth.getCurrentUser() == null
-          ? PreviewPage() // directly access by substituting in place of PreviewPage()
+          ? UserLogin() // directly access by substituting in place of PreviewPage()
           : const HomePageIndividual(),
     );
   }
 }
-
