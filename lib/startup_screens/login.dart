@@ -174,23 +174,30 @@ class _UserLoginState extends State<UserLogin> {
                             ),
                             child: MaterialButton(
                               onPressed: () async {
-                                if (isLogin) {
-                                  if (isPhoneVerification) {
-                                  } else {
-                                    await auth.loginUserWithEmail(
-                                        inputValue!, password!);
-                                    print("Logged In successfully");
-                                  }
+                                if (inputValue == null || password == null) {
+                                  ShowSnackBar(
+                                      context,
+                                      "Please fill all fields!",
+                                      Color.fromARGB(255, 219, 112, 112));
                                 } else {
-                                  if (isPhoneVerification) {
+                                  if (isLogin) {
+                                    if (isPhoneVerification) {
+                                    } else {
+                                      await auth.loginUserWithEmail(
+                                          inputValue!, password!);
+                                      print("Logged In successfully");
+                                    }
                                   } else {
-                                    await auth.signupUser(
-                                        inputValue!, password!);
-                                    print("Signed In successfully");
-                                    Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(builder: (context) {
-                                      return HomePageIndividual();
-                                    }));
+                                    if (isPhoneVerification) {
+                                    } else {
+                                      await auth.signupUser(
+                                          inputValue!, password!);
+                                      print("Signed In successfully");
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(builder: (context) {
+                                        return HomePageIndividual();
+                                      }));
+                                    }
                                   }
                                 }
                               },
@@ -244,13 +251,22 @@ class _UserLoginState extends State<UserLogin> {
     );
   }
 
+  void ShowSnackBar(BuildContext context, String message, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: color,
+      ),
+    );
+  }
+
   TextField passField(BuildContext context, String text) {
     return TextField(
       controller: passwordText,
       keyboardType: TextInputType.emailAddress,
       onChanged: (value) {
         setState(() {
-          password = value;
+          password = value.trim();
         });
       },
       obscureText: true,
@@ -267,11 +283,8 @@ class _UserLoginState extends State<UserLogin> {
         floatingLabelAlignment: FloatingLabelAlignment.start,
         suffixIcon: isPhoneVerification
             ? IconButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("OTP has been resent")),
-                  );
-                },
+                onPressed: () =>
+                    ShowSnackBar(context, "OTP has been resent", Colors.black),
                 iconSize: 25.h,
                 icon: Column(
                   children: [
