@@ -19,8 +19,8 @@ class SplashSlide extends StatelessWidget {
         children: <Widget>[
           Image(
             image: AssetImage(imgUrl),
-            width: 450.w,
-            height: 340.h,
+            width: 300.w,
+            height: 300.h,
             fit: BoxFit.fill,
           ),
           Row(

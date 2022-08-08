@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
       "imgUrl": "assets/startup_assets/preview_splash_assets/Group 40.png",
       "title1": "Cura ",
       "title2": "is about care",
-      "text": "Donate easily,quickly,right on the target all over the world",
+      "text": "Donate easily, quickly, right on the target all over the world.",
     },
     {
       "imgUrl": "assets/startup_assets/preview_splash_assets/Group 41.png",
@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
       "title2": '''transparent
 fundraising.''',
       "text":
-          "Grow online donations ,track your suppoters,host an event,deep-dive into metrics and more",
+          "Grow online donations, track your suppoters, host an event, deep-dive into metrics, and more.",
     }
   ];
   @override
@@ -60,9 +60,9 @@ fundraising.''',
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_back_ios_new,
-                      size: 15,
+                      size: 15.w,
                     ),
                     onPressed: () {
                       if (currentPage == 0) {
@@ -93,7 +93,7 @@ fundraising.''',
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50.0),
+                              borderRadius: BorderRadius.circular(50.r),
                               side: const BorderSide(
                                 color: const Color.fromARGB(103, 162, 221, 241),
                               ),
@@ -111,7 +111,7 @@ fundraising.''',
                   ),
                 ],
               ),
-              SizedBox(height: 30.h),
+              SizedBox(height: 126.h),
               Expanded(
                   flex: 4,
                   child: PageView.builder(
@@ -184,7 +184,6 @@ fundraising.''',
                                 alignment: Alignment.bottomRight,
                                 child: FloatingActionButton(
                                   onPressed: () {
-                                    print(isLastPage);
                                     controller.nextPage(
                                         duration:
                                             const Duration(milliseconds: 500),
