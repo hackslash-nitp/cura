@@ -1,6 +1,9 @@
+import 'package:cura/individual/home_page_individual.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../shared/gradient_background.dart';
+import '../shared/services/firebase_authentication.dart';
 
 class UserLogin extends StatefulWidget {
   const UserLogin({Key? key}) : super(key: key);
@@ -12,6 +15,9 @@ class UserLogin extends StatefulWidget {
 class _UserLoginState extends State<UserLogin> {
   TextEditingController inputText = TextEditingController();
   TextEditingController passwordText = TextEditingController();
+  FirebaseAuthentication auth = FirebaseAuthentication();
+
+  String? inputValue, password;
 
   String? dropDownValue = "+91";
   List<String> items = [
@@ -153,46 +159,9 @@ class _UserLoginState extends State<UserLogin> {
                           SizedBox(
                             height: 40.h,
                           ),
-                          TextField(
-                            controller: inputText,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 12.w),
-                              label: Text(
-                                "OTP: ",
-                                style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black),
-                              ),
-                              floatingLabelBehavior:
-                                  FloatingLabelBehavior.always,
-                              floatingLabelAlignment:
-                                  FloatingLabelAlignment.start,
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text("OTP has been resent")),
-                                  );
-                                },
-                                iconSize: 25.h,
-                                icon: Column(
-                                  children: [
-                                    const Icon(Icons.refresh),
-                                    Text(
-                                      "Resend",
-                                      style: TextStyle(fontSize: 8.sp),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.r),
-                              ),
-                            ),
-                          ),
+                          isPhoneVerification
+                              ? passField(context, "OTP: ")
+                              : passField(context, "Password: "),
                           SizedBox(
                             height: 21.h,
                           ),
@@ -204,7 +173,27 @@ class _UserLoginState extends State<UserLogin> {
                               color: primaryColor,
                             ),
                             child: MaterialButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                if (isLogin) {
+                                  if (isPhoneVerification) {
+                                  } else {
+                                    await auth.loginUserWithEmail(
+                                        inputValue!, password!);
+                                    print("Logged In successfully");
+                                  }
+                                } else {
+                                  if (isPhoneVerification) {
+                                  } else {
+                                    await auth.signupUser(
+                                        inputValue!, password!);
+                                    print("Signed In successfully");
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(builder: (context) {
+                                      return HomePageIndividual();
+                                    }));
+                                  }
+                                }
+                              },
                               child: Text(
                                 isLogin ? "LOG IN" : "SIGN UP",
                                 style: TextStyle(
@@ -255,9 +244,61 @@ class _UserLoginState extends State<UserLogin> {
     );
   }
 
+  TextField passField(BuildContext context, String text) {
+    return TextField(
+      controller: passwordText,
+      keyboardType: TextInputType.emailAddress,
+      onChanged: (value) {
+        setState(() {
+          password = value;
+        });
+      },
+      obscureText: true,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
+        label: Text(
+          text,
+          style: TextStyle(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w700,
+              color: Colors.black),
+        ),
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        floatingLabelAlignment: FloatingLabelAlignment.start,
+        suffixIcon: isPhoneVerification
+            ? IconButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("OTP has been resent")),
+                  );
+                },
+                iconSize: 25.h,
+                icon: Column(
+                  children: [
+                    const Icon(Icons.refresh),
+                    Text(
+                      "Resend",
+                      style: TextStyle(fontSize: 8.sp),
+                    ),
+                  ],
+                ),
+              )
+            : SizedBox(),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.r),
+        ),
+      ),
+    );
+  }
+
   TextField emailInputField() {
     return TextField(
       controller: inputText,
+      onChanged: (value) {
+        setState(() {
+          inputValue = value.trim();
+        });
+      },
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -277,6 +318,9 @@ class _UserLoginState extends State<UserLogin> {
     return TextField(
       controller: inputText,
       keyboardType: TextInputType.phone,
+      onChanged: (value) {
+        inputValue = value.trim();
+      },
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
         prefixIcon: Padding(
