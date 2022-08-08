@@ -24,6 +24,7 @@ class _UserLoginState extends State<UserLogin> {
   Color? secondaryColor = const Color(0xFFA2D2D5);
 
   bool isPhoneVerification = true;
+  bool isLogin = true;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class _UserLoginState extends State<UserLogin> {
                               size: 15.h,
                             )),
                         Text(
-                          "Log In",
+                          isLogin ? "Log In" : "Sign Up",
                           style: TextStyle(
                             fontSize: 24.sp,
                             fontWeight: FontWeight.w700,
@@ -172,7 +173,7 @@ class _UserLoginState extends State<UserLogin> {
                               suffixIcon: IconButton(
                                 onPressed: () {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
+                                    const SnackBar(
                                         content: Text("OTP has been resent")),
                                   );
                                 },
@@ -205,7 +206,7 @@ class _UserLoginState extends State<UserLogin> {
                             child: MaterialButton(
                               onPressed: () {},
                               child: Text(
-                                "LOG IN",
+                                isLogin ? "LOG IN" : "SIGN UP",
                                 style: TextStyle(
                                   fontSize: 18.sp,
                                   color: Colors.white,
@@ -218,18 +219,28 @@ class _UserLoginState extends State<UserLogin> {
                             height: 40.h,
                           ),
                           Text(
-                            "New User?",
+                            isLogin ? "New User?" : "Existing User?",
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 13.sp,
                                 color: const Color(0xFF006FF0)),
                           ),
-                          Text(
-                            "Sign Up Now ",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 13.sp,
-                                color: const Color(0xFF006FF0)),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isLogin = !isLogin;
+                              });
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.all(8.w),
+                              child: Text(
+                                isLogin ? "Sign Up Now" : "Log In Now",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14.sp,
+                                    color: const Color(0xFF006FF0)),
+                              ),
+                            ),
                           ),
                         ],
                       ),
