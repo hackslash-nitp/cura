@@ -4,9 +4,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'shared/services/firebase_authentication.dart';
 
-Future main() async {
+Future<void> main() async {
+  //Don't change the following code
+  //If you want to test out your screen, set the home property to the desired page in ScreenDecider
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  await Firebase.initializeApp();
   runApp(const ScreenDecider());
 }
 
@@ -21,8 +23,9 @@ class ScreenDecider extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      debugShowCheckedModeBanner: false,
       home: auth.getCurrentUser() == null
-          ? PreviewPage()
+          ? PreviewPage() // directly access by substituting in place of PreviewPage()
           : const HomePageIndividual(),
     );
   }
