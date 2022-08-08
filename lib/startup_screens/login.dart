@@ -12,12 +12,19 @@ class UserLogin extends StatefulWidget {
 class _UserLoginState extends State<UserLogin> {
   TextEditingController inputText = TextEditingController();
   TextEditingController passwordText = TextEditingController();
+
   String? dropDownValue = "+91";
   List<String> items = [
     "+91",
     "+01",
     "+51",
   ];
+
+  Color? primaryColor = const Color(0xFF729CA3);
+  Color? secondaryColor = const Color(0xFFA2D2D5);
+
+  bool isPhoneVerification = true;
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -36,7 +43,9 @@ class _UserLoginState extends State<UserLogin> {
                     Row(
                       children: <Widget>[
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
                             icon: Icon(
                               Icons.arrow_back_ios_new,
                               size: 15.h,
@@ -79,14 +88,21 @@ class _UserLoginState extends State<UserLogin> {
                               Container(
                                 height: 40.h,
                                 width: 141.w,
-                                decoration: const BoxDecoration(
-                                  color: Color(0xFF729CA3),
-                                  borderRadius: BorderRadiusDirectional.only(
-                                      topStart: Radius.circular(10),
-                                      bottomStart: Radius.circular(10)),
+                                decoration: BoxDecoration(
+                                  color: isPhoneVerification
+                                      ? primaryColor
+                                      : secondaryColor,
+                                  borderRadius:
+                                      const BorderRadiusDirectional.only(
+                                          topStart: Radius.circular(10),
+                                          bottomStart: Radius.circular(10)),
                                 ),
                                 child: MaterialButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    setState(() {
+                                      isPhoneVerification = true;
+                                    });
+                                  },
                                   child: Text(
                                     "Phone No.",
                                     style: TextStyle(
@@ -100,14 +116,21 @@ class _UserLoginState extends State<UserLogin> {
                               Container(
                                 height: 40.h,
                                 width: 141.w,
-                                decoration: const BoxDecoration(
-                                  color: Color(0xFFA2D2D5),
-                                  borderRadius: BorderRadiusDirectional.only(
-                                      topEnd: Radius.circular(10),
-                                      bottomEnd: Radius.circular(10)),
+                                decoration: BoxDecoration(
+                                  color: isPhoneVerification
+                                      ? secondaryColor
+                                      : primaryColor,
+                                  borderRadius:
+                                      const BorderRadiusDirectional.only(
+                                          topEnd: Radius.circular(10),
+                                          bottomEnd: Radius.circular(10)),
                                 ),
                                 child: MaterialButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    setState(() {
+                                      isPhoneVerification = false;
+                                    });
+                                  },
                                   child: Text(
                                     "Email",
                                     style: TextStyle(
@@ -123,41 +146,9 @@ class _UserLoginState extends State<UserLogin> {
                           SizedBox(
                             height: 22.h,
                           ),
-                          TextField(
-                            controller: inputText,
-                            keyboardType: TextInputType.phone,
-                            decoration: InputDecoration(
-                              contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 12.w),
-                              prefixIcon: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 12.w),
-                                child: DropdownButton(
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                  ),
-                                  borderRadius: BorderRadius.circular(5.r),
-                                  value: dropDownValue,
-                                  onChanged: (String? newValue) {
-                                    setState(() {
-                                      dropDownValue = newValue;
-                                    });
-                                  },
-                                  items: items.map((e) {
-                                    return DropdownMenuItem(
-                                      value: e,
-                                      child: Text(e),
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.r),
-                              ),
-                              hintText: '99999 99999',
-                            ),
-                          ),
+                          isPhoneVerification
+                              ? phoneInputField()
+                              : emailInputField(),
                           SizedBox(
                             height: 40.h,
                           ),
@@ -168,7 +159,7 @@ class _UserLoginState extends State<UserLogin> {
                               contentPadding:
                                   EdgeInsets.symmetric(horizontal: 12.w),
                               label: Text(
-                                "OTP",
+                                "OTP: ",
                                 style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w700,
@@ -179,7 +170,12 @@ class _UserLoginState extends State<UserLogin> {
                               floatingLabelAlignment:
                                   FloatingLabelAlignment.start,
                               suffixIcon: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text("OTP has been resent")),
+                                  );
+                                },
                                 iconSize: 25.h,
                                 icon: Column(
                                   children: [
@@ -203,8 +199,9 @@ class _UserLoginState extends State<UserLogin> {
                             height: 60.h,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.r),
-                                color: const Color(0xFF729CA3)),
+                              borderRadius: BorderRadius.circular(10.r),
+                              color: primaryColor,
+                            ),
                             child: MaterialButton(
                               onPressed: () {},
                               child: Text(
@@ -243,6 +240,61 @@ class _UserLoginState extends State<UserLogin> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  TextField emailInputField() {
+    return TextField(
+      controller: inputText,
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
+        prefixIcon: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
+          child: const Icon(Icons.email_outlined),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.r),
+        ),
+        hintText: 'yourmail@gmail.com',
+      ),
+    );
+  }
+
+  TextField phoneInputField() {
+    return TextField(
+      controller: inputText,
+      keyboardType: TextInputType.phone,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
+        prefixIcon: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
+          child: DropdownButton(
+            style: TextStyle(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w400,
+              color: Colors.black,
+            ),
+            borderRadius: BorderRadius.circular(5.r),
+            value: dropDownValue,
+            onChanged: (String? newValue) {
+              setState(() {
+                dropDownValue = newValue;
+              });
+            },
+            items: items.map((e) {
+              return DropdownMenuItem(
+                value: e,
+                child: Text(e),
+              );
+            }).toList(),
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.r),
+        ),
+        hintText: '99999 99999',
       ),
     );
   }

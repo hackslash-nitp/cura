@@ -1,6 +1,6 @@
+import 'package:cura/startup_screens/login.dart';
 import 'package:cura/startup_screens/preview_page.dart';
 import 'package:flutter/material.dart';
-
 import 'splash_slide.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -161,13 +161,11 @@ fundraising.''',
                                   backgroundColor:
                                       const Color.fromARGB(255, 127, 176, 176),
                                 ),
-                                onPressed: () {},
-                                // async {
-                                //   Navigator.of(context)
-                                //       .pushReplacement(MaterialPageRoute(
-                                //     builder: ((context) => LoginStudent()),
-                                //   ));
-                                // },
+                                onPressed: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: ((context) => UserLogin()),
+                                  ),
+                                ),
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
                                       vertical: 10.h, horizontal: 34.w),
