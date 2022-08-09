@@ -4,11 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../shared/gradient_background.dart';
 import '../shared/services/firebase_authentication.dart';
 
+bool _isLoading = false;
+
 void setOtp(String smsCode) {
   passwordText.text = smsCode;
 }
 
 void showErrorDialog(BuildContext context, String message) {
+  _isLoading = false;
   showDialog(
       context: context,
       builder: (context) {
@@ -206,8 +209,14 @@ class _UserLoginState extends State<UserLogin> {
                             ),
                             child: MaterialButton(
                               onPressed: () async {
+                                setState(() {
+                                  _isLoading = true;
+                                });
                                 if (_isPhoneVerification) {
                                   if (_inputValue == null) {
+                                    setState(() {
+                                      _isLoading = false;
+                                    });
                                     showSnackBar(
                                         context,
                                         "Please enter phone number",
@@ -227,24 +236,32 @@ class _UserLoginState extends State<UserLogin> {
                                         _inputValue!, _password!, context);
                                   }
                                 } else {
+                                  setState(() {
+                                    _isLoading = false;
+                                  });
                                   showSnackBar(
                                       context,
                                       "Please fill all the fields",
                                       Colors.redAccent);
                                 }
                               },
-                              child: Text(
-                                _isPhoneVerification
-                                    ? "GET OTP"
-                                    : _isLogin
-                                        ? "LOG IN"
-                                        : "SIGN UP",
-                                style: TextStyle(
-                                  fontSize: 18.sp,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
+                              child: _isLoading
+                                  ? const CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2.0,
+                                    )
+                                  : Text(
+                                      _isPhoneVerification
+                                          ? "GET OTP"
+                                          : _isLogin
+                                              ? "LOG IN"
+                                              : "SIGN UP",
+                                      style: TextStyle(
+                                        fontSize: 18.sp,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
                             ),
                           ),
                           SizedBox(
