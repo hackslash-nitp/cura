@@ -1,9 +1,37 @@
 import 'package:cura/individual/home_page_individual.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../shared/gradient_background.dart';
 import '../shared/services/firebase_authentication.dart';
+
+bool _isLoading = false;
+
+void setOtp(String smsCode) {
+  passwordText.text = smsCode;
+}
+
+void showErrorDialog(BuildContext context, String message) {
+  _isLoading = false;
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Error signing in"),
+          content: Text(message),
+          actions: [
+            OutlinedButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text("Close"))
+          ],
+        );
+      });
+}
+
+void navigateToHome(BuildContext context) {
+  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+    return const HomePageIndividual();
+  }));
+}
 
 class UserLogin extends StatefulWidget {
   const UserLogin({Key? key}) : super(key: key);
@@ -12,12 +40,12 @@ class UserLogin extends StatefulWidget {
   State<UserLogin> createState() => _UserLoginState();
 }
 
-class _UserLoginState extends State<UserLogin> {
-  TextEditingController inputText = TextEditingController();
-  TextEditingController passwordText = TextEditingController();
-  FirebaseAuthentication auth = FirebaseAuthentication();
+TextEditingController inputText = TextEditingController();
+TextEditingController passwordText = TextEditingController();
 
-  String? inputValue, password;
+class _UserLoginState extends State<UserLogin> {
+  FirebaseAuthentication auth = FirebaseAuthentication();
+  String? _inputValue, _password;
 
   String? dropDownValue = "+91";
   List<String> items = [
@@ -26,11 +54,18 @@ class _UserLoginState extends State<UserLogin> {
     "+51",
   ];
 
-  Color? primaryColor = const Color(0xFF729CA3);
-  Color? secondaryColor = const Color(0xFFA2D2D5);
+  final Color _primaryColor = const Color(0xFF729CA3);
+  final Color _secondaryColor = const Color(0xFFA2D2D5);
 
-  bool isPhoneVerification = true;
-  bool isLogin = true;
+  bool _isPhoneVerification = true;
+  bool _isLogin = true;
+
+  @override
+  void initState() {
+    inputText.text = "";
+    passwordText.text = "";
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +93,7 @@ class _UserLoginState extends State<UserLogin> {
                               size: 15.h,
                             )),
                         Text(
-                          isLogin ? "Log In" : "Sign Up",
+                          _isLogin ? "Log In" : "Sign Up",
                           style: TextStyle(
                             fontSize: 24.sp,
                             fontWeight: FontWeight.w700,
@@ -96,9 +131,9 @@ class _UserLoginState extends State<UserLogin> {
                                 height: 40.h,
                                 width: 141.w,
                                 decoration: BoxDecoration(
-                                  color: isPhoneVerification
-                                      ? primaryColor
-                                      : secondaryColor,
+                                  color: _isPhoneVerification
+                                      ? _primaryColor
+                                      : _secondaryColor,
                                   borderRadius:
                                       const BorderRadiusDirectional.only(
                                           topStart: Radius.circular(10),
@@ -107,7 +142,7 @@ class _UserLoginState extends State<UserLogin> {
                                 child: MaterialButton(
                                   onPressed: () {
                                     setState(() {
-                                      isPhoneVerification = true;
+                                      _isPhoneVerification = true;
                                     });
                                   },
                                   child: Text(
@@ -124,9 +159,9 @@ class _UserLoginState extends State<UserLogin> {
                                 height: 40.h,
                                 width: 141.w,
                                 decoration: BoxDecoration(
-                                  color: isPhoneVerification
-                                      ? secondaryColor
-                                      : primaryColor,
+                                  color: _isPhoneVerification
+                                      ? _secondaryColor
+                                      : _primaryColor,
                                   borderRadius:
                                       const BorderRadiusDirectional.only(
                                           topEnd: Radius.circular(10),
@@ -135,7 +170,7 @@ class _UserLoginState extends State<UserLogin> {
                                 child: MaterialButton(
                                   onPressed: () {
                                     setState(() {
-                                      isPhoneVerification = false;
+                                      _isPhoneVerification = false;
                                     });
                                   },
                                   child: Text(
@@ -153,13 +188,13 @@ class _UserLoginState extends State<UserLogin> {
                           SizedBox(
                             height: 22.h,
                           ),
-                          isPhoneVerification
+                          _isPhoneVerification
                               ? phoneInputField()
                               : emailInputField(),
                           SizedBox(
                             height: 40.h,
                           ),
-                          isPhoneVerification
+                          _isPhoneVerification
                               ? passField(context, "OTP: ")
                               : passField(context, "Password: "),
                           SizedBox(
@@ -170,52 +205,70 @@ class _UserLoginState extends State<UserLogin> {
                             width: double.infinity,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.r),
-                              color: primaryColor,
+                              color: _primaryColor,
                             ),
                             child: MaterialButton(
                               onPressed: () async {
-                                if (inputValue == null || password == null) {
-                                  ShowSnackBar(
-                                      context,
-                                      "Please fill all fields!",
-                                      Color.fromARGB(255, 219, 112, 112));
-                                } else {
-                                  if (isLogin) {
-                                    if (isPhoneVerification) {
-                                    } else {
-                                      await auth.loginUserWithEmail(
-                                          inputValue!, password!);
-                                      print("Logged In successfully");
-                                    }
-                                  } else {
-                                    if (isPhoneVerification) {
-                                    } else {
-                                      await auth.signupUser(
-                                          inputValue!, password!);
-                                      print("Signed In successfully");
-                                      Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(builder: (context) {
-                                        return HomePageIndividual();
-                                      }));
-                                    }
+                                setState(() {
+                                  _isLoading = true;
+                                });
+                                if (_isPhoneVerification) {
+                                  if (_inputValue == null) {
+                                    setState(() {
+                                      _isLoading = false;
+                                    });
+                                    showSnackBar(
+                                        context,
+                                        "Please enter phone number",
+                                        const Color.fromARGB(
+                                            255, 219, 112, 112));
+                                    return;
                                   }
+                                  await auth.loginUserWithPhoneNumber(
+                                      "$dropDownValue$_inputValue", context);
+                                } else if (_inputValue != null &&
+                                    _password != null) {
+                                  if (_isLogin) {
+                                    await auth.loginUserWithEmail(
+                                        _inputValue!, _password!, context);
+                                  } else {
+                                    await auth.signupUser(
+                                        _inputValue!, _password!, context);
+                                  }
+                                } else {
+                                  setState(() {
+                                    _isLoading = false;
+                                  });
+                                  showSnackBar(
+                                      context,
+                                      "Please fill all the fields",
+                                      Colors.redAccent);
                                 }
                               },
-                              child: Text(
-                                isLogin ? "LOG IN" : "SIGN UP",
-                                style: TextStyle(
-                                  fontSize: 18.sp,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
+                              child: _isLoading
+                                  ? const CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2.0,
+                                    )
+                                  : Text(
+                                      _isPhoneVerification
+                                          ? "GET OTP"
+                                          : _isLogin
+                                              ? "LOG IN"
+                                              : "SIGN UP",
+                                      style: TextStyle(
+                                        fontSize: 18.sp,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
                             ),
                           ),
                           SizedBox(
                             height: 40.h,
                           ),
                           Text(
-                            isLogin ? "New User?" : "Existing User?",
+                            _isLogin ? "New User?" : "Existing User?",
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 13.sp,
@@ -224,13 +277,13 @@ class _UserLoginState extends State<UserLogin> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                isLogin = !isLogin;
+                                _isLogin = !_isLogin;
                               });
                             },
                             child: Padding(
                               padding: EdgeInsets.all(8.w),
                               child: Text(
-                                isLogin ? "Sign Up Now" : "Log In Now",
+                                _isLogin ? "Sign Up Now" : "Log In Now",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 14.sp,
@@ -251,7 +304,7 @@ class _UserLoginState extends State<UserLogin> {
     );
   }
 
-  void ShowSnackBar(BuildContext context, String message, Color color) {
+  void showSnackBar(BuildContext context, String message, Color color) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
@@ -263,13 +316,16 @@ class _UserLoginState extends State<UserLogin> {
   TextField passField(BuildContext context, String text) {
     return TextField(
       controller: passwordText,
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: _isPhoneVerification
+          ? TextInputType.number
+          : TextInputType.emailAddress,
       onChanged: (value) {
         setState(() {
-          password = value.trim();
+          _password = value.trim();
         });
       },
       obscureText: true,
+      maxLength: _isPhoneVerification ? 6 : null,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
         label: Text(
@@ -281,10 +337,10 @@ class _UserLoginState extends State<UserLogin> {
         ),
         floatingLabelBehavior: FloatingLabelBehavior.always,
         floatingLabelAlignment: FloatingLabelAlignment.start,
-        suffixIcon: isPhoneVerification
+        suffixIcon: _isPhoneVerification
             ? IconButton(
                 onPressed: () =>
-                    ShowSnackBar(context, "OTP has been resent", Colors.black),
+                    showSnackBar(context, "OTP has been resent", Colors.black),
                 iconSize: 25.h,
                 icon: Column(
                   children: [
@@ -309,7 +365,7 @@ class _UserLoginState extends State<UserLogin> {
       controller: inputText,
       onChanged: (value) {
         setState(() {
-          inputValue = value.trim();
+          _inputValue = value.trim();
         });
       },
       keyboardType: TextInputType.emailAddress,
@@ -332,7 +388,7 @@ class _UserLoginState extends State<UserLogin> {
       controller: inputText,
       keyboardType: TextInputType.phone,
       onChanged: (value) {
-        inputValue = value.trim();
+        _inputValue = value.trim();
       },
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
