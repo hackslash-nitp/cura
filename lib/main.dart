@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/basic.dart';
 import 'package:flutter/src/material/card.dart';
 import 'package:flutter/src/material/text_button.dart';
-//import 'package:cura/main.dart';
+// import 'package:cura/main.dart';
 
 void main() {
   runApp(
@@ -40,7 +40,7 @@ void main() {
               )),
         ),
         alignSplashscreen(),
-        TextButton(
+        ElevatedButton(
           style: TextButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -52,20 +52,17 @@ void main() {
           child: Icon(
             Icons.email,
           ),
-          
         ),
-        TextButton(
+        ElevatedButton(
           style: TextButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               primary: const Color.fromARGB(255, 137, 184, 189),
-              backgroundColor: Colors.white
-              ),
+              backgroundColor: Colors.white),
           onPressed: () {},
           child: Text("Phone",
               style: TextStyle(color: Colors.white, fontSize: 30)),
-        
         ),
         Center(
           child: Text('Terms & conditions',
@@ -75,7 +72,7 @@ void main() {
                 color: Colors.black,
                 fontFamily: 'PT Sans',
               )),
-              //Icon(Icon.horiz_lined)
+          //Icon(Icon.horiz_lined)
         ),
       ]),
     )),
@@ -86,12 +83,11 @@ Align alignSplashscreen() {
   return Align(
       alignment: Alignment(-.5, .8),
       child: Image.asset(
-        'assets/startup_assets/preview_splash_assets/spl4.png',
+        'assets/startup_assets/preview_splash_assets/spl4a.png',
         height: 500,
         width: 300,
         alignment: Alignment.topCenter,
-      )
-      );
+      ));
 }
 
 iconphone() {
@@ -105,3 +101,16 @@ iconemail() {
     Icons.email,
   ));
 }
+
+
+/*
+Elevatedbutton(
+  column(
+    children: <widget>[ Icon(Icons.email);
+      
+    ]
+  ),
+  onPressed : null,
+)
+
+*/
