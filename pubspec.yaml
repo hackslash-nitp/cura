@@ -38,6 +38,7 @@ dependencies:
   flutter_screenutil: ^5.5.3+2
   firebase_core: ^1.20.0
   firebase_auth: ^3.6.2
+  carousel_slider: ^4.1.1
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/startup_assets/create_account_assets/
     - assets/startup_assets/preview_splash_assets/
     - assets/startup_assets/preview_splash_assets/apps.png
     - assets/startup_assets/preview_splash_assets/display_screen.png
