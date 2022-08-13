@@ -1,10 +1,15 @@
+import 'package:cura/individual/home_page_individual.dart';
+import 'package:cura/shared/widgets/widgets.dart';
+import 'package:cura/startup_screens/create_account.dart';
 import 'package:cura/startup_screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import '../navigation.dart';
 
 class FirebaseAuthentication {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool otpEntered = false;
+  String? _otp;
 
   //Function to get current user
   User? getCurrentUser() {
@@ -16,46 +21,50 @@ class FirebaseAuthentication {
       String email, String password, BuildContext context) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-      navigateToHome(context);
+      Navigation.navigateToPageWithReplacement(
+          context, const HomePageIndividual());
     } on FirebaseAuthException catch (e) {
-      print(e.message);
-      showErrorDialog(context, e.message!);
+      CustomErrorDialog.showErrorDialog(context, e.message!);
       return null;
     }
     return _auth.currentUser!.uid;
   }
 
   //Function to login user with phone number
-  Future<String?> loginUserWithPhoneNumber(
-      String phoneNumber, BuildContext context) async {
+  Future<void> loginUserWithPhoneNumber(
+      String phoneNumber, BuildContext context, bool isSignUp) async {
     try {
       await _auth.verifyPhoneNumber(
           timeout: const Duration(seconds: 60),
           phoneNumber: phoneNumber,
           verificationCompleted: (PhoneAuthCredential cred) async {
             print("Verification Completed: ${cred.smsCode}");
-            setOtp(cred.smsCode!);
-            User? currentUser = getCurrentUser();
+            _otp = cred.smsCode;
+            Otp otp = Otp(otp: _otp ?? "");
+            otp.setOtp();
+
             if (cred.smsCode != null) {
               try {
-                await _auth
-                    .signInWithCredential(cred)
-                    .then((value) => navigateToHome(context));
-                navigateToHome(context);
+                await _auth.signInWithCredential(cred).then((value) =>
+                    Navigation.navigateToPageWithReplacement(
+                        context, const HomePageIndividual()));
+                isSignUp
+                    ? Navigation.navigateToPageWithReplacement(
+                        context, const HomePageIndividual())
+                    : Navigation.navigateToPageWithReplacement(
+                        context, CreateAccountPage());
               } on FirebaseAuthException catch (e) {
-                showErrorDialog(context, e.message!);
+                CustomErrorDialog.showErrorDialog(context, e.message!);
               }
             }
           },
           verificationFailed: (FirebaseAuthException e) {
-            print(e.message);
-            showErrorDialog(context, e.message!);
+            CustomErrorDialog.showErrorDialog(context, e.message!);
           },
           codeSent: (String verificationId, int? forceResendingToken) async {},
           codeAutoRetrievalTimeout: (String verificationID) {});
     } on FirebaseAuthException catch (e) {
-      print(e.message);
-      showErrorDialog(context, e.message!);
+      CustomErrorDialog.showErrorDialog(context, e.message!);
     }
   }
 
@@ -65,10 +74,10 @@ class FirebaseAuthentication {
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      await loginUserWithEmail(email, password, context);
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      Navigation.navigateToPageWithReplacement(context, CreateAccountPage());
     } on FirebaseAuthException catch (e) {
-      print(e.message);
-      showErrorDialog(context, e.message!);
+      CustomErrorDialog.showErrorDialog(context, e.message!);
     }
   }
 
@@ -77,8 +86,7 @@ class FirebaseAuthentication {
     try {
       await _auth.signOut();
     } on FirebaseAuthException catch (e) {
-      print(e.message);
-      showErrorDialog(context, e.message!);
+      CustomErrorDialog.showErrorDialog(context, e.message!);
     }
   }
 }

@@ -1,36 +1,20 @@
-import 'package:cura/individual/home_page_individual.dart';
+import 'package:cura/shared/widgets/widgets.dart';
+import 'package:cura/startup_screens/preview_page.dart';
+import '../shared/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../shared/gradient_background.dart';
+import '../shared/widgets/gradient_background.dart';
 import '../shared/services/firebase_authentication.dart';
 
-bool _isLoading = false;
+late TextEditingController _otpController;
 
-void setOtp(String smsCode) {
-  passwordText.text = smsCode;
-}
+class Otp {
+  final String otp;
+  Otp({required this.otp});
 
-void showErrorDialog(BuildContext context, String message) {
-  _isLoading = false;
-  showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text("Error signing in"),
-          content: Text(message),
-          actions: [
-            OutlinedButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text("Close"))
-          ],
-        );
-      });
-}
-
-void navigateToHome(BuildContext context) {
-  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-    return const HomePageIndividual();
-  }));
+  void setOtp() {
+    _otpController.text = otp;
+  }
 }
 
 class UserLogin extends StatefulWidget {
@@ -40,14 +24,11 @@ class UserLogin extends StatefulWidget {
   State<UserLogin> createState() => _UserLoginState();
 }
 
-TextEditingController inputText = TextEditingController();
-TextEditingController passwordText = TextEditingController();
-
 class _UserLoginState extends State<UserLogin> {
   FirebaseAuthentication auth = FirebaseAuthentication();
-  String? _inputValue, _password;
 
-  String? dropDownValue = "+91";
+  String? _inputValue, _password;
+  String? _dropDownValue = "+91";
   List<String> items = [
     "+91",
     "+01",
@@ -57,13 +38,23 @@ class _UserLoginState extends State<UserLogin> {
   final Color _primaryColor = const Color(0xFF729CA3);
   final Color _secondaryColor = const Color(0xFFA2D2D5);
 
+  TextEditingController inputText = TextEditingController();
+  TextEditingController passwordText = TextEditingController();
+
   bool _isPhoneVerification = true;
   bool _isLogin = true;
 
   @override
+  void dispose() {
+    inputText.dispose();
+    passwordText.dispose();
+    _otpController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
-    inputText.text = "";
-    passwordText.text = "";
+    _otpController = TextEditingController();
     super.initState();
   }
 
@@ -86,7 +77,8 @@ class _UserLoginState extends State<UserLogin> {
                       children: <Widget>[
                         IconButton(
                             onPressed: () {
-                              Navigator.of(context).pop();
+                              Navigation.navigateToPageWithReplacement(
+                                  context, const PreviewPage());
                             },
                             icon: Icon(
                               Icons.arrow_back_ios_new,
@@ -209,15 +201,9 @@ class _UserLoginState extends State<UserLogin> {
                             ),
                             child: MaterialButton(
                               onPressed: () async {
-                                setState(() {
-                                  _isLoading = true;
-                                });
                                 if (_isPhoneVerification) {
                                   if (_inputValue == null) {
-                                    setState(() {
-                                      _isLoading = false;
-                                    });
-                                    showSnackBar(
+                                    CustomSnackbar.showSnackBar(
                                         context,
                                         "Please enter phone number",
                                         const Color.fromARGB(
@@ -225,7 +211,9 @@ class _UserLoginState extends State<UserLogin> {
                                     return;
                                   }
                                   await auth.loginUserWithPhoneNumber(
-                                      "$dropDownValue$_inputValue", context);
+                                      "$_dropDownValue$_inputValue",
+                                      context,
+                                      _isLogin);
                                 } else if (_inputValue != null &&
                                     _password != null) {
                                   if (_isLogin) {
@@ -235,33 +223,30 @@ class _UserLoginState extends State<UserLogin> {
                                     await auth.signupUser(
                                         _inputValue!, _password!, context);
                                   }
+                                } else if (_password!.length < 6) {
+                                  CustomSnackbar.showSnackBar(
+                                      context,
+                                      "Password should be atleast 6 characters long",
+                                      Colors.redAccent);
                                 } else {
-                                  setState(() {
-                                    _isLoading = false;
-                                  });
-                                  showSnackBar(
+                                  CustomSnackbar.showSnackBar(
                                       context,
                                       "Please fill all the fields",
                                       Colors.redAccent);
                                 }
                               },
-                              child: _isLoading
-                                  ? const CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 2.0,
-                                    )
-                                  : Text(
-                                      _isPhoneVerification
-                                          ? "GET OTP"
-                                          : _isLogin
-                                              ? "LOG IN"
-                                              : "SIGN UP",
-                                      style: TextStyle(
-                                        fontSize: 18.sp,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
+                              child: Text(
+                                _isPhoneVerification
+                                    ? "GET OTP"
+                                    : _isLogin
+                                        ? "LOG IN"
+                                        : "SIGN UP",
+                                style: TextStyle(
+                                  fontSize: 18.sp,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -304,18 +289,9 @@ class _UserLoginState extends State<UserLogin> {
     );
   }
 
-  void showSnackBar(BuildContext context, String message, Color color) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: color,
-      ),
-    );
-  }
-
   TextField passField(BuildContext context, String text) {
     return TextField(
-      controller: passwordText,
+      controller: _isPhoneVerification ? _otpController : passwordText,
       keyboardType: _isPhoneVerification
           ? TextInputType.number
           : TextInputType.emailAddress,
@@ -324,7 +300,7 @@ class _UserLoginState extends State<UserLogin> {
           _password = value.trim();
         });
       },
-      obscureText: true,
+      obscureText: !_isPhoneVerification,
       maxLength: _isPhoneVerification ? 6 : null,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -339,8 +315,8 @@ class _UserLoginState extends State<UserLogin> {
         floatingLabelAlignment: FloatingLabelAlignment.start,
         suffixIcon: _isPhoneVerification
             ? IconButton(
-                onPressed: () =>
-                    showSnackBar(context, "OTP has been resent", Colors.black),
+                onPressed: () => CustomSnackbar.showSnackBar(
+                    context, "OTP has been resent", Colors.black),
                 iconSize: 25.h,
                 icon: Column(
                   children: [
@@ -352,7 +328,7 @@ class _UserLoginState extends State<UserLogin> {
                   ],
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.r),
         ),
@@ -401,10 +377,10 @@ class _UserLoginState extends State<UserLogin> {
               color: Colors.black,
             ),
             borderRadius: BorderRadius.circular(5.r),
-            value: dropDownValue,
+            value: _dropDownValue,
             onChanged: (String? newValue) {
               setState(() {
-                dropDownValue = newValue;
+                _dropDownValue = newValue;
               });
             },
             items: items.map((e) {
