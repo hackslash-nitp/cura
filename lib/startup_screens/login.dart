@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../shared/widgets/gradient_background.dart';
 import '../shared/services/firebase_authentication.dart';
 
-TextEditingController _otpController = TextEditingController();
+late TextEditingController _otpController;
 
 class Otp {
   final String otp;
@@ -54,6 +54,7 @@ class _UserLoginState extends State<UserLogin> {
 
   @override
   void initState() {
+    _otpController = TextEditingController();
     super.initState();
   }
 
