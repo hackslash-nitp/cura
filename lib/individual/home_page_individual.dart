@@ -15,19 +15,21 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Home Screen"),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            await auth.logoutUser(context);
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => UserLogin()),
-            );
-          },
-          child: Text("Log Out"),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("Home Screen"),
+        ),
+        body: Center(
+          child: ElevatedButton(
+            onPressed: () async {
+              await auth.logoutUser(context);
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const UserLogin()),
+              );
+            },
+            child: const Text("Log Out"),
+          ),
         ),
       ),
     );

@@ -3,7 +3,7 @@ import 'splash_screen1_3.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PreviewPage extends StatefulWidget {
-  PreviewPage({Key? key}) : super(key: key);
+  const PreviewPage({Key? key}) : super(key: key);
 
   @override
   State<PreviewPage> createState() => _PreviewPageState();
@@ -46,7 +46,7 @@ class _PreviewPageState extends State<PreviewPage> {
                   children: [
                     Image(
                       filterQuality: FilterQuality.high,
-                      image: AssetImage(
+                      image: const AssetImage(
                         'assets/startup_assets/preview_splash_assets/Ellipse.png',
                       ),
                       width: 200.w,
@@ -68,7 +68,7 @@ class _PreviewPageState extends State<PreviewPage> {
                           onPressed: () {
                             Navigator.of(context)
                                 .pushReplacement(MaterialPageRoute(
-                              builder: (context) => SplashScreen(),
+                              builder: (context) => const SplashScreen(),
                             ));
                           },
                           child: Text(
