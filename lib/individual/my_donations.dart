@@ -9,7 +9,26 @@ class MyDonationsScreen extends StatefulWidget {
 }
 
 class _MyDonationsScreenState extends State<MyDonationsScreen> {
-  final List<String> _donations = ["Donation1", "Donation2", "Donation3"];
+  final List<Map<String, String>> _donations = [
+    {
+      'donationAmount': '2500.0',
+      'date': 'March 18, 2021',
+      'time': '12:39 PM',
+      'status': 'Completed',
+    },
+    {
+      'donationAmount': '3500.0',
+      'date': 'April 13, 2021',
+      'time': '01:23 PM',
+      'status': 'Completed',
+    },
+    {
+      'donationAmount': '8000.0',
+      'date': 'January 12, 2022',
+      'time': '03:47 PM',
+      'status': 'Completed',
+    },
+  ];
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -130,6 +149,15 @@ class _MyDonationsScreenState extends State<MyDonationsScreen> {
                                 itemBuilder: (context, index) {
                                   return MyDonationInfo(
                                     index: index,
+                                    donationAmount: _donations[index]
+                                            ['donationAmount'] ??
+                                        "Not Available",
+                                    date: _donations[index]['date'] ??
+                                        "Not Available",
+                                    time: _donations[index]['time'] ??
+                                        "Not Available",
+                                    status: _donations[index]['status'] ??
+                                        "Not Available",
                                   );
                                 }),
                           ),
@@ -149,8 +177,16 @@ class _MyDonationsScreenState extends State<MyDonationsScreen> {
 
 class MyDonationInfo extends StatelessWidget {
   final int index;
+  final String donationAmount, date, time, status;
 
-  const MyDonationInfo({Key? key, required this.index}) : super(key: key);
+  const MyDonationInfo(
+      {Key? key,
+      required this.index,
+      required this.donationAmount,
+      required this.time,
+      required this.date,
+      required this.status})
+      : super(key: key);
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
@@ -169,14 +205,14 @@ class MyDonationInfo extends StatelessWidget {
                     size: 20.w,
                   ),
                   Text(
-                    "2500.0",
+                    donationAmount,
                     style:
                         TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w400),
                   ),
                 ],
               ),
               Text(
-                "March 18, 2021\n12:39 PM",
+                "$date\n$time",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16.sp,
@@ -196,7 +232,7 @@ class MyDonationInfo extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Completed",
+                      status,
                       style: TextStyle(
                           fontSize: 16.sp, fontWeight: FontWeight.w400),
                     ),
@@ -217,7 +253,8 @@ class MyDonationInfo extends StatelessWidget {
             ),
             child: GestureDetector(
               onTap: () {
-                print("Receipt tapped: #$index");
+                //code for showing receipt
+                //to be implemented later
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
