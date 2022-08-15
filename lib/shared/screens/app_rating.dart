@@ -1,3 +1,4 @@
+import 'package:cura/shared/services/firebase_database.dart';
 import 'package:cura/shared/widgets/message_dialog.dart';
 import 'package:cura/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ class AppRating extends StatefulWidget {
 
 class _AppRatingState extends State<AppRating> {
   final TextEditingController _commentController = TextEditingController();
+  final FirestoreDatabase _db = FirestoreDatabase();
   int _appRating = 0;
 
   @override
@@ -101,10 +103,11 @@ class _AppRatingState extends State<AppRating> {
                               Navigator.of(context).pop();
                             }),
                             getMainButton("Submit", const Color(0xFF729CA3),
-                                const Color(0xFFFFFFFF), () {
-                              if (_commentController.text.trim().isNotEmpty &&
+                                const Color(0xFFFFFFFF), () async {
+                              if (_commentController.text.isNotEmpty &&
                                   _appRating > 0) {
-                                //backend implementation for storing review to be implemented later
+                                await _db.postReview(
+                                    _appRating, _commentController.text.trim());
                                 showDialog(
                                     builder: (context) => const MessageDialog(
                                         title: "Thank You!",
