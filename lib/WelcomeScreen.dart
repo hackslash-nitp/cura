@@ -48,15 +48,22 @@ class MyAppState extends State<MyApp> {
                               fontFamily: 'PT Sans',
                             )),
                         Align(
-                            alignment: const Alignment(-.5, .8),
+                            alignment: Alignment(-.5, .8),
                             child: Image.asset(
                               'assets/startup_assets/preview_splash_assets/spl4a.png',
                               height: 350,
                               alignment: Alignment.topCenter,
                             )),
                         Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 137, 184, 189),
+                              width: 1.5,
+                            ),
+                          ),
                           margin: EdgeInsets.all(7),
-                          height: 50,
+                          height: 53,
                           width: 378,
                           child: TextButton(
                             onPressed: () {},
@@ -87,8 +94,16 @@ class MyAppState extends State<MyApp> {
                         ),
                         Container(
                           margin: EdgeInsets.all(7),
-                          height: 50,
+                          height: 53,
                           width: 378,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 137, 184, 189),
+                              width: 1.5,
+                            ),
+                            color: const Color.fromARGB(255, 137, 184, 189),
+                          ),
                           child: TextButton(
                             style: TextButton.styleFrom(
                                 shape: RoundedRectangleBorder(
