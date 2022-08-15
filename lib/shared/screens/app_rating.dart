@@ -1,3 +1,4 @@
+import 'package:cura/shared/widgets/message_dialog.dart';
 import 'package:cura/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +12,14 @@ class AppRating extends StatefulWidget {
 
 class _AppRatingState extends State<AppRating> {
   final TextEditingController _commentController = TextEditingController();
+  int _appRating = 0;
+
+  @override
+  void dispose() {
+    _commentController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final bottom = MediaQuery.of(context).viewInsets.bottom;
@@ -51,11 +60,11 @@ class _AppRatingState extends State<AppRating> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            getStarWidget(),
-                            getStarWidget(),
-                            getStarWidget(),
-                            getStarWidget(),
-                            getStarWidget(),
+                            getStarWidget(1),
+                            getStarWidget(2),
+                            getStarWidget(3),
+                            getStarWidget(4),
+                            getStarWidget(5),
                           ],
                         ),
                         SizedBox(height: 16.h),
@@ -93,12 +102,26 @@ class _AppRatingState extends State<AppRating> {
                             }),
                             getMainButton("Submit", const Color(0xFF729CA3),
                                 const Color(0xFFFFFFFF), () {
-                              if (_commentController.text.trim().isNotEmpty) {
-                                print("Submitted Succesfully!");
+                              if (_commentController.text.trim().isNotEmpty &&
+                                  _appRating > 0) {
+                                //backend implementation for storing review to be implemented later
+                                showDialog(
+                                    builder: (context) => const MessageDialog(
+                                        title: "Thank You!",
+                                        imageUrl:
+                                            "assets/main_assets/Completed.png",
+                                        contentText:
+                                            "Thank you for sharing your valuable comments and rating us!"),
+                                    context: context);
+                                setState(() {
+                                  //to reset the UI once the review has been submitted.
+                                  _appRating = 0;
+                                  _commentController.text = "";
+                                });
                               } else {
                                 CustomSnackbar.showSnackBar(
                                     context,
-                                    "Please enter your feedback",
+                                    "Please enter proper feedback",
                                     Colors.redAccent);
                               }
                             }),
@@ -139,11 +162,19 @@ class _AppRatingState extends State<AppRating> {
     );
   }
 
-  Image getStarWidget() {
-    return Image(
-      image: const AssetImage('assets/main_assets/star.png'),
-      width: 50.w,
-      height: 50.h,
+  Widget getStarWidget(int index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _appRating = index;
+        });
+      },
+      child: Image(
+        image: const AssetImage('assets/main_assets/star.png'),
+        color: index <= _appRating ? Color.fromARGB(255, 197, 184, 61) : null,
+        width: 50.w,
+        height: 50.h,
+      ),
     );
   }
 }
