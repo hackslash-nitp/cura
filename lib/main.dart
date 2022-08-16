@@ -26,7 +26,13 @@ class ScreenDecider extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
+<<<<<<< HEAD
       home:UserChatsPage(),
+=======
+      home: auth.getCurrentUser() == null
+          ? PreviewPage() // directly access by substituting in place of PreviewPage()
+          : const HomePageIndividual(),
+>>>>>>> ccf11f6d91d69c07b0bc30c1f525a1dab56b1c57
     );
   }
 }
