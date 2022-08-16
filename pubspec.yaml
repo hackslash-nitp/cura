@@ -39,15 +39,11 @@ dependencies:
   firebase_core: ^1.20.0
   firebase_auth: ^3.6.2
   carousel_slider: ^4.1.1
-<<<<<<< HEAD
   anim_search_bar: ^2.0.2
-=======
   cloud_firestore: ^3.4.4
   image_picker: ^0.8.5+3
   file_picker: ^5.0.1
   searchfield: ^0.5.3
->>>>>>> ccf11f6d91d69c07b0bc30c1f525a1dab56b1c57
-
 
 dev_dependencies:
   flutter_test:
@@ -74,11 +70,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
-<<<<<<< HEAD
-    - assets/support.png
-=======
     - assets/main_assets/
->>>>>>> ccf11f6d91d69c07b0bc30c1f525a1dab56b1c57
     - assets/startup_assets/create_account_assets/
     - assets/startup_assets/preview_splash_assets/
     - assets/startup_assets/individual_assets/donation.png
