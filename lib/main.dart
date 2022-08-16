@@ -25,7 +25,6 @@ class ScreenDecider extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      debugShowCheckedModeBanner: false,
       home: auth.getCurrentUser() == null
           ? PreviewPage() // directly access by substituting in place of PreviewPage()
           : const HomePageIndividual(),
