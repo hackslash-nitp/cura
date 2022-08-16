@@ -1,3 +1,4 @@
+import 'dart:js';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -34,9 +35,9 @@ class MyAppState extends State<MyApp> {
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                      )),
+                      ),),
                   Padding(
-                    padding: const EdgeInsets.all(30.0),
+                    padding: const EdgeInsets.all(15.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -149,3 +150,49 @@ class MyAppState extends State<MyApp> {
         ));
   }
 }
+
+Future openDialog() => showDialog(
+      context: context,
+      // ignore: prefer_const_constructors
+      builder: ((context) => AlertDialog(
+            title: Container(
+              child: Column(
+                children: [
+                  Center(
+                    child: Text(
+                      "TERMS & CONDITIONS",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 0, 0, 0),
+                        fontSize: 34,
+                        fontFamily: 'PT Sans',
+                      ),
+                    ),
+                  ),
+                  Align(
+                    child: Image.asset(
+                      'assets/line.png',
+                      alignment: Alignment.topLeft,
+                    ),
+                  ),
+                  Container(
+                    child: Column(
+                      children: [
+                        Text(
+                          "1.Agreement Introduction",
+                          style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                            fontSize: 30,
+                            fontFamily: 'PT Sans',
+                          ),
+                        ),
+                        Text("xyz")
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )),
+    );
