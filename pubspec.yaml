@@ -40,6 +40,7 @@ dependencies:
   firebase_auth: ^3.6.2
   carousel_slider: ^4.1.1
   cloud_firestore: ^3.4.4
+  searchfield: ^0.5.3
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,7 @@ flutter:
     - assets/main_assets/
     - assets/startup_assets/create_account_assets/
     - assets/startup_assets/preview_splash_assets/
+    - assets/startup_assets/individual_assets/donation.png
     
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
