@@ -1,9 +1,12 @@
 import 'dart:io';
+import 'package:cura/shared/model/organisation.dart';
+import 'package:cura/shared/services/firebase_database.dart';
 import 'package:cura/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
+import '../individual/home_page_individual.dart';
 import '../shared/widgets/gradient_background.dart';
 
 class OrgAccountSetup extends StatefulWidget {
@@ -23,13 +26,15 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
   final TextEditingController pincodeController = TextEditingController();
   final TextEditingController bioController = TextEditingController();
 
-  final _formKey = GlobalKey<FormState>();
+  final _orgFormKey = GlobalKey<FormState>();
 
   final buttonStyle = TextButton.styleFrom(
     backgroundColor: const Color.fromARGB(100, 117, 212, 227),
   );
 
   final List<String> gender = ['Male', 'Female', 'Other'];
+  final FirestoreDatabase _db = FirestoreDatabase();
+
   String? userGender, estdDate;
   File? userImage, userAttachment;
 
@@ -190,7 +195,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                     color: Color.fromRGBO(0, 0, 0, 0.33),
                   ),
                   Form(
-                    key: _formKey,
+                    key: _orgFormKey,
                     child: SizedBox(
                       height: 470.h,
                       width: double.infinity,
@@ -476,13 +481,31 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                         borderRadius: BorderRadius.circular(10.r),
                       ),
                       child: TextButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate() &&
+                        onPressed: () async {
+                          if (_orgFormKey.currentState!.validate() &&
                               estdDate != null &&
                               userGender != null &&
                               userAttachment != null) {
-                            CustomSnackbar.showSnackBar(
-                                context, "Processing Data", Colors.lightGreen);
+                            final OrganisationUser orgUser = OrganisationUser(
+                                orgName: nameController.text.trim(),
+                                orgEmail: emailController.text.trim(),
+                                orgContact: phoneController.text.trim(),
+                                orgRegNumber: regNumberController.text.trim(),
+                                country: countryController.text.trim(),
+                                address: addressController.text.trim(),
+                                pincode: pincodeController.text.trim(),
+                                imgUrl:
+                                    userImage == null ? "" : userImage!.path,
+                                estDate: estdDate!,
+                                attachmentUrl: userAttachment == null
+                                    ? ""
+                                    : userAttachment!.path);
+                            Map<String, dynamic> orgJSON = orgUser.toJSON();
+                            await _db.postOrganizationProfileData(orgJSON);
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const HomePageIndividual()));
                           }
                         },
                         style: TextButton.styleFrom(

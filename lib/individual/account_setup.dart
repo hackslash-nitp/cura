@@ -1,9 +1,13 @@
-import 'package:cura/shared/widgets/widgets.dart';
+import 'package:cura/individual/home_page_individual.dart';
+import 'package:cura/shared/model/individual.dart';
+import 'package:cura/shared/model/organisation.dart';
+import 'package:cura/shared/widgets/message_dialog.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import '../shared/widgets/gradient_background.dart';
+import '../shared/services/firebase_database.dart';
 
 class IndividualAccountSetup extends StatefulWidget {
   const IndividualAccountSetup({Key? key}) : super(key: key);
@@ -22,12 +26,13 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
   final TextEditingController educationController = TextEditingController();
   final TextEditingController bioController = TextEditingController();
 
-  final _formKey = GlobalKey<FormState>();
+  final _indFormKey = GlobalKey<FormState>();
 
   final buttonStyle = TextButton.styleFrom(
     backgroundColor: const Color.fromARGB(100, 117, 212, 227),
   );
 
+  final FirestoreDatabase db = FirestoreDatabase();
   final List<String> gender = ['Male', 'Female', 'Other'];
   String? userGender, dob;
   File? userImage;
@@ -38,6 +43,10 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
     emailController.dispose();
     phoneController.dispose();
     occupationController.dispose();
+    countryController.dispose();
+    cityController.dispose();
+    educationController.dispose();
+    bioController.dispose();
     super.dispose();
   }
 
@@ -189,7 +198,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                     color: Color.fromRGBO(0, 0, 0, 0.33),
                   ),
                   Form(
-                    key: _formKey,
+                    key: _indFormKey,
                     child: SizedBox(
                       height: 450.h,
                       width: double.infinity,
@@ -375,12 +384,29 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                         borderRadius: BorderRadius.circular(10.r),
                       ),
                       child: TextButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate() &&
+                        onPressed: () async {
+                          if (_indFormKey.currentState!.validate() &&
                               dob != null &&
                               userGender != null) {
-                            CustomSnackbar.showSnackBar(
-                                context, "Processing Data", Colors.lightGreen);
+                            IndividualUser individual = IndividualUser(
+                                individualName: nameController.text.trim(),
+                                individualEmail: emailController.text.trim(),
+                                individualContact: phoneController.text.trim(),
+                                occupation: occupationController.text.trim(),
+                                country: countryController.text.trim(),
+                                city: cityController.text.trim(),
+                                gender: userGender!,
+                                imgUrl:
+                                    userImage == null ? "" : userImage!.path,
+                                dob: dob!,
+                                education: educationController.text.trim(),
+                                bio: bioController.text.trim());
+                            Map<String, dynamic> userJSON = individual.toJSON();
+                            await db.postIndividualProfileData(userJSON);
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const HomePageIndividual()));
                           }
                         },
                         style: TextButton.styleFrom(
