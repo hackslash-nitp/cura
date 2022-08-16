@@ -23,8 +23,8 @@ class ScreenDecider extends StatelessWidget {
       title: 'Cura',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        debugShowCheckedModeBanner: false,
       ),
+      debugShowCheckedModeBanner: false,
       home: auth.getCurrentUser() == null
           ? PreviewPage() // directly access by substituting in place of PreviewPage()
           : const HomePageIndividual(),
