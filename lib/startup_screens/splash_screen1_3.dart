@@ -1,6 +1,6 @@
+import 'package:cura/startup_screens/login.dart';
 import 'package:cura/startup_screens/preview_page.dart';
 import 'package:flutter/material.dart';
-
 import 'splash_slide.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
       "imgUrl": "assets/startup_assets/preview_splash_assets/Group 40.png",
       "title1": "Cura ",
       "title2": "is about care",
-      "text": "Donate easily,quickly,right on the target all over the world",
+      "text": "Donate easily, quickly, right on the target all over the world.",
     },
     {
       "imgUrl": "assets/startup_assets/preview_splash_assets/Group 41.png",
@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
       "title2": '''transparent
 fundraising.''',
       "text":
-          "Grow online donations ,track your suppoters,host an event,deep-dive into metrics and more",
+          "Grow online donations, track your suppoters, host an event, deep-dive into metrics, and more.",
     }
   ];
   @override
@@ -60,16 +60,16 @@ fundraising.''',
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_back_ios_new,
-                      size: 15,
+                      size: 15.w,
                     ),
                     onPressed: () {
                       if (currentPage == 0) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PreviewPage(),
+                            builder: (context) => const PreviewPage(),
                           ),
                         );
                       } else {
@@ -93,9 +93,9 @@ fundraising.''',
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50.0),
+                              borderRadius: BorderRadius.circular(50.r),
                               side: const BorderSide(
-                                color: const Color.fromARGB(103, 162, 221, 241),
+                                color: Color.fromARGB(103, 162, 221, 241),
                               ),
                             ),
                           ),
@@ -111,7 +111,7 @@ fundraising.''',
                   ),
                 ],
               ),
-              SizedBox(height: 30.h),
+              SizedBox(height: 126.h),
               Expanded(
                   flex: 4,
                   child: PageView.builder(
@@ -161,13 +161,11 @@ fundraising.''',
                                   backgroundColor:
                                       const Color.fromARGB(255, 127, 176, 176),
                                 ),
-                                onPressed: () {},
-                                // async {
-                                //   Navigator.of(context)
-                                //       .pushReplacement(MaterialPageRoute(
-                                //     builder: ((context) => LoginStudent()),
-                                //   ));
-                                // },
+                                onPressed: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: ((context) => const UserLogin()),
+                                  ),
+                                ),
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
                                       vertical: 10.h, horizontal: 34.w),
@@ -184,18 +182,17 @@ fundraising.''',
                                 alignment: Alignment.bottomRight,
                                 child: FloatingActionButton(
                                   onPressed: () {
-                                    print(isLastPage);
                                     controller.nextPage(
                                         duration:
                                             const Duration(milliseconds: 500),
                                         curve: Curves.easeInOut);
                                   },
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 108, 166, 170),
                                   child: Icon(
                                     Icons.arrow_forward,
                                     size: 50.r,
                                   ),
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 108, 166, 170),
                                 ),
                               ),
                       ),
@@ -220,7 +217,7 @@ fundraising.''',
         width: currentPage == index ? 8 : 8,
         decoration: BoxDecoration(
           color: currentPage == index
-              ? Color.fromARGB(255, 57, 121, 125)
+              ? const Color.fromARGB(255, 57, 121, 125)
               : const Color(0xFFD8D8D8),
           borderRadius: BorderRadius.circular(5),
         ),

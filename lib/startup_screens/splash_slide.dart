@@ -13,52 +13,50 @@ class SplashSlide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Image(
-            image: AssetImage(imgUrl),
-            width: 450.w,
-            height: 340.h,
-            fit: BoxFit.fill,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                headTitle1,
-                style: TextStyle(
-                  fontSize: 30.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(213, 85, 202, 213),
-                ),
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                headTitle2,
-                style: TextStyle(
-                  fontSize: 30.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-          SizedBox(height: 20.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.w),
-            child: Text(
-              text,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Image(
+          image: AssetImage(imgUrl),
+          width: 300.w,
+          height: 300.h,
+          fit: BoxFit.fill,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              headTitle1,
               style: TextStyle(
-                fontSize: 15.sp,
-                fontWeight: FontWeight.w400,
+                fontSize: 30.sp,
+                fontWeight: FontWeight.bold,
+                color: const Color.fromARGB(213, 85, 202, 213),
               ),
               textAlign: TextAlign.center,
             ),
+            Text(
+              headTitle2,
+              style: TextStyle(
+                fontSize: 30.sp,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+        SizedBox(height: 20.h),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30.w),
+          child: Text(
+            text,
+            style: TextStyle(
+              fontSize: 15.sp,
+              fontWeight: FontWeight.w400,
+            ),
+            textAlign: TextAlign.center,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

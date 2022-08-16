@@ -1,8 +1,15 @@
+import 'package:cura/individual/home_page_individual.dart';
+import 'package:cura/shared/widgets/widgets.dart';
+import 'package:cura/startup_screens/create_account.dart';
+import 'package:cura/startup_screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import '../navigation.dart';
 
 class FirebaseAuthentication {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool otpEntered = false;
+  String? _otp;
 
   //Function to get current user
   User? getCurrentUser() {
@@ -10,57 +17,76 @@ class FirebaseAuthentication {
   }
 
   //Function to login user using email and password
-  Future<String?> loginUserWithEmail(String email, String password) async {
+  Future<String?> loginUserWithEmail(
+      String email, String password, BuildContext context) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException {
-      print("Error occured while logging in via email.");
+      Navigation.navigateToPageWithReplacement(
+          context, const HomePageIndividual());
+    } on FirebaseAuthException catch (e) {
+      CustomErrorDialog.showErrorDialog(context, e.message!);
+      return null;
     }
     return _auth.currentUser!.uid;
   }
 
   //Function to login user with phone number
-  Future<String?> loginUserWithPhoneNumber(String phoneNumber) async {
+  Future<void> loginUserWithPhoneNumber(
+      String phoneNumber, BuildContext context, bool isSignUp) async {
     try {
       await _auth.verifyPhoneNumber(
           timeout: const Duration(seconds: 60),
-          phoneNumber: '+91$phoneNumber',
+          phoneNumber: phoneNumber,
           verificationCompleted: (PhoneAuthCredential cred) async {
-            await _auth.signInWithCredential(cred);
+            print("Verification Completed: ${cred.smsCode}");
+            _otp = cred.smsCode;
+            Otp otp = Otp(otp: _otp ?? "");
+            otp.setOtp();
+
+            if (cred.smsCode != null) {
+              try {
+                await _auth.signInWithCredential(cred).then((value) =>
+                    Navigation.navigateToPageWithReplacement(
+                        context, const HomePageIndividual()));
+                isSignUp
+                    ? Navigation.navigateToPageWithReplacement(
+                        context, const HomePageIndividual())
+                    : Navigation.navigateToPageWithReplacement(
+                        context, CreateAccountPage());
+              } on FirebaseAuthException catch (e) {
+                CustomErrorDialog.showErrorDialog(context, e.message!);
+              }
+            }
           },
           verificationFailed: (FirebaseAuthException e) {
-            print(
-                "Verification of phone number failed"); //Dummy code for error handling for now
+            CustomErrorDialog.showErrorDialog(context, e.message!);
           },
-          codeSent: (String verificationId, int? forceResendingToken) async {
-            String smsCode = "xxxx";
-            PhoneAuthCredential credential = PhoneAuthProvider.credential(
-                verificationId: verificationId, smsCode: smsCode);
-            await _auth.signInWithCredential(credential);
-          },
+          codeSent: (String verificationId, int? forceResendingToken) async {},
           codeAutoRetrievalTimeout: (String verificationID) {});
-    } on FirebaseAuthException {
-      print("Error occured while logging in via phone");
+    } on FirebaseAuthException catch (e) {
+      CustomErrorDialog.showErrorDialog(context, e.message!);
     }
-    return _auth.currentUser!.uid;
   }
 
   //Function to sign-up user
-  Future<void> signupUser(String email, String password) async {
+  Future<void> signupUser(
+      String email, String password, BuildContext context) async {
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-    } on FirebaseAuthException {
-      print("Error occured while registering user");
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      Navigation.navigateToPageWithReplacement(context, CreateAccountPage());
+    } on FirebaseAuthException catch (e) {
+      CustomErrorDialog.showErrorDialog(context, e.message!);
     }
   }
 
   //Function to logout user
-  Future<void> logoutUser() async {
+  Future<void> logoutUser(BuildContext context) async {
     try {
       await _auth.signOut();
-    } on FirebaseAuthException {
-      print("Error occured while logging out");
+    } on FirebaseAuthException catch (e) {
+      CustomErrorDialog.showErrorDialog(context, e.message!);
     }
   }
 }
