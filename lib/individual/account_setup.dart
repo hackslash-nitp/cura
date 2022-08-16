@@ -219,7 +219,19 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () async {
+                                  final DateTime? picked = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime(2012, 1),
+                                      firstDate: DateTime(1940, 1),
+                                      lastDate: DateTime(2012, 1));
+                                  if (picked != null) {
+                                    setState(() {
+                                      dob =
+                                          "${picked.day}/${picked.month}/${picked.year}";
+                                    });
+                                  }
+                                },
                                 child: Container(
                                   height: 60.h,
                                   width: 170.w,
