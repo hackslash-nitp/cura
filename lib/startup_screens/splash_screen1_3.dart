@@ -69,7 +69,7 @@ fundraising.''',
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PreviewPage(),
+                            builder: (context) => const PreviewPage(),
                           ),
                         );
                       } else {
@@ -95,7 +95,7 @@ fundraising.''',
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50.r),
                               side: const BorderSide(
-                                color: const Color.fromARGB(103, 162, 221, 241),
+                                color: Color.fromARGB(103, 162, 221, 241),
                               ),
                             ),
                           ),
@@ -163,7 +163,7 @@ fundraising.''',
                                 ),
                                 onPressed: () => Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: ((context) => UserLogin()),
+                                    builder: ((context) => const UserLogin()),
                                   ),
                                 ),
                                 child: Padding(
@@ -187,12 +187,12 @@ fundraising.''',
                                             const Duration(milliseconds: 500),
                                         curve: Curves.easeInOut);
                                   },
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 108, 166, 170),
                                   child: Icon(
                                     Icons.arrow_forward,
                                     size: 50.r,
                                   ),
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 108, 166, 170),
                                 ),
                               ),
                       ),
@@ -217,7 +217,7 @@ fundraising.''',
         width: currentPage == index ? 8 : 8,
         decoration: BoxDecoration(
           color: currentPage == index
-              ? Color.fromARGB(255, 57, 121, 125)
+              ? const Color.fromARGB(255, 57, 121, 125)
               : const Color(0xFFD8D8D8),
           borderRadius: BorderRadius.circular(5),
         ),
