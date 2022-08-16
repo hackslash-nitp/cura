@@ -1,8 +1,9 @@
+import 'dart:io';
 import 'package:cura/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import '../shared/widgets/gradient_background.dart';
 
 class OrgAccountSetup extends StatefulWidget {
@@ -30,7 +31,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
 
   final List<String> gender = ['Male', 'Female', 'Other'];
   String? userGender, estdDate;
-  File? userImage;
+  File? userImage, userAttachment;
 
   @override
   void dispose() {
@@ -399,7 +400,9 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                     SizedBox(
                                       width: 270.w,
                                       child: Text(
-                                        "Upload Organisation Authenticity Certificate Issued by Government",
+                                        userAttachment == null
+                                            ? "Upload Organisation Authenticity Certificate Issued by Government"
+                                            : userAttachment!.path.toString(),
                                         style: TextStyle(
                                           fontSize: 17.sp,
                                           fontWeight: FontWeight.w400,
@@ -411,7 +414,35 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                     Transform.rotate(
                                       angle: 45.0 * 3.14159 / 180,
                                       child: IconButton(
-                                          onPressed: () {},
+                                          onPressed: () async {
+                                            try {
+                                              FilePickerResult? result =
+                                                  await FilePicker.platform
+                                                      .pickFiles();
+                                              if (result == null) {
+                                                return;
+                                              } else if (result
+                                                          .files.first.size /
+                                                      1000000 >
+                                                  3) {
+                                                CustomSnackbar.showSnackBar(
+                                                    context,
+                                                    "File size larger than 3 MB",
+                                                    Colors.red);
+                                                return;
+                                              }
+                                              File? file = File(
+                                                  result.files.first.path!);
+                                              print(result.files.first.size
+                                                  .toString());
+                                              setState(() {
+                                                userAttachment = file;
+                                              });
+                                            } catch (e) {
+                                              print(
+                                                  "An exception occured: ${e.toString()}");
+                                            }
+                                          },
                                           icon: const Icon(
                                               Icons.attach_file_outlined)),
                                     ),
@@ -446,7 +477,8 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                         onPressed: () {
                           if (_formKey.currentState!.validate() &&
                               estdDate != null &&
-                              userGender != null) {
+                              userGender != null &&
+                              userAttachment != null) {
                             CustomSnackbar.showSnackBar(
                                 context, "Processing Data", Colors.lightGreen);
                           }
