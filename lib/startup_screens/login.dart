@@ -65,7 +65,7 @@ class _UserLoginState extends State<UserLogin> {
       builder: (context, child) => Scaffold(
         body: Stack(
           children: [
-            const GradientBackground(),
+            const BiDirectionalBackground(),
             SafeArea(
               child: Container(
                 width: double.infinity,
