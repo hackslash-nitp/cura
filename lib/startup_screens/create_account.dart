@@ -1,11 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:cura/individual/account_setup.dart';
+import 'package:cura/shared/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import '../organization/account_setup.dart';
 import '../shared/services/firebase_authentication.dart';
 
 class CreateAccountPage extends StatefulWidget {
-  CreateAccountPage({Key? key}) : super(key: key);
+  const CreateAccountPage({Key? key}) : super(key: key);
 
   @override
   State<CreateAccountPage> createState() => _CreateAccountPageState();
@@ -14,6 +15,7 @@ class CreateAccountPage extends StatefulWidget {
 class _CreateAccountPageState extends State<CreateAccountPage> {
   bool hasChanged = false;
   final FirebaseAuthentication _auth = FirebaseAuthentication();
+  int option = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,6 +127,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                               //indexOfPage=0: Helper
                               //indexOfPage=1: Organisation
                               setState(() {
+                                option = indexOfPage;
                                 hasChanged = !hasChanged;
                               });
                             },
@@ -133,6 +136,13 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                         TextButton(
                           onPressed: () {
                             //next button functionality
+                            option == 0
+                                ? Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const IndividualAccountSetup()))
+                                : Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const OrgAccountSetup()));
                           },
                           style: TextButton.styleFrom(
                             alignment: Alignment.topCenter,
