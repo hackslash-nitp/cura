@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import '../shared/widgets/gradient_background.dart';
 
 class IndividualAccountSetup extends StatefulWidget {
@@ -25,6 +27,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
 
   final List<String> gender = ['Male', 'Female', 'Other'];
   String? userGender, dob;
+  File? userImage;
 
   @override
   void dispose() {
@@ -70,10 +73,13 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Image(
-                        image: const AssetImage(
-                            'assets/startup_assets/create_account_assets/profile_primary.png'),
-                        height: 110.h,
+                      CircleAvatar(
+                        backgroundImage: userImage == null
+                            ? const AssetImage(
+                                'assets/startup_assets/create_account_assets/profile_primary.png')
+                            : FileImage(userImage!) as ImageProvider,
+                        radius: 50.r,
+                        backgroundColor: Colors.transparent,
                       ),
                       Column(
                         children: <Widget>[
@@ -97,7 +103,18 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  try {
+                                    final image = await ImagePicker()
+                                        .pickImage(source: ImageSource.gallery);
+                                    if (image == null) return;
+                                    setState(() {
+                                      userImage = File(image.path);
+                                    });
+                                  } catch (e) {
+                                    print("An error has occured!");
+                                  }
+                                },
                                 style: buttonStyle,
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
@@ -114,7 +131,19 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               ),
                               SizedBox(width: 25.w),
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  try {
+                                    final image = await ImagePicker()
+                                        .pickImage(source: ImageSource.camera);
+                                    if (image == null) return;
+                                    setState(() {
+                                      userImage = File(image.path);
+                                    });
+                                  } catch (e) {
+                                    print(
+                                        "An error has occured! ${e.toString()}");
+                                  }
+                                },
                                 style: buttonStyle,
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
