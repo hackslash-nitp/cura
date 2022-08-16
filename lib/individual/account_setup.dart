@@ -60,7 +60,9 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                       children: <Widget>[
                         IconButton(
                           icon: const Icon(Icons.arrow_back_ios_new),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
                           iconSize: 14.h,
                         ),
                         Text(
