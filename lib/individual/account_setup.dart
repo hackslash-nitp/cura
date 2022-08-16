@@ -1,3 +1,4 @@
+import 'package:cura/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,6 +21,8 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
   final TextEditingController cityController = TextEditingController();
   final TextEditingController educationController = TextEditingController();
   final TextEditingController bioController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
 
   final buttonStyle = TextButton.styleFrom(
     backgroundColor: const Color.fromARGB(100, 117, 212, 227),
@@ -183,86 +186,64 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                     thickness: 2,
                     color: Color.fromRGBO(0, 0, 0, 0.33),
                   ),
-                  SizedBox(
-                    height: 450.h,
-                    width: double.infinity,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 30.w, vertical: 20.h),
-                      child: ListView(
-                        children: <Widget>[
-                          getInputTextField(nameController, "Enter your Name",
-                              TextInputType.name),
-                          SizedBox(
-                            height: 34.h,
-                          ),
-                          getInputTextField(emailController, "Enter your Email",
-                              TextInputType.emailAddress),
-                          SizedBox(
-                            height: 34.h,
-                          ),
-                          getInputTextField(phoneController,
-                              "Enter your Phone Number", TextInputType.number),
-                          SizedBox(
-                            height: 34.h,
-                          ),
-                          getInputTextField(occupationController,
-                              "Enter your Occupation", TextInputType.name),
-                          SizedBox(
-                            height: 34.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                width: 170.w,
-                                decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromRGBO(117, 212, 227, 0.2),
-                                  borderRadius: BorderRadius.circular(10.r),
-                                ),
-                                padding: EdgeInsets.symmetric(horizontal: 18.w),
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton(
-                                      value: userGender,
-                                      style: TextStyle(
-                                          fontSize: 18.sp,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.black),
-                                      hint: Text("Select",
-                                          style: TextStyle(
-                                              fontSize: 18.sp,
-                                              fontWeight: FontWeight.w700,
-                                              color: Colors.black)),
-                                      items: gender.map((value) {
-                                        return DropdownMenuItem(
-                                          value: value,
-                                          child: Text(value),
-                                        );
-                                      }).toList(),
-                                      onChanged: (value) {
-                                        setState(() {
-                                          userGender = value!.toString();
-                                        });
-                                      }),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () async {
-                                  final DateTime? picked = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime(2012, 1),
-                                      firstDate: DateTime(1940, 1),
-                                      lastDate: DateTime(2012, 1));
-                                  if (picked != null) {
-                                    setState(() {
-                                      dob =
-                                          "${picked.day}/${picked.month}/${picked.year}";
-                                    });
-                                  }
-                                },
-                                child: Container(
-                                  height: 60.h,
+                  Form(
+                    key: _formKey,
+                    child: SizedBox(
+                      height: 450.h,
+                      width: double.infinity,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 30.w, vertical: 20.h),
+                        child: ListView(
+                          children: <Widget>[
+                            getInputTextField(nameController, "Enter your Name",
+                                TextInputType.name, (val) {
+                              if (val == null || val.isEmpty) {
+                                return "Please enter your name";
+                              }
+                            }),
+                            SizedBox(
+                              height: 34.h,
+                            ),
+                            getInputTextField(
+                                emailController,
+                                "Enter your Email",
+                                TextInputType.emailAddress, (val) {
+                              if (val == null ||
+                                  val.isEmpty ||
+                                  !val.contains('@')) {
+                                return "Please enter a proper email address";
+                              }
+                            }),
+                            SizedBox(
+                              height: 34.h,
+                            ),
+                            getInputTextField(
+                                phoneController,
+                                "Enter your Phone Number",
+                                TextInputType.number, (val) {
+                              if (val == null || val.isEmpty) {
+                                return "Please enter your contact number";
+                              }
+                            }),
+                            SizedBox(
+                              height: 34.h,
+                            ),
+                            getInputTextField(
+                                occupationController,
+                                "Enter your Occupation",
+                                TextInputType.name, (val) {
+                              if (val == null || val.isEmpty) {
+                                return "Please enter your occupation";
+                              }
+                            }),
+                            SizedBox(
+                              height: 34.h,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Container(
                                   width: 170.w,
                                   decoration: BoxDecoration(
                                     color: const Color.fromRGBO(
@@ -270,48 +251,116 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                                     borderRadius: BorderRadius.circular(10.r),
                                   ),
                                   padding:
-                                      EdgeInsets.symmetric(horizontal: 10.w),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Text(
-                                        dob ?? "DD/MM/YYYY",
+                                      EdgeInsets.symmetric(horizontal: 18.w),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton(
+                                        value: userGender,
                                         style: TextStyle(
-                                          fontSize: 18.sp,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                      const Icon(Icons.arrow_drop_down),
-                                    ],
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.w700,
+                                            color: Colors.black),
+                                        hint: Text("Gender",
+                                            style: TextStyle(
+                                                fontSize: 18.sp,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.black)),
+                                        items: gender.map((value) {
+                                          return DropdownMenuItem(
+                                            value: value,
+                                            child: Text(value),
+                                          );
+                                        }).toList(),
+                                        onChanged: (value) {
+                                          setState(() {
+                                            userGender = value!.toString();
+                                          });
+                                        }),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 34.h,
-                          ),
-                          getInputTextField(countryController,
-                              "Enter your Country", TextInputType.name),
-                          SizedBox(
-                            height: 34.h,
-                          ),
-                          getInputTextField(cityController, "Enter your City",
-                              TextInputType.name),
-                          SizedBox(
-                            height: 34.h,
-                          ),
-                          getInputTextField(
-                              educationController,
-                              "Enter your Educational Qualification",
-                              TextInputType.name),
-                          SizedBox(
-                            height: 34.h,
-                          ),
-                          getInputTextField(bioController, "Write your Bio...",
-                              TextInputType.name),
-                        ],
+                                GestureDetector(
+                                  onTap: () async {
+                                    final DateTime? picked =
+                                        await showDatePicker(
+                                            context: context,
+                                            initialDate: DateTime(2012, 1),
+                                            firstDate: DateTime(1940, 1),
+                                            lastDate: DateTime(2012, 1));
+                                    if (picked != null) {
+                                      setState(() {
+                                        dob =
+                                            "${picked.day}/${picked.month}/${picked.year}";
+                                      });
+                                    }
+                                  },
+                                  child: Container(
+                                    height: 60.h,
+                                    width: 170.w,
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromRGBO(
+                                          117, 212, 227, 0.2),
+                                      borderRadius: BorderRadius.circular(10.r),
+                                    ),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10.w),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Text(
+                                          dob ?? "Date of Birth",
+                                          style: TextStyle(
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        const Icon(Icons.arrow_drop_down),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 34.h,
+                            ),
+                            getInputTextField(
+                                countryController,
+                                "Enter your Country",
+                                TextInputType.name, (val) {
+                              if (val == null || val.isEmpty) {
+                                return "Please enter your country";
+                              }
+                            }),
+                            SizedBox(
+                              height: 34.h,
+                            ),
+                            getInputTextField(cityController, "Enter your City",
+                                TextInputType.name, (val) {
+                              if (val == null || val.isEmpty) {
+                                return "Please enter your city";
+                              }
+                            }),
+                            SizedBox(
+                              height: 34.h,
+                            ),
+                            getInputTextField(
+                                educationController,
+                                "Enter your Educational Qualification",
+                                TextInputType.name, (val) {
+                              if (val == null || val.isEmpty) {
+                                return "Please enter your name";
+                              }
+                            }),
+                            SizedBox(
+                              height: 34.h,
+                            ),
+                            getInputTextField(
+                                bioController,
+                                "Write your Bio...",
+                                TextInputType.name,
+                                (val) {}),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -324,7 +373,14 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                         borderRadius: BorderRadius.circular(10.r),
                       ),
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (_formKey.currentState!.validate() &&
+                              dob != null &&
+                              userGender != null) {
+                            CustomSnackbar.showSnackBar(
+                                context, "Processing Data", Colors.lightGreen);
+                          }
+                        },
                         style: TextButton.styleFrom(
                           backgroundColor: const Color(0xFF72B7C2),
                         ),
@@ -350,7 +406,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
   }
 
   Container getInputTextField(TextEditingController controller, String hintText,
-      TextInputType inputType) {
+      TextInputType inputType, String? Function(String?) validator) {
     return Container(
       width: 365.w,
       decoration: BoxDecoration(
@@ -358,8 +414,9 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
         borderRadius: BorderRadius.circular(10.r),
       ),
       padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 7.h),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
+        validator: validator,
         keyboardType: inputType,
         style: TextStyle(
           color: const Color.fromARGB(255, 104, 104, 104),
