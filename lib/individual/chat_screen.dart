@@ -139,7 +139,31 @@ class _ChatScreenState extends State<ChatScreen> {
                               iconSize: 28.h,
                               icon: const Icon(Icons.mic)),
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                //The following code is for formatting purposes to display date.
+                                //--------------------------------------------------------------------
+                                final time = DateTime.now();
+                                int hour = time.hour;
+                                String meridian = hour < 11 ? "am" : "pm";
+                                hour = hour % 11;
+                                hour = hour == 0 ? 12 : hour - 1;
+                                String timeInHours =
+                                    hour < 10 ? "0$hour" : hour.toString();
+                                int minutes = time.minute;
+                                String minute = minutes < 10
+                                    ? "0$minutes"
+                                    : minutes.toString();
+                                //--------------------------------------------------------------------
+                                setState(() {
+                                  msgList.add({
+                                    'msg': messageController.text.trim(),
+                                    'isMe': true,
+                                    'time': "$timeInHours:$minute $meridian"
+                                  });
+                                });
+                                messageController.clear();
+                                FocusScope.of(context).unfocus();
+                              },
                               iconSize: 28.h,
                               icon: const Icon(Icons.send)),
                         ],
