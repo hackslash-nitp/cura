@@ -1,7 +1,6 @@
 import 'package:cura/individual/home_page_individual.dart';
 import 'package:cura/shared/model/individual.dart';
-import 'package:cura/shared/model/organisation.dart';
-import 'package:cura/shared/widgets/message_dialog.dart';
+import 'package:cura/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,9 +32,11 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
   );
 
   final FirestoreDatabase db = FirestoreDatabase();
+  final Storage storage = Storage();
   final List<String> gender = ['Male', 'Female', 'Other'];
-  String? userGender, dob;
+  String? userGender, dob, imgUrl, imgName = "random212";
   File? userImage;
+  bool isSelected = false;
 
   @override
   void dispose() {
@@ -98,7 +99,15 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                       Column(
                         children: <Widget>[
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              if (!isSelected) {
+                                CustomSnackbar.showSnackBar(context,
+                                    "Select an image first", Colors.red);
+                                return;
+                              }
+                              imgUrl = await storage.postFile(
+                                  userImage!, "DisplayPictures/${imgName!}");
+                            },
                             style: buttonStyle,
                             child: Padding(
                               padding: EdgeInsets.symmetric(
@@ -124,6 +133,8 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                                     if (image == null) return;
                                     setState(() {
                                       userImage = File(image.path);
+                                      imgName = image.name;
+                                      isSelected = true;
                                     });
                                   } catch (e) {
                                     print("An error has occured!");
@@ -152,6 +163,8 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                                     if (image == null) return;
                                     setState(() {
                                       userImage = File(image.path);
+                                      isSelected = true;
+                                      imgName = image.name;
                                     });
                                   } catch (e) {
                                     print(
@@ -396,8 +409,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                                 country: countryController.text.trim(),
                                 city: cityController.text.trim(),
                                 gender: userGender!,
-                                imgUrl:
-                                    userImage == null ? "" : userImage!.path,
+                                imgUrl: imgUrl == null ? "" : imgUrl!,
                                 dob: dob!,
                                 education: educationController.text.trim(),
                                 bio: bioController.text.trim());

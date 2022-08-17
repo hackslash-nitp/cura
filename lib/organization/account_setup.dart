@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cura/shared/model/organisation.dart';
 import 'package:cura/shared/services/firebase_database.dart';
+import 'package:cura/shared/widgets/message_dialog.dart';
 import 'package:cura/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,11 +33,13 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
     backgroundColor: const Color.fromARGB(100, 117, 212, 227),
   );
 
-  final List<String> gender = ['Male', 'Female', 'Other'];
+  final List<String> orgType = ['Type 1', 'Type 2', 'Type 3', 'Type 4'];
   final FirestoreDatabase _db = FirestoreDatabase();
+  final Storage storage = Storage();
 
-  String? userGender, estdDate;
+  String? userorgType, estdDate, imgUrl, imgName, attachUrl, attachName;
   File? userImage, userAttachment;
+  bool isSelected = false;
 
   @override
   void dispose() {
@@ -44,6 +47,10 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
     emailController.dispose();
     phoneController.dispose();
     regNumberController.dispose();
+    countryController.dispose();
+    addressController.dispose();
+    pincodeController.dispose();
+    bioController.dispose();
     super.dispose();
   }
 
@@ -95,7 +102,15 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                       Column(
                         children: <Widget>[
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              if (!isSelected) {
+                                CustomSnackbar.showSnackBar(context,
+                                    "Select an image first", Colors.red);
+                                return;
+                              }
+                              imgUrl = await storage.postFile(
+                                  userImage!, "DisplayPictures/${imgName!}");
+                            },
                             style: buttonStyle,
                             child: Padding(
                               padding: EdgeInsets.symmetric(
@@ -121,6 +136,8 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                     if (image == null) return;
                                     setState(() {
                                       userImage = File(image.path);
+                                      isSelected = true;
+                                      imgName = image.name;
                                     });
                                   } catch (e) {
                                     print("An error has occured!");
@@ -149,6 +166,8 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                     if (image == null) return;
                                     setState(() {
                                       userImage = File(image.path);
+                                      isSelected = true;
+                                      imgName = image.name;
                                     });
                                   } catch (e) {
                                     print(
@@ -278,7 +297,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                               padding: EdgeInsets.symmetric(horizontal: 18.w),
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton(
-                                    value: userGender,
+                                    value: userorgType,
                                     style: TextStyle(
                                         fontSize: 18.sp,
                                         fontWeight: FontWeight.w700,
@@ -288,7 +307,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                             fontSize: 18.sp,
                                             fontWeight: FontWeight.w700,
                                             color: Colors.black)),
-                                    items: gender.map((value) {
+                                    items: orgType.map((value) {
                                       return DropdownMenuItem(
                                         value: value,
                                         child: Text(value),
@@ -296,7 +315,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                     }).toList(),
                                     onChanged: (value) {
                                       setState(() {
-                                        userGender = value!.toString();
+                                        userorgType = value!.toString();
                                       });
                                     }),
                               ),
@@ -440,10 +459,21 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                               }
                                               File? file = File(
                                                   result.files.first.path!);
-                                              print(result.files.first.size
-                                                  .toString());
+                                              String url = await storage.postFile(
+                                                  file,
+                                                  "UserCertificates/${result.files.first.name}");
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) => const MessageDialog(
+                                                      title:
+                                                          "Uploaded successfully",
+                                                      imageUrl:
+                                                          "assets/main_assets/Completed.png",
+                                                      contentText:
+                                                          "The attachment file has been uploaded successfully!"));
                                               setState(() {
                                                 userAttachment = file;
+                                                attachUrl = url;
                                               });
                                             } catch (e) {
                                               print(
@@ -484,22 +514,21 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                         onPressed: () async {
                           if (_orgFormKey.currentState!.validate() &&
                               estdDate != null &&
-                              userGender != null &&
+                              userorgType != null &&
                               userAttachment != null) {
                             final OrganisationUser orgUser = OrganisationUser(
                                 orgName: nameController.text.trim(),
                                 orgEmail: emailController.text.trim(),
                                 orgContact: phoneController.text.trim(),
                                 orgRegNumber: regNumberController.text.trim(),
+                                orgType: userorgType!,
                                 country: countryController.text.trim(),
                                 address: addressController.text.trim(),
                                 pincode: pincodeController.text.trim(),
-                                imgUrl:
-                                    userImage == null ? "" : userImage!.path,
+                                imgUrl: imgUrl == null ? "" : imgUrl!,
                                 estDate: estdDate!,
-                                attachmentUrl: userAttachment == null
-                                    ? ""
-                                    : userAttachment!.path);
+                                attachmentUrl:
+                                    attachUrl == null ? "" : attachUrl!);
                             Map<String, dynamic> orgJSON = orgUser.toJSON();
                             await _db.postOrganizationProfileData(orgJSON);
                             Navigator.of(context).pushReplacement(
