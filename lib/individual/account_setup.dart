@@ -16,14 +16,7 @@ class IndividualAccountSetup extends StatefulWidget {
 }
 
 class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController occupationController = TextEditingController();
-  final TextEditingController countryController = TextEditingController();
-  final TextEditingController cityController = TextEditingController();
-  final TextEditingController educationController = TextEditingController();
-  final TextEditingController bioController = TextEditingController();
+  late List<TextEditingController> controllerList;
 
   final _indFormKey = GlobalKey<FormState>();
 
@@ -39,15 +32,17 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
   bool isSelected = false;
 
   @override
+  void initState() {
+    controllerList =
+        List.generate(8, (index) => TextEditingController(), growable: false);
+    super.initState();
+  }
+
+  @override
   void dispose() {
-    nameController.dispose();
-    emailController.dispose();
-    phoneController.dispose();
-    occupationController.dispose();
-    countryController.dispose();
-    cityController.dispose();
-    educationController.dispose();
-    bioController.dispose();
+    controllerList.forEach((element) {
+      element.dispose();
+    });
     super.dispose();
   }
 
@@ -220,8 +215,8 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                             horizontal: 30.w, vertical: 20.h),
                         child: ListView(
                           children: <Widget>[
-                            getInputTextField(nameController, "Enter your Name",
-                                TextInputType.name, (val) {
+                            getInputTextField(controllerList[0],
+                                "Enter your Name", TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your name";
                               }
@@ -230,7 +225,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               height: 34.h,
                             ),
                             getInputTextField(
-                                emailController,
+                                controllerList[1],
                                 "Enter your Email",
                                 TextInputType.emailAddress, (val) {
                               if (val == null ||
@@ -243,7 +238,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               height: 34.h,
                             ),
                             getInputTextField(
-                                phoneController,
+                                controllerList[2],
                                 "Enter your Phone Number",
                                 TextInputType.number, (val) {
                               if (val == null || val.isEmpty) {
@@ -254,7 +249,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               height: 34.h,
                             ),
                             getInputTextField(
-                                occupationController,
+                                controllerList[3],
                                 "Enter your Occupation",
                                 TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
@@ -348,7 +343,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               height: 34.h,
                             ),
                             getInputTextField(
-                                countryController,
+                                controllerList[4],
                                 "Enter your Country",
                                 TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
@@ -358,8 +353,8 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                             SizedBox(
                               height: 34.h,
                             ),
-                            getInputTextField(cityController, "Enter your City",
-                                TextInputType.name, (val) {
+                            getInputTextField(controllerList[5],
+                                "Enter your City", TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your city";
                               }
@@ -368,7 +363,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               height: 34.h,
                             ),
                             getInputTextField(
-                                educationController,
+                                controllerList[6],
                                 "Enter your Educational Qualification",
                                 TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
@@ -379,7 +374,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               height: 34.h,
                             ),
                             getInputTextField(
-                                bioController,
+                                controllerList[7],
                                 "Write your Bio...",
                                 TextInputType.name,
                                 (val) {}),
@@ -402,17 +397,18 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               dob != null &&
                               userGender != null) {
                             IndividualUser individual = IndividualUser(
-                                individualName: nameController.text.trim(),
-                                individualEmail: emailController.text.trim(),
-                                individualContact: phoneController.text.trim(),
-                                occupation: occupationController.text.trim(),
-                                country: countryController.text.trim(),
-                                city: cityController.text.trim(),
+                                individualName: controllerList[0].text.trim(),
+                                individualEmail: controllerList[1].text.trim(),
+                                individualContact:
+                                    controllerList[2].text.trim(),
+                                occupation: controllerList[3].text.trim(),
+                                country: controllerList[4].text.trim(),
+                                city: controllerList[5].text.trim(),
                                 gender: userGender!,
                                 imgUrl: imgUrl == null ? "" : imgUrl!,
                                 dob: dob!,
-                                education: educationController.text.trim(),
-                                bio: bioController.text.trim());
+                                education: controllerList[6].text.trim(),
+                                bio: controllerList[7].text.trim());
                             Map<String, dynamic> userJSON = individual.toJSON();
                             await db.postIndividualProfileData(userJSON);
                             Navigator.of(context).pushReplacement(

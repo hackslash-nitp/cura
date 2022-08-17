@@ -18,14 +18,7 @@ class OrgAccountSetup extends StatefulWidget {
 }
 
 class _OrgAccountSetupState extends State<OrgAccountSetup> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController regNumberController = TextEditingController();
-  final TextEditingController countryController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
-  final TextEditingController pincodeController = TextEditingController();
-  final TextEditingController bioController = TextEditingController();
+  late List<TextEditingController> controllerList;
 
   final _orgFormKey = GlobalKey<FormState>();
 
@@ -42,15 +35,17 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
   bool isSelected = false;
 
   @override
+  void initState() {
+    controllerList =
+        List.generate(7, (index) => TextEditingController(), growable: false);
+    super.initState();
+  }
+
+  @override
   void dispose() {
-    nameController.dispose();
-    emailController.dispose();
-    phoneController.dispose();
-    regNumberController.dispose();
-    countryController.dispose();
-    addressController.dispose();
-    pincodeController.dispose();
-    bioController.dispose();
+    controllerList.forEach((element) {
+      element.dispose();
+    });
     super.dispose();
   }
 
@@ -227,7 +222,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                 false,
                                 70.h,
                                 365.w,
-                                nameController,
+                                controllerList[0],
                                 "Enter Organisation Name",
                                 TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
@@ -241,7 +236,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                 false,
                                 70.h,
                                 365.w,
-                                emailController,
+                                controllerList[1],
                                 "Enter Organisation Email",
                                 TextInputType.emailAddress, (val) {
                               if (val == null ||
@@ -257,7 +252,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                 false,
                                 70.h,
                                 365.w,
-                                phoneController,
+                                controllerList[2],
                                 "Enter Organisation Contact Number",
                                 TextInputType.number, (val) {
                               if (val == null || val.isEmpty) {
@@ -271,7 +266,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                 false,
                                 70.h,
                                 365.w,
-                                regNumberController,
+                                controllerList[3],
                                 "Enter Organisation Registration Number",
                                 TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
@@ -327,7 +322,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                 false,
                                 70.h,
                                 365.w,
-                                countryController,
+                                controllerList[4],
                                 "Enter your Country",
                                 TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
@@ -341,7 +336,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                 true,
                                 120.h,
                                 365.w,
-                                addressController,
+                                controllerList[5],
                                 "Enter your Address",
                                 TextInputType.multiline, (val) {
                               if (val == null || val.isEmpty) {
@@ -358,7 +353,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                     false,
                                     70.h,
                                     170.w,
-                                    pincodeController,
+                                    controllerList[6],
                                     "Pincode",
                                     TextInputType.number, (val) {
                                   if (val == null || val.isEmpty) {
@@ -517,14 +512,14 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                               userorgType != null &&
                               userAttachment != null) {
                             final OrganisationUser orgUser = OrganisationUser(
-                                orgName: nameController.text.trim(),
-                                orgEmail: emailController.text.trim(),
-                                orgContact: phoneController.text.trim(),
-                                orgRegNumber: regNumberController.text.trim(),
+                                orgName: controllerList[0].text.trim(),
+                                orgEmail: controllerList[1].text.trim(),
+                                orgContact: controllerList[2].text.trim(),
+                                orgRegNumber: controllerList[3].text.trim(),
                                 orgType: userorgType!,
-                                country: countryController.text.trim(),
-                                address: addressController.text.trim(),
-                                pincode: pincodeController.text.trim(),
+                                country: controllerList[4].text.trim(),
+                                address: controllerList[5].text.trim(),
+                                pincode: controllerList[6].text.trim(),
                                 imgUrl: imgUrl == null ? "" : imgUrl!,
                                 estDate: estdDate!,
                                 attachmentUrl:
