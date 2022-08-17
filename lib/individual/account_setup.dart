@@ -1,9 +1,12 @@
+import 'package:cura/individual/home_page_individual.dart';
+import 'package:cura/shared/model/individual.dart';
 import 'package:cura/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import '../shared/widgets/gradient_background.dart';
+import '../shared/services/firebase_database.dart';
 
 class IndividualAccountSetup extends StatefulWidget {
   const IndividualAccountSetup({Key? key}) : super(key: key);
@@ -13,31 +16,33 @@ class IndividualAccountSetup extends StatefulWidget {
 }
 
 class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController occupationController = TextEditingController();
-  final TextEditingController countryController = TextEditingController();
-  final TextEditingController cityController = TextEditingController();
-  final TextEditingController educationController = TextEditingController();
-  final TextEditingController bioController = TextEditingController();
+  late List<TextEditingController> controllerList;
 
-  final _formKey = GlobalKey<FormState>();
+  final _indFormKey = GlobalKey<FormState>();
 
   final buttonStyle = TextButton.styleFrom(
     backgroundColor: const Color.fromARGB(100, 117, 212, 227),
   );
 
+  final FirestoreDatabase db = FirestoreDatabase();
+  final Storage storage = Storage();
   final List<String> gender = ['Male', 'Female', 'Other'];
-  String? userGender, dob;
+  String? userGender, dob, imgUrl, imgName = "random212";
   File? userImage;
+  bool isSelected = false;
+
+  @override
+  void initState() {
+    controllerList =
+        List.generate(8, (index) => TextEditingController(), growable: false);
+    super.initState();
+  }
 
   @override
   void dispose() {
-    nameController.dispose();
-    emailController.dispose();
-    phoneController.dispose();
-    occupationController.dispose();
+    for (var element in controllerList) {
+      element.dispose();
+    }
     super.dispose();
   }
 
@@ -89,7 +94,15 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                       Column(
                         children: <Widget>[
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              if (!isSelected) {
+                                CustomSnackbar.showSnackBar(context,
+                                    "Select an image first", Colors.red);
+                                return;
+                              }
+                              imgUrl = await storage.postFile(
+                                  userImage!, "DisplayPictures/${imgName!}");
+                            },
                             style: buttonStyle,
                             child: Padding(
                               padding: EdgeInsets.symmetric(
@@ -115,6 +128,8 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                                     if (image == null) return;
                                     setState(() {
                                       userImage = File(image.path);
+                                      imgName = image.name;
+                                      isSelected = true;
                                     });
                                   } catch (e) {
                                     print("An error has occured!");
@@ -143,6 +158,8 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                                     if (image == null) return;
                                     setState(() {
                                       userImage = File(image.path);
+                                      isSelected = true;
+                                      imgName = image.name;
                                     });
                                   } catch (e) {
                                     print(
@@ -189,7 +206,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                     color: Color.fromRGBO(0, 0, 0, 0.33),
                   ),
                   Form(
-                    key: _formKey,
+                    key: _indFormKey,
                     child: SizedBox(
                       height: 450.h,
                       width: double.infinity,
@@ -198,17 +215,18 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                             horizontal: 30.w, vertical: 20.h),
                         child: ListView(
                           children: <Widget>[
-                            getInputTextField(nameController, "Enter your Name",
-                                TextInputType.name, (val) {
+                            getInputTextField(controllerList[0],
+                                "Enter your Name", TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your name";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
                             ),
                             getInputTextField(
-                                emailController,
+                                controllerList[1],
                                 "Enter your Email",
                                 TextInputType.emailAddress, (val) {
                               if (val == null ||
@@ -216,28 +234,31 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                                   !val.contains('@')) {
                                 return "Please enter a proper email address";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
                             ),
                             getInputTextField(
-                                phoneController,
+                                controllerList[2],
                                 "Enter your Phone Number",
                                 TextInputType.number, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your contact number";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
                             ),
                             getInputTextField(
-                                occupationController,
+                                controllerList[3],
                                 "Enter your Occupation",
                                 TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your occupation";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -326,41 +347,43 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               height: 34.h,
                             ),
                             getInputTextField(
-                                countryController,
+                                controllerList[4],
                                 "Enter your Country",
                                 TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your country";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
                             ),
-                            getInputTextField(cityController, "Enter your City",
-                                TextInputType.name, (val) {
+                            getInputTextField(controllerList[5],
+                                "Enter your City", TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your city";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
                             ),
                             getInputTextField(
-                                educationController,
+                                controllerList[6],
                                 "Enter your Educational Qualification",
                                 TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your name";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
                             ),
-                            getInputTextField(
-                                bioController,
-                                "Write your Bio...",
-                                TextInputType.name,
-                                (val) {}),
+                            getInputTextField(controllerList[7],
+                                "Write your Bio...", TextInputType.name, (val) {
+                              return null;
+                            }),
                           ],
                         ),
                       ),
@@ -375,12 +398,29 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                         borderRadius: BorderRadius.circular(10.r),
                       ),
                       child: TextButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate() &&
+                        onPressed: () async {
+                          if (_indFormKey.currentState!.validate() &&
                               dob != null &&
                               userGender != null) {
-                            CustomSnackbar.showSnackBar(
-                                context, "Processing Data", Colors.lightGreen);
+                            IndividualUser individual = IndividualUser(
+                                individualName: controllerList[0].text.trim(),
+                                individualEmail: controllerList[1].text.trim(),
+                                individualContact:
+                                    controllerList[2].text.trim(),
+                                occupation: controllerList[3].text.trim(),
+                                country: controllerList[4].text.trim(),
+                                city: controllerList[5].text.trim(),
+                                gender: userGender!,
+                                imgUrl: imgUrl == null ? "" : imgUrl!,
+                                dob: dob!,
+                                education: controllerList[6].text.trim(),
+                                bio: controllerList[7].text.trim());
+                            Map<String, dynamic> userJSON = individual.toJSON();
+                            await db.postIndividualProfileData(userJSON).then(
+                                (value) => Navigator.of(context)
+                                    .pushReplacement(MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HomePageIndividual())));
                           }
                         },
                         style: TextButton.styleFrom(
