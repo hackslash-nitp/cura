@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PaymentPage extends StatefulWidget {
-  PaymentPage({Key? key}) : super(key: key);
+  const PaymentPage({Key? key}) : super(key: key);
 
   @override
   State<PaymentPage> createState() => _PaymentPageState();
@@ -12,7 +12,7 @@ class _PaymentPageState extends State<PaymentPage> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(428, 926),
+      designSize: const Size(428, 926),
       builder: (context, child) => Scaffold(
         body: SafeArea(
           child: SizedBox(
@@ -82,7 +82,7 @@ class _PaymentPageState extends State<PaymentPage> {
                           style: TextStyle(
                             fontSize: 35.sp,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 118, 175, 182),
+                            color: const Color.fromARGB(255, 118, 175, 182),
                           ),
                         ),
                       ),
@@ -109,7 +109,7 @@ class _PaymentPageState extends State<PaymentPage> {
                           width: double.infinity,
                           decoration: BoxDecoration(
                             border: Border.all(
-                                color: Color.fromARGB(255, 176, 229, 233),
+                                color: const Color.fromARGB(255, 176, 229, 233),
                                 width: 2.w),
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -122,7 +122,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
-                                    Container(
+                                    SizedBox(
                                       width: 150.w,
                                       height: 60.h,
                                       child: TextButton(
@@ -145,7 +145,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                         ),
                                       ),
                                     ),
-                                    Container(
+                                    SizedBox(
                                       width: 150.w,
                                       height: 60.h,
                                       child: TextButton(
@@ -177,7 +177,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: <Widget>[
-                                    Container(
+                                    SizedBox(
                                       width: 150.w,
                                       height: 60.h,
                                       child: TextButton(
@@ -187,7 +187,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                                 BorderRadius.circular(20.r),
                                           ),
                                           primary: Colors.white,
-                                          backgroundColor: Color.fromARGB(
+                                          backgroundColor: const Color.fromARGB(
                                               255, 154, 216, 221),
                                         ),
                                         onPressed: () {},
@@ -200,7 +200,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                         ),
                                       ),
                                     ),
-                                    Container(
+                                    SizedBox(
                                       width: 150.w,
                                       height: 60.h,
                                       child: TextButton(
@@ -210,8 +210,8 @@ class _PaymentPageState extends State<PaymentPage> {
                                                 BorderRadius.circular(20.r),
                                           ),
                                           primary: Colors.white,
-                                          backgroundColor:
-                                              Color.fromARGB(255, 72, 117, 122),
+                                          backgroundColor: const Color.fromARGB(
+                                              255, 72, 117, 122),
                                         ),
                                         onPressed: () {},
                                         child: Text(
@@ -246,7 +246,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
-                    child: Container(
+                    child: SizedBox(
                       height: 60.h,
                       child: TextFormField(
                         keyboardType: TextInputType.number,
@@ -263,7 +263,7 @@ class _PaymentPageState extends State<PaymentPage> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.r),
                             borderSide: BorderSide(
-                                color: Color.fromARGB(255, 120, 194, 204),
+                                color: const Color.fromARGB(255, 120, 194, 204),
                                 width: 3.w),
                           ),
                           hintText: "Enter Card Number",
@@ -294,7 +294,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Container(
+                        SizedBox(
                           height: 50.h,
                           width: 130.w,
                           child: TextFormField(
@@ -312,14 +312,15 @@ class _PaymentPageState extends State<PaymentPage> {
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.r),
                                 borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 120, 194, 204),
+                                    color: const Color.fromARGB(
+                                        255, 120, 194, 204),
                                     width: 3.w),
                               ),
                               hintText: "MM/YYYY",
                             ),
                           ),
                         ),
-                        Container(
+                        SizedBox(
                           height: 50.h,
                           width: 100.w,
                           child: TextFormField(
@@ -337,7 +338,8 @@ class _PaymentPageState extends State<PaymentPage> {
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.r),
                                 borderSide: BorderSide(
-                                    color: Color.fromARGB(255, 120, 194, 204),
+                                    color: const Color.fromARGB(
+                                        255, 120, 194, 204),
                                     width: 3.w),
                               ),
                               hintText: "XXX",
@@ -362,7 +364,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(30.w, 5.h, 30.w, 0),
-                    child: Container(
+                    child: SizedBox(
                       height: 60.h,
                       child: TextFormField(
                         keyboardType: TextInputType.number,
@@ -379,7 +381,7 @@ class _PaymentPageState extends State<PaymentPage> {
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.r),
                             borderSide: BorderSide(
-                                color: Color.fromARGB(255, 120, 194, 204),
+                                color: const Color.fromARGB(255, 120, 194, 204),
                                 width: 3.w),
                           ),
                           hintText: "Full Name of card holder",
@@ -389,7 +391,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(35.w, 40.h, 35.w, 10.h),
-                    child: Container(
+                    child: SizedBox(
                       height: 50.w,
                       width: 400.w,
                       child: TextButton(
@@ -397,8 +399,9 @@ class _PaymentPageState extends State<PaymentPage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.r),
                           ),
-                          primary: Color.fromARGB(255, 8, 134, 104),
-                          backgroundColor: Color.fromARGB(255, 110, 159, 165),
+                          primary: const Color.fromARGB(255, 8, 134, 104),
+                          backgroundColor:
+                              const Color.fromARGB(255, 110, 159, 165),
                         ),
                         onPressed: () {},
                         child: Text(

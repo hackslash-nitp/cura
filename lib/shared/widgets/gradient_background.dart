@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class GradientBackground extends StatelessWidget {
-  const GradientBackground({
+class BiDirectionalBackground extends StatelessWidget {
+  const BiDirectionalBackground({
     Key? key,
   }) : super(key: key);
 
@@ -19,6 +19,29 @@ class GradientBackground extends StatelessWidget {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         stops: [0.0, 0.25, 0.8, 1.0],
+        tileMode: TileMode.clamp,
+      )),
+    );
+  }
+}
+
+class UniDirectionalBackground extends StatelessWidget {
+  const UniDirectionalBackground({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+          gradient: LinearGradient(
+        colors: [
+          Color(0xFF6CAFB4),
+          Colors.white,
+        ],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        stops: [0.0, 0.25],
         tileMode: TileMode.clamp,
       )),
     );

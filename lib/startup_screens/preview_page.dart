@@ -52,7 +52,7 @@ class _PreviewPageState extends State<PreviewPage> {
                       width: 200.w,
                       // height: 57.h,
                     ),
-                    Container(
+                    SizedBox(
                       width: 250.w,
                       height: 57.h,
                       child: Expanded(

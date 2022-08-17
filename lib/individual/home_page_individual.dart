@@ -23,10 +23,12 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
         body: Center(
           child: ElevatedButton(
             onPressed: () async {
-              await auth.logoutUser(context);
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const UserLogin()),
-              );
+              await auth
+                  .logoutUser(context)
+                  .then((value) => Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                            builder: (context) => const UserLogin()),
+                      ));
             },
             child: const Text("Log Out"),
           ),

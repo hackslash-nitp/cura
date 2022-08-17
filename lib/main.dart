@@ -1,10 +1,8 @@
 import 'package:cura/individual/donor_details.dart';
 import 'package:cura/individual/home_page_individual.dart';
-import 'package:cura/individual/support_team_page.dart';
 import 'package:cura/startup_screens/preview_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'individual/user_chats_page.dart';
 import 'shared/services/firebase_authentication.dart';
 
 Future<void> main() async {
@@ -28,7 +26,7 @@ class ScreenDecider extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: auth.getCurrentUser() == null
-          ? DonerPage() // directly access by substituting in place of PreviewPage()
+          ? const DonorPage() // directly access by substituting in place of PreviewPage()
           : const HomePageIndividual(),
     );
   }

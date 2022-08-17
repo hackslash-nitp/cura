@@ -20,9 +20,10 @@ class FirebaseAuthentication {
   Future<String?> loginUserWithEmail(
       String email, String password, BuildContext context) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-      Navigation.navigateToPageWithReplacement(
-          context, const HomePageIndividual());
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) => Navigation.navigateToPageWithReplacement(
+              context, const HomePageIndividual()));
     } on FirebaseAuthException catch (e) {
       CustomErrorDialog.showErrorDialog(context, e.message!);
       return null;
@@ -38,21 +39,17 @@ class FirebaseAuthentication {
           timeout: const Duration(seconds: 60),
           phoneNumber: phoneNumber,
           verificationCompleted: (PhoneAuthCredential cred) async {
-            print("Verification Completed: ${cred.smsCode}");
             _otp = cred.smsCode;
             Otp otp = Otp(otp: _otp ?? "");
             otp.setOtp();
 
             if (cred.smsCode != null) {
               try {
-                await _auth.signInWithCredential(cred).then((value) =>
-                    Navigation.navigateToPageWithReplacement(
-                        context, const HomePageIndividual()));
-                isSignUp
+                await _auth.signInWithCredential(cred).then((value) => isSignUp
                     ? Navigation.navigateToPageWithReplacement(
                         context, const HomePageIndividual())
                     : Navigation.navigateToPageWithReplacement(
-                        context, CreateAccountPage());
+                        context, const CreateAccountPage()));
               } on FirebaseAuthException catch (e) {
                 CustomErrorDialog.showErrorDialog(context, e.message!);
               }
@@ -74,8 +71,10 @@ class FirebaseAuthentication {
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-      Navigation.navigateToPageWithReplacement(context, CreateAccountPage());
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) => Navigation.navigateToPageWithReplacement(
+              context, const CreateAccountPage()));
     } on FirebaseAuthException catch (e) {
       CustomErrorDialog.showErrorDialog(context, e.message!);
     }

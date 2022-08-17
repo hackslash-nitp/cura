@@ -41,7 +41,10 @@ dependencies:
   carousel_slider: ^4.1.1
   anim_search_bar: ^2.0.2
   cloud_firestore: ^3.4.4
+  image_picker: ^0.8.5+3
+  file_picker: ^5.0.1
   searchfield: ^0.5.3
+  firebase_storage: ^10.3.5
 
 dev_dependencies:
   flutter_test:
