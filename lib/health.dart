@@ -1,4 +1,4 @@
-import 'package:first_app/main.dart';
+import 'package:first_app/health.dart';
 import 'package:flutter/material.dart';
 
 class Healthpage extends StatelessWidget {
@@ -23,7 +23,7 @@ class Healthpage extends StatelessWidget {
                 size: 24,
               ),
               onPressed: () {
-                MyApp();
+                // MyApp();
               },
             ),
           ],

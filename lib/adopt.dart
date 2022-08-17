@@ -1,5 +1,6 @@
-import 'package:first_app/main.dart';
+import 'package:first_app/health.dart';
 import 'package:flutter/material.dart';
+import './main.dart';
 
 class Adoptpage extends StatelessWidget {
   @override
@@ -59,7 +60,7 @@ class Adoptpage extends StatelessWidget {
                 onPressed: (() {}),
                 child: Row(
                   children: <Widget>[
-                    healthTextall(),
+                    adoptTextall1(),
                     Container(
                       child: adoptface1Image(),
                     ),
@@ -88,7 +89,7 @@ class Adoptpage extends StatelessWidget {
                 onPressed: (() {}),
                 child: Row(
                   children: <Widget>[
-                    healthTextall(),
+                    adoptTextall2(),
                     Container(
                       child: adoptface2Image(),
                     ),
@@ -104,7 +105,7 @@ class Adoptpage extends StatelessWidget {
   }
 }
 
-adoptface1Image() {
+Card adoptface1Image() {
   return Card(
     child: Row(
       children: <Widget>[
@@ -127,7 +128,7 @@ adoptface1Image() {
   );
 }
 
-adoptface2Image() {
+Card adoptface2Image() {
   return Card(
     child: Row(
       children: <Widget>[
@@ -144,6 +145,40 @@ adoptface2Image() {
               image: AssetImage('assets/images 1.png'),
             ),
           ),
+        ),
+      ],
+    ),
+  );
+}
+
+Container adoptTextall1() {
+  return Container(
+    child: Column(
+      children: [
+        Text(
+          "\n\n\n  Spend Time ",
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 137, 184, 189),
+              fontSize: 25,
+              fontFamily: 'PT Sans'),
+        ),
+      ],
+    ),
+  );
+}
+
+Container adoptTextall2() {
+  return Container(
+    child: Column(
+      children: [
+        Text(
+          "\n\n\n  Sang Chi ",
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 137, 184, 189),
+              fontSize: 25,
+              fontFamily: 'PT Sans'),
         ),
       ],
     ),

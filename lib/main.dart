@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './adopt.dart';
-import './health.dart';
+import 'health.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,221 +19,285 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       home: Scaffold(
-        body: Column(
-          children: [
-            Align(
-              // alignment: const Alignment(-.5, .8),
-              child: Image.asset(
-                'assets/Mobile life-amico 2.png',
-                height: 325,
-                width: 325,
-                // alignment: Alignment.topCenter,
-              ),
-            ),
-            Container(
-              // ignore: prefer_const_constructors
-              decoration: BoxDecoration(
-                boxShadow: [
-                  containerShadow(),
-                ],
-              ),
-              margin: EdgeInsets.all(20),
-              height: 40,
-              width: 400,
-              child: TextButton(
-                style: TextButton.styleFrom(
-                    shadowColor: Colors.black12,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(180),
-                    ),
-                    primary: Color.fromARGB(255, 0, 0, 0),
-                    backgroundColor: Colors.white),
-                onPressed: (() {}),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.search,
-                      size: 23,
-                    ),
-                    Text(
-                      "     Search Here",
-                      style: TextStyle(
-                          color: Color.fromARGB(102, 24, 22, 22),
-                          fontSize: 17,
-                          fontFamily: 'PT Sans'),
-                      textAlign: TextAlign.left,
-                    )
-                  ],
+       
+        body:
+            Column(
+            children: [
+              Align(
+                // alignment: const Alignment(-.5, .8),
+                child: Image.asset(
+                  'assets/Mobile life-amico 2.png',
+                  height: 325,
+                  width: 325,
+                  // alignment: Alignment.topCenter,
                 ),
               ),
-            ),
-            Column(
-              children: [
-                ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      child: Column(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                containerShadow(),
-                              ],
-                            ),
-                            margin: EdgeInsets.all(0),
-                            height: 209,
-                            width: 370,
-                            child: TextButton(
-                              style: TextButton.styleFrom(
-                                  shadowColor: Colors.black12,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  primary: Color.fromARGB(255, 0, 0, 0),
-                                  backgroundColor: Colors.white),
-                              onPressed: (() {
-                                Adoptpage();
-                              }),
-                              child: Row(
-                                children: <Widget>[
-                                  adopttextall(),
-                                  Container(
-                                    child: adoptextraImage(),
-                                  ),
-                                ],
-                              ),
-                              // Container(
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                containerShadow(),
-                              ],
-                            ),
-                            margin: EdgeInsets.all(0),
-                            height: 209,
-                            width: 370,
-                            child: TextButton(
-                              style: TextButton.styleFrom(
-                                  shadowColor: Colors.black12,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  primary: Color.fromARGB(255, 0, 0, 0),
-                                  backgroundColor: Colors.white),
-                              onPressed: (() {}),
-                              child: Row(
-                                children: <Widget>[
-                                  healthTextall(),
-                                  Container(
-                                    child: healthextraImage(),
-                                  ),
-                                ],
-                              ),
-                              // Container(
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                containerShadow(),
-                              ],
-                            ),
-                            margin: EdgeInsets.all(0),
-                            height: 209,
-                            width: 370,
-                            child: TextButton(
-                              style: TextButton.styleFrom(
-                                  shadowColor: Colors.black12,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  primary: Color.fromARGB(255, 0, 0, 0),
-                                  backgroundColor: Colors.white),
-                              onPressed: (() {
-                                Healthpage();
-                              }),
-                              child: Row(
-                                children: <Widget>[
-                                  donateTextall(),
-                                  Container(
-                                    child: donateextraImage(),
-                                  ),
-                                ],
-                              ),
-                              // Container(
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                containerShadow(),
-                              ],
-                            ),
-                            margin: EdgeInsets.all(0),
-                            height: 209,
-                            width: 370,
-                            child: TextButton(
-                              style: TextButton.styleFrom(
-                                  shadowColor: Colors.black12,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  primary: Color.fromARGB(255, 0, 0, 0),
-                                  backgroundColor: Colors.white),
-                              onPressed: (() {}),
-                              child: Row(
-                                children: <Widget>[
-                                  spendtimeTextall(),
-                                  Container(
-                                    child: spendTimeextraImage(),
-                                  ),
-                                ],
-                              ),
-                              // Container(
-                            ),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                containerShadow(),
-                              ],
-                            ),
-                            margin: EdgeInsets.all(0),
-                            height: 209,
-                            width: 370,
-                            child: TextButton(
-                              style: TextButton.styleFrom(
-                                  shadowColor: Colors.black12,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  primary: Color.fromARGB(255, 0, 0, 0),
-                                  backgroundColor: Colors.white),
-                              onPressed: (() {}),
-                              child: Row(
-                                children: <Widget>[
-                                  postfeedTextall(),
-                                  Container(
-                                    child: postfeedextraImage(),
-                                  ),
-                                ],
-                              ),
-                              // Container(
-                            ),
-                          ),
-                        ],
+              Container(
+                // ignore: prefer_const_constructors
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    containerShadow(),
+                  ],
+                ),
+                margin: EdgeInsets.all(15),
+                height: 40,
+                width: 400,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                      shadowColor: Colors.black12,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(180),
                       ),
+                      primary: Color.fromARGB(255, 0, 0, 0),
+                      backgroundColor: Colors.white),
+                  onPressed: (() {
+                    CustomSerachHomepage();
+                  }),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.search,
+                        size: 23,
+                      ),
+                      Text(
+                        "     Search Here",
+                        style: TextStyle(
+                            color: Color.fromARGB(102, 24, 22, 22),
+                            fontSize: 17,
+                            fontFamily: 'PT Sans'),
+                        textAlign: TextAlign.left,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        Column(
+                          children: [
+                            Container(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        containerShadow(),
+                                      ],
+                                    ),
+                                    margin: EdgeInsets.all(15),
+                                    height: 209,
+                                    width: 370,
+                                    child: TextButton(
+                                      style: TextButton.styleFrom(
+                                          shadowColor: Colors.black12,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                          ),
+                                          primary: Color.fromARGB(255, 0, 0, 0),
+                                          backgroundColor: Colors.white),
+                                      onPressed: (() {
+                                        Adoptpage();
+                                      }),
+                                      child: Row(
+                                        children: <Widget>[
+                                          adopttextall(),
+                                          Container(
+                                            child: adoptextraImage(),
+                                          ),
+                                        ],
+                                      ),
+                                      // Container(
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        containerShadow(),
+                                      ],
+                                    ),
+                                    margin: EdgeInsets.all(15),
+                                    height: 209,
+                                    width: 370,
+                                    child: TextButton(
+                                      style: TextButton.styleFrom(
+                                          shadowColor: Colors.black12,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                          ),
+                                          primary: Color.fromARGB(255, 0, 0, 0),
+                                          backgroundColor: Colors.white),
+                                      onPressed: (() {}),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            child: healthextraImage(),
+                                          ),
+                                          healthTextall(),
+                                        ],
+                                      ),
+                                      // Container(
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        containerShadow(),
+                                      ],
+                                    ),
+                                    margin: EdgeInsets.all(10),
+                                    height: 209,
+                                    width: 370,
+                                    child: TextButton(
+                                      style: TextButton.styleFrom(
+                                          shadowColor: Colors.black12,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                          ),
+                                          primary: Color.fromARGB(255, 0, 0, 0),
+                                          backgroundColor: Colors.white),
+                                      onPressed: (() {
+                                        Healthpage();
+                                      }),
+                                      child: Row(
+                                        children: <Widget>[
+                                          donateTextall(),
+                                          Container(
+                                            child: donateextraImage(),
+                                          ),
+                                        ],
+                                      ),
+                                      // Container(
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        containerShadow(),
+                                      ],
+                                    ),
+                                    margin: EdgeInsets.all(10),
+                                    height: 209,
+                                    width: 370,
+                                    child: TextButton(
+                                      style: TextButton.styleFrom(
+                                          shadowColor: Colors.black12,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                          ),
+                                          primary: Color.fromARGB(255, 0, 0, 0),
+                                          backgroundColor: Colors.white),
+                                      onPressed: (() {}),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                            child: spendTimeextraImage(),
+                                          ),
+                                          spendtimeTextall(),
+                                        ],
+                                      ),
+                                      // Container(
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      boxShadow: [
+                                        containerShadow(),
+                                      ],
+                                    ),
+                                    margin: EdgeInsets.all(10),
+                                    height: 209,
+                                    width: 370,
+                                    child: TextButton(
+                                      style: TextButton.styleFrom(
+                                          shadowColor: Colors.black12,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                          ),
+                                          primary: Color.fromARGB(255, 0, 0, 0),
+                                          backgroundColor: Colors.white),
+                                      onPressed: (() {}),
+                                      child: Row(
+                                        children: <Widget>[
+                                          postfeedTextall(),
+                                          Container(
+                                            child: postfeedextraImage(),
+                                          ),
+                                        ],
+                                      ),
+                                      // Container(
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     );
                   },
                 ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          
         ),
+        bottomNavigationBar: Container(
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 199, 226, 228),
+                    borderRadius: BorderRadius.circular(35),
+                    border: Border.all(
+                      color: Color.fromARGB(255, 156, 212, 235),
+                    ),
+                  ),
+                  height: 75,
+                  width: 350,
+                  // color: Color.fromARGB(255, 199, 226, 228),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      MaterialButton(
+                        onPressed: () {},
+                        child: Icon(
+                          Icons.home_filled,
+                          color: Color(0xFF668086),
+                        ),
+                      ),
+                      //SizedBox(width: 10),
+                      MaterialButton(
+                        onPressed: () {},
+                        child: Icon(
+                          Icons.add_chart,
+                          color: Colors.black,
+                        ),
+                      ),
+                      //SizedBox(width: 10),
+                      MaterialButton(
+                        onPressed: () {},
+                        child: Icon(
+                          Icons.message_outlined,
+                        ),
+                      ),
+                      //SizedBox(width: 10),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.person,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
       ),
     );
   }
@@ -274,17 +338,17 @@ healthextraImage() {
     child: Row(
       children: <Widget>[
         Container(
-          height: 189,
-          width: 189,
+          height: 179,
+          width: 179,
           decoration: BoxDecoration(
             boxShadow: [
               containerShadow(),
             ],
-            borderRadius: BorderRadius.circular(25),
-            color: const Color.fromARGB(255, 137, 184, 189),
+            borderRadius: BorderRadius.circular(26),
+            color: const Color.fromARGB(255, 199, 226, 228),
             image: DecorationImage(
-                image: AssetImage('assets/Nursing home-rafiki 1.png'),
-                fit: BoxFit.fitHeight),
+              image: AssetImage('assets/Nursing home-rafiki 1.png'),
+            ),
           ),
         ),
       ],
@@ -304,7 +368,7 @@ donateextraImage() {
               containerShadow(),
             ],
             borderRadius: BorderRadius.circular(25),
-            color: const Color.fromARGB(255, 137, 184, 189),
+            color: const Color.fromARGB(255, 199, 226, 228),
             image: DecorationImage(
                 image: AssetImage('assets/Humanitarian Help-bro 1.png'),
                 fit: BoxFit.fitHeight),
@@ -327,7 +391,7 @@ spendTimeextraImage() {
               containerShadow(),
             ],
             borderRadius: BorderRadius.circular(25),
-            color: const Color.fromARGB(255, 137, 184, 189),
+            color: const Color.fromARGB(255, 199, 226, 228),
             image: DecorationImage(
                 image: AssetImage('assets/Nursing home-rafiki 1.png'),
                 fit: BoxFit.fitHeight),
@@ -350,7 +414,7 @@ postfeedextraImage() {
               containerShadow(),
             ],
             borderRadius: BorderRadius.circular(25),
-            color: const Color.fromARGB(255, 137, 184, 189),
+            color: const Color.fromARGB(255, 199, 226, 228),
             image: DecorationImage(
                 image: AssetImage('assets/Parents-cuate 1.png'),
                 fit: BoxFit.fitHeight),
@@ -368,7 +432,7 @@ adopttextall() {
         Align(
           alignment: Alignment.bottomLeft,
           child: Text(
-            "\n\n\n  Adopt ",
+            "\n\n  Adopt ",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 137, 184, 189),
@@ -400,7 +464,7 @@ spendtimeTextall() {
         Align(
           alignment: Alignment.bottomLeft,
           child: Text(
-            "\n\n\n  Spend Time ",
+            "\n\n  Spend Time ",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 137, 184, 189),
@@ -432,7 +496,7 @@ postfeedTextall() {
         Align(
           alignment: Alignment.bottomLeft,
           child: Text(
-            "\n\n\n  Post Feed ",
+            "\n\nPost Feed ",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 137, 184, 189),
@@ -464,7 +528,7 @@ donateTextall() {
         Align(
           alignment: Alignment.bottomLeft,
           child: Text(
-            "\n\n\n  Donate ",
+            "\n\n\nDonate ",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 137, 184, 189),
@@ -494,7 +558,7 @@ healthTextall() {
     child: Column(
       children: [
         Align(
-          alignment: Alignment.bottomLeft,
+          alignment: Alignment.topRight,
           child: Text(
             "\n\n\n  Health ",
             style: TextStyle(
@@ -505,9 +569,9 @@ healthTextall() {
           ),
         ),
         Align(
-          alignment: Alignment.bottomLeft,
+          alignment: Alignment.topRight,
           child: Text(
-            "   Give them free treat ",
+            "  Give them free\n  treat ",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(150, 0, 0, 0),
@@ -519,4 +583,96 @@ healthTextall() {
       ],
     ),
   );
+}
+
+class CustomSerachHomepage extends SearchDelegate {
+  List<String> searchTerms = [
+    'Adopt',
+    'Donate',
+    'Health',
+    'Spend Time',
+    'Post Feed'
+  ];
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+          onPressed: () {
+            query = '';
+          },
+          icon: Icon(Icons.clear))
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+        onPressed: () {
+          close(context, null);
+        },
+        icon: Icon(Icons.arrow_back));
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    List<String> matchQuery = [];
+    for (var process in searchTerms) {
+      if (process.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(process);
+      }
+    }
+    return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: (context, index) {
+        var result = matchQuery[index];
+        return ListTile(
+          title: Text(result),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List<String> matchQuery = [];
+    for (var process in searchTerms) {
+      if (process.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(process);
+      }
+    }
+    return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: (context, index) {
+        var result = matchQuery[index];
+        return ListTile(
+          title: Text(result),
+        );
+      },
+    );
+  }
+}
+
+class BiDirectionalBackground extends StatelessWidget {
+  const BiDirectionalBackground({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration:BoxDecoration(
+          gradient: LinearGradient(
+        colors: [
+          Color(0xFF6CAFB4),
+          Colors.white,
+          Colors.white,
+          Color(0xFF6CAFB4),
+        ],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        stops: [0.0, 0.25, 0.8, 1.0],
+        tileMode: TileMode.clamp,
+      )),
+    );
+  }
 }
