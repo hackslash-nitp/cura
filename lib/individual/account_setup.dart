@@ -40,9 +40,9 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
 
   @override
   void dispose() {
-    controllerList.forEach((element) {
+    for (var element in controllerList) {
       element.dispose();
-    });
+    }
     super.dispose();
   }
 
@@ -220,6 +220,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your name";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -233,6 +234,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                                   !val.contains('@')) {
                                 return "Please enter a proper email address";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -244,6 +246,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your contact number";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -255,6 +258,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your occupation";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -349,6 +353,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your country";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -358,6 +363,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your city";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -369,15 +375,15 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your name";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
                             ),
-                            getInputTextField(
-                                controllerList[7],
-                                "Write your Bio...",
-                                TextInputType.name,
-                                (val) {}),
+                            getInputTextField(controllerList[7],
+                                "Write your Bio...", TextInputType.name, (val) {
+                              return null;
+                            }),
                           ],
                         ),
                       ),
@@ -410,11 +416,11 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                                 education: controllerList[6].text.trim(),
                                 bio: controllerList[7].text.trim());
                             Map<String, dynamic> userJSON = individual.toJSON();
-                            await db.postIndividualProfileData(userJSON);
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const HomePageIndividual()));
+                            await db.postIndividualProfileData(userJSON).then(
+                                (value) => Navigator.of(context)
+                                    .pushReplacement(MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HomePageIndividual())));
                           }
                         },
                         style: TextButton.styleFrom(

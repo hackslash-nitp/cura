@@ -67,7 +67,7 @@ class _UserLoginState extends State<UserLogin> {
           children: [
             const BiDirectionalBackground(),
             SafeArea(
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,

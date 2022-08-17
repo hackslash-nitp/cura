@@ -43,9 +43,9 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
 
   @override
   void dispose() {
-    controllerList.forEach((element) {
+    for (var element in controllerList) {
       element.dispose();
-    });
+    }
     super.dispose();
   }
 
@@ -228,6 +228,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                               if (val == null || val.isEmpty) {
                                 return "Please enter organisation name";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -244,6 +245,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                   !val.contains('@')) {
                                 return "Please enter a proper email address";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -258,6 +260,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                               if (val == null || val.isEmpty) {
                                 return "Please enter organisation contact number";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -272,6 +275,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                               if (val == null || val.isEmpty) {
                                 return "Please enter registration number";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -328,6 +332,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your country";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -342,6 +347,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                               if (val == null || val.isEmpty) {
                                 return "Please enter organisation address";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -359,6 +365,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                   if (val == null || val.isEmpty) {
                                     return "Please enter pincode";
                                   }
+                                  return null;
                                 }),
                                 GestureDetector(
                                   onTap: () async {
@@ -525,11 +532,11 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                 attachmentUrl:
                                     attachUrl == null ? "" : attachUrl!);
                             Map<String, dynamic> orgJSON = orgUser.toJSON();
-                            await _db.postOrganizationProfileData(orgJSON);
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const HomePageIndividual()));
+                            await _db.postOrganizationProfileData(orgJSON).then(
+                                (value) => Navigator.of(context)
+                                    .pushReplacement(MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HomePageIndividual())));
                           }
                         },
                         style: TextButton.styleFrom(

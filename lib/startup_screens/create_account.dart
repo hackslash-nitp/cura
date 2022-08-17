@@ -1,5 +1,4 @@
 import 'package:cura/individual/account_setup.dart';
-import 'package:cura/shared/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../organization/account_setup.dart';
@@ -85,13 +84,13 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                                 Image.asset(
                                     "assets/startup_assets/create_account_assets/profile_primary.png",
                                     color: hasChanged
-                                        ? Color(0xFFbbbbbb)
-                                        : Color(0xFF92B7C0)),
+                                        ? const Color(0xFFbbbbbb)
+                                        : const Color(0xFF92B7C0)),
                                 Text("HELPER",
                                     style: TextStyle(
                                       color: hasChanged
-                                          ? Color(0xFFbbbbbb)
-                                          : Color(0xFF729CA3),
+                                          ? const Color(0xFFbbbbbb)
+                                          : const Color(0xFF729CA3),
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.w600,
                                     )),
@@ -103,14 +102,14 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                                 Image.asset(
                                     "assets/startup_assets/create_account_assets/profile_primary.png",
                                     color: hasChanged
-                                        ? Color(0xFF92B7C0)
-                                        : Color(0xFFbbbbbb)),
+                                        ? const Color(0xFF92B7C0)
+                                        : const Color(0xFFbbbbbb)),
                                 Text(
                                   "ORGANISATION",
                                   style: TextStyle(
                                     color: hasChanged
-                                        ? Color(0xFF729CA3)
-                                        : Color(0xFFbbbbbb),
+                                        ? const Color(0xFF729CA3)
+                                        : const Color(0xFFbbbbbb),
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -166,8 +165,9 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
               padding: const EdgeInsets.only(left: 8.0),
               child: IconButton(
                 onPressed: () async {
-                  await _auth.logoutUser(context);
-                  Navigator.of(context).pop();
+                  await _auth
+                      .logoutUser(context)
+                      .then((value) => Navigator.of(context).pop());
                 },
                 icon: const Icon(Icons.arrow_back_ios),
               ),

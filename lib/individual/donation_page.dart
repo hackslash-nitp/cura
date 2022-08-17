@@ -16,7 +16,7 @@ class _DonationPageState extends State<DonationPage> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(428, 926),
+      designSize: const Size(428, 926),
       builder: (context, child) => Scaffold(
         body: SafeArea(
           child: SizedBox(
@@ -68,11 +68,11 @@ class _DonationPageState extends State<DonationPage> {
                       ],
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     height: 5.h,
                     width: double.infinity,
                   ),
-                  Container(
+                  SizedBox(
                     height: 250.sp,
                     width: double.infinity,
                     child: const Image(
@@ -87,7 +87,7 @@ class _DonationPageState extends State<DonationPage> {
                     child: Container(
                       decoration: BoxDecoration(
                           border: Border.all(
-                            color: Color.fromARGB(255, 176, 229, 233),
+                            color: const Color.fromARGB(255, 176, 229, 233),
                             width: 2,
                           ),
                           borderRadius: BorderRadius.circular(30)),
@@ -129,8 +129,8 @@ class _DonationPageState extends State<DonationPage> {
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(30.r),
                                     borderSide: BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 120, 194, 204),
+                                        color: const Color.fromARGB(
+                                            255, 120, 194, 204),
                                         width: 3.w),
                                   ),
                                   hintText: 'Amount',
@@ -173,11 +173,12 @@ class _DonationPageState extends State<DonationPage> {
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(30.r),
                                     borderSide: BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 137, 184, 189),
+                                        color: const Color.fromARGB(
+                                            255, 137, 184, 189),
                                         width: 2.w),
                                   ),
-                                  fillColor: Color.fromARGB(255, 186, 231, 235),
+                                  fillColor:
+                                      const Color.fromARGB(255, 186, 231, 235),
                                   filled: true,
                                   suffixIcon: const Icon(
                                     Icons.arrow_drop_down,
@@ -225,11 +226,12 @@ class _DonationPageState extends State<DonationPage> {
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(30.r),
                                     borderSide: BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 137, 184, 189),
+                                        color: const Color.fromARGB(
+                                            255, 137, 184, 189),
                                         width: 2.w),
                                   ),
-                                  fillColor: Color.fromARGB(255, 186, 231, 235),
+                                  fillColor:
+                                      const Color.fromARGB(255, 186, 231, 235),
                                   filled: true,
                                   suffixIcon: const Icon(
                                     Icons.arrow_drop_down,
@@ -269,7 +271,7 @@ class _DonationPageState extends State<DonationPage> {
                       ],
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     height: 45.w,
                     width: 200.w,
                     child: TextButton(

@@ -174,7 +174,9 @@ class _AppRatingState extends State<AppRating> {
       },
       child: Image(
         image: const AssetImage('assets/main_assets/star.png'),
-        color: index <= _appRating ? Color.fromARGB(255, 197, 184, 61) : null,
+        color: index <= _appRating
+            ? const Color.fromARGB(255, 197, 184, 61)
+            : null,
         width: 50.w,
         height: 50.h,
       ),
