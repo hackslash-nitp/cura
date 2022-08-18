@@ -12,32 +12,46 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController messageController = TextEditingController();
 
+  final List<String> months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
   final List<Map<String, dynamic>> msgList = [
-    {
-      'msg': 'Hey!',
-      'time': '4:00 pm',
-      'isMe': true,
-    },
+    {'msg': 'Hey!', 'time': '4:00 pm', 'isMe': true, 'date': '18 August 2022'},
     {
       'msg': 'Hello sir! How can we help you ?',
       'time': '4:01 pm',
       'isMe': false,
+      'date': '18 August 2022'
     },
     {
       'msg':
           'I want to come to your foundation. What’s the time allowed for outsiders to come?',
       'time': '4:02 pm',
       'isMe': true,
+      'date': '18 August 2022'
     },
     {
       'msg': 'Sir, you can come anytime between 09:00 a.m. to 05:00 p.m.',
       'time': '4:03 pm',
       'isMe': false,
+      'date': '19 August 2022'
     },
     {
       'msg': 'Okay! Thank you.',
       'time': '4:04 pm',
       'isMe': true,
+      'date': '20 August 2022'
     },
   ];
 
@@ -77,13 +91,29 @@ class _ChatScreenState extends State<ChatScreen> {
                         physics: const BouncingScrollPhysics(),
                         itemCount: msgList.length,
                         itemBuilder: (context, index) {
-                          return index == 0
-                              ? DateMsgTile()
-                              : MessageWidget(
-                                  isMe: msgList[index]['isMe'],
-                                  msg: msgList[index]['msg'],
-                                  time: msgList[index]['time'],
-                                );
+                          String currentDate = msgList[index]['date'];
+                          bool showDate = false;
+                          if (index == 0) {
+                            return DateMsgTile(
+                              convDate: msgList[0]['date'],
+                            );
+                          } else if (index != msgList.length - 1 &&
+                              currentDate != msgList[index + 1]['date']) {
+                            showDate = true;
+                            return MessageWidget(
+                              isMe: msgList[index]['isMe'],
+                              msg: msgList[index]['msg'],
+                              time: msgList[index]['time'],
+                              showDate: showDate,
+                              nextDate: msgList[index + 1]['date'],
+                            );
+                          }
+                          return MessageWidget(
+                            isMe: msgList[index]['isMe'],
+                            msg: msgList[index]['msg'],
+                            time: msgList[index]['time'],
+                            showDate: showDate,
+                          );
                         },
                       ),
                     ),
@@ -149,16 +179,19 @@ class _ChatScreenState extends State<ChatScreen> {
                                 hour = hour == 0 ? 12 : hour - 1;
                                 String timeInHours =
                                     hour < 10 ? "0$hour" : hour.toString();
+                                //--------------------------------------------------------------------
                                 int minutes = time.minute;
                                 String minute = minutes < 10
                                     ? "0$minutes"
                                     : minutes.toString();
                                 //--------------------------------------------------------------------
+                                String month = months[time.month - 1];
                                 setState(() {
                                   msgList.add({
                                     'msg': messageController.text.trim(),
                                     'isMe': true,
-                                    'time': "$timeInHours:$minute $meridian"
+                                    'time': "$timeInHours:$minute $meridian",
+                                    'date': "${time.day} $month ${time.year}"
                                   });
                                 });
                                 messageController.clear();
@@ -219,8 +252,11 @@ class _ChatScreenState extends State<ChatScreen> {
 }
 
 class DateMsgTile extends StatelessWidget {
+  final String convDate;
+
   const DateMsgTile({
     Key? key,
+    required this.convDate,
   }) : super(key: key);
 
   @override
@@ -237,7 +273,7 @@ class DateMsgTile extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                "26 June 2022",
+                convDate,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 14.sp,
@@ -256,18 +292,21 @@ class DateMsgTile extends StatelessWidget {
 }
 
 class MessageWidget extends StatelessWidget {
-  final bool isMe;
+  final bool isMe, showDate;
   final String msg, time;
+  final String? nextDate;
 
   final Color myMsgColor = const Color(0xFFE0EEEF);
   final Color senderMsgColor = const Color(0xFFD9D9D9);
 
-  const MessageWidget({
-    Key? key,
-    required this.isMe,
-    required this.msg,
-    required this.time,
-  }) : super(key: key);
+  const MessageWidget(
+      {Key? key,
+      required this.isMe,
+      required this.msg,
+      required this.time,
+      required this.showDate,
+      this.nextDate})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -330,7 +369,8 @@ class MessageWidget extends StatelessWidget {
         ),
         const SizedBox(
           height: 20,
-        )
+        ),
+        if (showDate) DateMsgTile(convDate: nextDate!),
       ],
     );
   }
