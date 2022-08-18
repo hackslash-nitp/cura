@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-class mydrawer extends StatefulWidget {
-  const mydrawer({Key? key}) : super(key: key);
+class individualdrawer extends StatefulWidget {
+  const individualdrawer({Key? key}) : super(key: key);
 
   @override
-  State<mydrawer> createState() => _mydrawerState();
+  State<individualdrawer> createState() => _individualdrawerState();
 }
-
-class _mydrawerState extends State<mydrawer> {
+class _individualdrawerState extends State<individualdrawer> {
   @override
-    final List<String> entries=['Doner Contact','Donation Records','Work Notifications','Post Engangements','Edit Profile','Settings','Log Out'];
+    final List<String> entries=['Your Donations','Edit Profile','Settings','Log Out'];
 
   Widget build(BuildContext context) {
     return Drawer(
-    backgroundColor: Color.fromARGB(255, 166, 223, 250),
-    child: ListView(
+    backgroundColor: Color.fromRGBO(146, 183, 192, 0.8),
+    child:Column(
       children: [
         Container(
           padding: EdgeInsets.only(top: 37,left: 16),
@@ -22,33 +21,34 @@ class _mydrawerState extends State<mydrawer> {
               //profile image
               Container(height: 104,width: 104,
                 child: const CircleAvatar(
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Colors.teal,
+                  // backgroundImage: AssetImage('assets/cura_logo.png'),
                 ),
               ),
               const SizedBox(height: 11,),
-              const Text("Welcome!\nOrganisation Name",
+              const Text("Welcome!\nDoner Name",
               style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black),
               )
             ],
           ),
         ),
-                   const SizedBox(height: 41,),
+        const SizedBox(height: 41,),
 
      //body
-      Expanded(
+   Expanded(
           child: Container(
             height: double.maxFinite,
             child: ListView.separated(itemBuilder: ((context, index) {
-               return ListTile(tileColor: Color.fromRGBO(199, 226,228, 1),title:Text(entries[index],style: const TextStyle(fontSize: 14,color: Colors.black,)
+               return ListTile(tileColor: Color.fromRGBO(199, 226,228, 1),title:Text(entries[index],style: TextStyle(fontSize: 14,color: Colors.black,)
                ),);
              }),
               separatorBuilder: (((context, index) {
-          return const Divider(height: 4,thickness: 1,color:Color.fromRGBO(146, 183, 192, 0.8),);
+          return Divider(height: 4,thickness: 1,color:Color.fromRGBO(146, 183, 192, 0.8),);
               })),
                itemCount: entries.length),
           ),
         )
-      ],
+     ],
     ),
     );
     
