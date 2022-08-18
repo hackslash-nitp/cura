@@ -71,18 +71,3 @@ class _orgprofileState extends State<orgprofile> {
     );
   }
 }
- // bottomNavigationBar:BottomNavigationBar(
-      //   currentIndex: 0,
-      //   items: const [
-      //   BottomNavigationBarItem(icon: Icon(Icons.home),
-      //   backgroundColor: Colors.blue),
-      //   BottomNavigationBarItem(icon: Icon(Icons.add_outlined),
-      //   backgroundColor: Colors.blue),
-      //   BottomNavigationBarItem(icon: Icon(Icons.chat),
-      //   backgroundColor: Colors.blue),
-      //   BottomNavigationBarItem(icon: Icon(Icons.person),
-      //   backgroundColor: Colors.blue),
-      // ],
-      // onTap: (index){setState(() {
-      //   _currentIndex=index;
-      // });},) ,
