@@ -1,9 +1,13 @@
 import 'dart:io';
+import 'package:cura/shared/model/organisation.dart';
+import 'package:cura/shared/services/firebase_database.dart';
+import 'package:cura/shared/widgets/message_dialog.dart';
 import 'package:cura/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
+import '../individual/home_page_individual.dart';
 import '../shared/widgets/gradient_background.dart';
 
 class OrgAccountSetup extends StatefulWidget {
@@ -14,31 +18,34 @@ class OrgAccountSetup extends StatefulWidget {
 }
 
 class _OrgAccountSetupState extends State<OrgAccountSetup> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController regNumberController = TextEditingController();
-  final TextEditingController countryController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
-  final TextEditingController pincodeController = TextEditingController();
-  final TextEditingController bioController = TextEditingController();
+  late List<TextEditingController> controllerList;
 
-  final _formKey = GlobalKey<FormState>();
+  final _orgFormKey = GlobalKey<FormState>();
 
   final buttonStyle = TextButton.styleFrom(
     backgroundColor: const Color.fromARGB(100, 117, 212, 227),
   );
 
-  final List<String> gender = ['Male', 'Female', 'Other'];
-  String? userGender, estdDate;
+  final List<String> orgType = ['Type 1', 'Type 2', 'Type 3', 'Type 4'];
+  final FirestoreDatabase _db = FirestoreDatabase();
+  final Storage storage = Storage();
+
+  String? userorgType, estdDate, imgUrl, imgName, attachUrl, attachName;
   File? userImage, userAttachment;
+  bool isSelected = false;
+
+  @override
+  void initState() {
+    controllerList =
+        List.generate(7, (index) => TextEditingController(), growable: false);
+    super.initState();
+  }
 
   @override
   void dispose() {
-    nameController.dispose();
-    emailController.dispose();
-    phoneController.dispose();
-    regNumberController.dispose();
+    for (var element in controllerList) {
+      element.dispose();
+    }
     super.dispose();
   }
 
@@ -90,7 +97,15 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                       Column(
                         children: <Widget>[
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              if (!isSelected) {
+                                CustomSnackbar.showSnackBar(context,
+                                    "Select an image first", Colors.red);
+                                return;
+                              }
+                              imgUrl = await storage.postFile(
+                                  userImage!, "DisplayPictures/${imgName!}");
+                            },
                             style: buttonStyle,
                             child: Padding(
                               padding: EdgeInsets.symmetric(
@@ -116,6 +131,8 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                     if (image == null) return;
                                     setState(() {
                                       userImage = File(image.path);
+                                      isSelected = true;
+                                      imgName = image.name;
                                     });
                                   } catch (e) {
                                     print("An error has occured!");
@@ -144,6 +161,8 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                     if (image == null) return;
                                     setState(() {
                                       userImage = File(image.path);
+                                      isSelected = true;
+                                      imgName = image.name;
                                     });
                                   } catch (e) {
                                     print(
@@ -190,7 +209,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                     color: Color.fromRGBO(0, 0, 0, 0.33),
                   ),
                   Form(
-                    key: _formKey,
+                    key: _orgFormKey,
                     child: SizedBox(
                       height: 470.h,
                       width: double.infinity,
@@ -203,12 +222,13 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                 false,
                                 70.h,
                                 365.w,
-                                nameController,
+                                controllerList[0],
                                 "Enter Organisation Name",
                                 TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter organisation name";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -217,7 +237,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                 false,
                                 70.h,
                                 365.w,
-                                emailController,
+                                controllerList[1],
                                 "Enter Organisation Email",
                                 TextInputType.emailAddress, (val) {
                               if (val == null ||
@@ -225,6 +245,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                   !val.contains('@')) {
                                 return "Please enter a proper email address";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -233,12 +254,13 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                 false,
                                 70.h,
                                 365.w,
-                                phoneController,
+                                controllerList[2],
                                 "Enter Organisation Contact Number",
                                 TextInputType.number, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter organisation contact number";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -247,12 +269,13 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                 false,
                                 70.h,
                                 365.w,
-                                regNumberController,
+                                controllerList[3],
                                 "Enter Organisation Registration Number",
                                 TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter registration number";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -273,7 +296,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                               padding: EdgeInsets.symmetric(horizontal: 18.w),
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton(
-                                    value: userGender,
+                                    value: userorgType,
                                     style: TextStyle(
                                         fontSize: 18.sp,
                                         fontWeight: FontWeight.w700,
@@ -283,7 +306,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                             fontSize: 18.sp,
                                             fontWeight: FontWeight.w700,
                                             color: Colors.black)),
-                                    items: gender.map((value) {
+                                    items: orgType.map((value) {
                                       return DropdownMenuItem(
                                         value: value,
                                         child: Text(value),
@@ -291,7 +314,7 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                     }).toList(),
                                     onChanged: (value) {
                                       setState(() {
-                                        userGender = value!.toString();
+                                        userorgType = value!.toString();
                                       });
                                     }),
                               ),
@@ -303,12 +326,13 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                 false,
                                 70.h,
                                 365.w,
-                                countryController,
+                                controllerList[4],
                                 "Enter your Country",
                                 TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your country";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -317,12 +341,13 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                 true,
                                 120.h,
                                 365.w,
-                                addressController,
+                                controllerList[5],
                                 "Enter your Address",
                                 TextInputType.multiline, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter organisation address";
                               }
+                              return null;
                             }),
                             SizedBox(
                               height: 34.h,
@@ -334,12 +359,13 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                     false,
                                     70.h,
                                     170.w,
-                                    pincodeController,
+                                    controllerList[6],
                                     "Pincode",
                                     TextInputType.number, (val) {
                                   if (val == null || val.isEmpty) {
                                     return "Please enter pincode";
                                   }
+                                  return null;
                                 }),
                                 GestureDetector(
                                   onTap: () async {
@@ -435,10 +461,21 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                                               }
                                               File? file = File(
                                                   result.files.first.path!);
-                                              print(result.files.first.size
-                                                  .toString());
+                                              String url = await storage.postFile(
+                                                  file,
+                                                  "UserCertificates/${result.files.first.name}");
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) => const MessageDialog(
+                                                      title:
+                                                          "Uploaded successfully",
+                                                      imageUrl:
+                                                          "assets/main_assets/Completed.png",
+                                                      contentText:
+                                                          "The attachment file has been uploaded successfully!"));
                                               setState(() {
                                                 userAttachment = file;
+                                                attachUrl = url;
                                               });
                                             } catch (e) {
                                               print(
@@ -476,13 +513,30 @@ class _OrgAccountSetupState extends State<OrgAccountSetup> {
                         borderRadius: BorderRadius.circular(10.r),
                       ),
                       child: TextButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate() &&
+                        onPressed: () async {
+                          if (_orgFormKey.currentState!.validate() &&
                               estdDate != null &&
-                              userGender != null &&
+                              userorgType != null &&
                               userAttachment != null) {
-                            CustomSnackbar.showSnackBar(
-                                context, "Processing Data", Colors.lightGreen);
+                            final OrganisationUser orgUser = OrganisationUser(
+                                orgName: controllerList[0].text.trim(),
+                                orgEmail: controllerList[1].text.trim(),
+                                orgContact: controllerList[2].text.trim(),
+                                orgRegNumber: controllerList[3].text.trim(),
+                                orgType: userorgType!,
+                                country: controllerList[4].text.trim(),
+                                address: controllerList[5].text.trim(),
+                                pincode: controllerList[6].text.trim(),
+                                imgUrl: imgUrl == null ? "" : imgUrl!,
+                                estDate: estdDate!,
+                                attachmentUrl:
+                                    attachUrl == null ? "" : attachUrl!);
+                            Map<String, dynamic> orgJSON = orgUser.toJSON();
+                            await _db.postOrganizationProfileData(orgJSON).then(
+                                (value) => Navigator.of(context)
+                                    .pushReplacement(MaterialPageRoute(
+                                        builder: (context) =>
+                                            const HomePageIndividual())));
                           }
                         },
                         style: TextButton.styleFrom(
