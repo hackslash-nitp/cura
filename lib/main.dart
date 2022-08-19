@@ -19,285 +19,237 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
-      
       home: Scaffold(
-       
-        body:
-            Column(
-            children: [
-              Align(
-                // alignment: const Alignment(-.5, .8),
-                child: Image.asset(
-                  'assets/Mobile life-amico 2.png',
-                  height: 325,
-                  width: 325,
-                  // alignment: Alignment.topCenter,
-                ),
+        body: Column(
+          children: [
+            BiDirectionalBackground(),
+            Align(
+              // alignment: const Alignment(-.5, .8),
+              child: Image.asset(
+                'assets/Mobile life-amico 2.png',
+                height: 325,
+                width: 325,
+                // alignment: Alignment.topCenter,
               ),
-              Container(
-                // ignore: prefer_const_constructors
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    containerShadow(),
+            ),
+            Container(
+              // ignore: prefer_const_constructors
+              decoration: BoxDecoration(
+                boxShadow: [
+                  containerShadow(),
+                ],
+              ),
+              margin: EdgeInsets.all(15),
+              height: 40,
+              width: 400,
+              child: TextButton(
+                style: TextButton.styleFrom(
+                    shadowColor: Colors.black12,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(180),
+                    ),
+                    primary: Color.fromARGB(255, 0, 0, 0),
+                    backgroundColor: Colors.white),
+                onPressed: (() {
+                  CustomSerachHomepage();
+                }),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.search,
+                      size: 23,
+                    ),
+                    Text(
+                      "     Search Here",
+                      style: TextStyle(
+                          color: Color.fromARGB(102, 24, 22, 22),
+                          fontSize: 17,
+                          fontFamily: 'PT Sans'),
+                      textAlign: TextAlign.left,
+                    )
                   ],
                 ),
-                margin: EdgeInsets.all(15),
-                height: 40,
-                width: 400,
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                      shadowColor: Colors.black12,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(180),
-                      ),
-                      primary: Color.fromARGB(255, 0, 0, 0),
-                      backgroundColor: Colors.white),
-                  onPressed: (() {
-                    CustomSerachHomepage();
-                  }),
-                  child: Row(
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                itemCount: 1,
+                itemBuilder: (context, index) {
+                  return Column(
                     children: [
-                      Icon(
-                        Icons.search,
-                        size: 23,
-                      ),
-                      Text(
-                        "     Search Here",
-                        style: TextStyle(
-                            color: Color.fromARGB(102, 24, 22, 22),
-                            fontSize: 17,
-                            fontFamily: 'PT Sans'),
-                        textAlign: TextAlign.left,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        Column(
-                          children: [
-                            Container(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        containerShadow(),
+                      Column(
+                        children: [
+                          Container(
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      containerShadow(),
+                                    ],
+                                  ),
+                                  margin: EdgeInsets.all(15),
+                                  height: 209,
+                                  width: 370,
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        shadowColor: Colors.black12,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                        ),
+                                        primary: Color.fromARGB(255, 0, 0, 0),
+                                        backgroundColor: Colors.white),
+                                    onPressed: (() {
+                                      Adoptpage();
+                                    }),
+                                    child: Row(
+                                      children: <Widget>[
+                                        adopttextall(),
+                                        Container(
+                                          child: adoptextraImage(),
+                                        ),
                                       ],
                                     ),
-                                    margin: EdgeInsets.all(15),
-                                    height: 209,
-                                    width: 370,
-                                    child: TextButton(
-                                      style: TextButton.styleFrom(
-                                          shadowColor: Colors.black12,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                          ),
-                                          primary: Color.fromARGB(255, 0, 0, 0),
-                                          backgroundColor: Colors.white),
-                                      onPressed: (() {
-                                        Adoptpage();
-                                      }),
-                                      child: Row(
-                                        children: <Widget>[
-                                          adopttextall(),
-                                          Container(
-                                            child: adoptextraImage(),
-                                          ),
-                                        ],
-                                      ),
-                                      // Container(
-                                    ),
+                                    // Container(
                                   ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        containerShadow(),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      containerShadow(),
+                                    ],
+                                  ),
+                                  margin: EdgeInsets.all(15),
+                                  height: 209,
+                                  width: 370,
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        shadowColor: Colors.black12,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                        ),
+                                        primary: Color.fromARGB(255, 0, 0, 0),
+                                        backgroundColor: Colors.white),
+                                    onPressed: (() {}),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          child: healthextraImage(),
+                                        ),
+                                        healthTextall(),
                                       ],
                                     ),
-                                    margin: EdgeInsets.all(15),
-                                    height: 209,
-                                    width: 370,
-                                    child: TextButton(
-                                      style: TextButton.styleFrom(
-                                          shadowColor: Colors.black12,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                          ),
-                                          primary: Color.fromARGB(255, 0, 0, 0),
-                                          backgroundColor: Colors.white),
-                                      onPressed: (() {}),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Container(
-                                            child: healthextraImage(),
-                                          ),
-                                          healthTextall(),
-                                        ],
-                                      ),
-                                      // Container(
-                                    ),
+                                    // Container(
                                   ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        containerShadow(),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      containerShadow(),
+                                    ],
+                                  ),
+                                  margin: EdgeInsets.all(10),
+                                  height: 209,
+                                  width: 370,
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        shadowColor: Colors.black12,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                        ),
+                                        primary: Color.fromARGB(255, 0, 0, 0),
+                                        backgroundColor: Colors.white),
+                                    onPressed: (() {
+                                      Healthpage();
+                                    }),
+                                    child: Row(
+                                      children: <Widget>[
+                                        donateTextall(),
+                                        Container(
+                                          child: donateextraImage(),
+                                        ),
                                       ],
                                     ),
-                                    margin: EdgeInsets.all(10),
-                                    height: 209,
-                                    width: 370,
-                                    child: TextButton(
-                                      style: TextButton.styleFrom(
-                                          shadowColor: Colors.black12,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                          ),
-                                          primary: Color.fromARGB(255, 0, 0, 0),
-                                          backgroundColor: Colors.white),
-                                      onPressed: (() {
-                                        Healthpage();
-                                      }),
-                                      child: Row(
-                                        children: <Widget>[
-                                          donateTextall(),
-                                          Container(
-                                            child: donateextraImage(),
-                                          ),
-                                        ],
-                                      ),
-                                      // Container(
-                                    ),
+                                    // Container(
                                   ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        containerShadow(),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      containerShadow(),
+                                    ],
+                                  ),
+                                  margin: EdgeInsets.all(10),
+                                  height: 209,
+                                  width: 370,
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        shadowColor: Colors.black12,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                        ),
+                                        primary: Color.fromARGB(255, 0, 0, 0),
+                                        backgroundColor: Colors.white),
+                                    onPressed: (() {}),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          child: spendTimeextraImage(),
+                                        ),
+                                        spendtimeTextall(),
                                       ],
                                     ),
-                                    margin: EdgeInsets.all(10),
-                                    height: 209,
-                                    width: 370,
-                                    child: TextButton(
-                                      style: TextButton.styleFrom(
-                                          shadowColor: Colors.black12,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                          ),
-                                          primary: Color.fromARGB(255, 0, 0, 0),
-                                          backgroundColor: Colors.white),
-                                      onPressed: (() {}),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Container(
-                                            child: spendTimeextraImage(),
-                                          ),
-                                          spendtimeTextall(),
-                                        ],
-                                      ),
-                                      // Container(
-                                    ),
+                                    // Container(
                                   ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        containerShadow(),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      containerShadow(),
+                                    ],
+                                  ),
+                                  margin: EdgeInsets.all(10),
+                                  height: 209,
+                                  width: 370,
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        shadowColor: Colors.black12,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                        ),
+                                        primary: Color.fromARGB(255, 0, 0, 0),
+                                        backgroundColor: Colors.white),
+                                    onPressed: (() {}),
+                                    child: Row(
+                                      children: <Widget>[
+                                        postfeedTextall(),
+                                        Container(
+                                          child: postfeedextraImage(),
+                                        ),
                                       ],
                                     ),
-                                    margin: EdgeInsets.all(10),
-                                    height: 209,
-                                    width: 370,
-                                    child: TextButton(
-                                      style: TextButton.styleFrom(
-                                          shadowColor: Colors.black12,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                          ),
-                                          primary: Color.fromARGB(255, 0, 0, 0),
-                                          backgroundColor: Colors.white),
-                                      onPressed: (() {}),
-                                      child: Row(
-                                        children: <Widget>[
-                                          postfeedTextall(),
-                                          Container(
-                                            child: postfeedextraImage(),
-                                          ),
-                                        ],
-                                      ),
-                                      // Container(
-                                    ),
+                                    // Container(
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ),
-            ],
-          
-        ),
-        bottomNavigationBar: Container(
-                  decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 199, 226, 228),
-                    borderRadius: BorderRadius.circular(35),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 156, 212, 235),
-                    ),
-                  ),
-                  height: 75,
-                  width: 350,
-                  // color: Color.fromARGB(255, 199, 226, 228),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      MaterialButton(
-                        onPressed: () {},
-                        child: Icon(
-                          Icons.home_filled,
-                          color: Color(0xFF668086),
-                        ),
-                      ),
-                      //SizedBox(width: 10),
-                      MaterialButton(
-                        onPressed: () {},
-                        child: Icon(
-                          Icons.add_chart,
-                          color: Colors.black,
-                        ),
-                      ),
-                      //SizedBox(width: 10),
-                      MaterialButton(
-                        onPressed: () {},
-                        child: Icon(
-                          Icons.message_outlined,
-                        ),
-                      ),
-                      //SizedBox(width: 10),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.person,
-                        ),
+                          ),
+                        ],
                       ),
                     ],
-                  ),
-                ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: bottomDecoration(),
       ),
     );
   }
@@ -660,7 +612,7 @@ class BiDirectionalBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration:BoxDecoration(
+      decoration: BoxDecoration(
           gradient: LinearGradient(
         colors: [
           Color(0xFF6CAFB4),
@@ -675,4 +627,58 @@ class BiDirectionalBackground extends StatelessWidget {
       )),
     );
   }
+}
+
+bottomDecoration() {
+  return Container(
+    margin: EdgeInsets.all(0),
+    decoration: BoxDecoration(
+      color: Color.fromARGB(255, 199, 226, 228),
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.zero,
+          topRight: Radius.zero,
+          bottomLeft: Radius.zero,
+          bottomRight: Radius.zero),
+      border: Border.all(
+        color: Color.fromARGB(255, 156, 212, 235),
+      ),
+    ),
+    height: 50,
+    width: 350,
+    // color: Color.fromARGB(255, 199, 226, 228),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        MaterialButton(
+          onPressed: () {},
+          child: Icon(
+            Icons.home_filled,
+            color: Color(0xFF668086),
+          ),
+        ),
+        //SizedBox(width: 10),
+        MaterialButton(
+          onPressed: () {},
+          child: Icon(
+            Icons.add_chart,
+            color: Colors.black,
+          ),
+        ),
+        //SizedBox(width: 10),
+        MaterialButton(
+          onPressed: () {},
+          child: Icon(
+            Icons.message_outlined,
+          ),
+        ),
+        //SizedBox(width: 10),
+        IconButton(
+          onPressed: () {},
+          icon: Icon(
+            Icons.person,
+          ),
+        ),
+      ],
+    ),
+  );
 }

@@ -1,6 +1,8 @@
-import 'package:first_app/health.dart';
+// import 'package:first_app/health.dart';
 import 'package:flutter/material.dart';
-import './main.dart';
+// import './main.dart';
+import 'main.dart';
+// import './Welcomescreen.dart';
 
 class Adoptpage extends StatelessWidget {
   @override
@@ -31,6 +33,7 @@ class Adoptpage extends StatelessWidget {
         ),
         body: Column(
           children: [
+            BiDirectionalBackground(),
             Align(
               // alignment: const Alignment(-.5, .8),
               child: Image.asset(
@@ -100,6 +103,7 @@ class Adoptpage extends StatelessWidget {
             ),
           ],
         ),
+        bottomNavigationBar: bottomDecoration(),
       ),
     );
   }
