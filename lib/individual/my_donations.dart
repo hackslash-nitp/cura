@@ -187,6 +187,8 @@ class MyDonationInfo extends StatelessWidget {
       required this.date,
       required this.status})
       : super(key: key);
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
