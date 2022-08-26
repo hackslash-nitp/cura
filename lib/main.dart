@@ -1,5 +1,6 @@
 import 'package:cura/individual/donation_page.dart';
 import 'package:cura/individual/home_page_individual.dart';
+import 'package:cura/organization/organisation-profile.dart';
 import 'package:cura/organization/postfeed.dart';
 import 'package:cura/startup_screens/preview_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,7 +28,7 @@ class ScreenDecider extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: auth.getCurrentUser() == null
-          ? const postfeed() // directly access by substituting in place of PreviewPage()
+          ? const organisationprofile()// directly access by substituting in place of PreviewPage()
           : const HomePageIndividual(),
     );
   }
