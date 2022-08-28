@@ -1,3 +1,4 @@
+import 'package:cura/individual/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -14,15 +15,15 @@ class _MyChatsScreenState extends State<MyChatsScreen> {
   TextEditingController searchController = TextEditingController();
 
   List<Map<String, String>> contactInfo = [
-    {'imgUrl': '', 'title': 'Alpha Male Old Age Home'},
-    {'imgUrl': '', 'title': 'Barrel Orphanage'},
-    {'imgUrl': '', 'title': 'Cars & Love Orphanage'},
-    {'imgUrl': '', 'title': 'Cinderella Girl Orphanage'},
-    {'imgUrl': '', 'title': 'El Nino Pola Orphanage'},
-    {'imgUrl': '', 'title': 'Sigma Male Old Age Home'},
-    {'imgUrl': '', 'title': 'Trust Orphanage'},
-    {'imgUrl': '', 'title': 'Younity Foundation'},
-    {'imgUrl': '', 'title': 'Yeet Child Foundation'},
+    {'imgUrl': 'assets/preview1.png', 'title': 'Alpha Male Old Age Home'},
+    {'imgUrl': 'assets/preview1.png', 'title': 'Barrel Orphanage'},
+    {'imgUrl': 'assets/preview1.png', 'title': 'Cars & Love Orphanage'},
+    {'imgUrl': 'assets/preview1.png', 'title': 'Cinderella Girl Orphanage'},
+    {'imgUrl': 'assets/preview1.png', 'title': 'El Nino Pola Orphanage'},
+    {'imgUrl': 'assets/preview1.png', 'title': 'Sigma Male Old Age Home'},
+    {'imgUrl': 'assets/preview1.png', 'title': 'Trust Orphanage'},
+    {'imgUrl': 'assets/preview1.png', 'title': 'Younity Foundation'},
+    {'imgUrl': 'assets/preview1.png', 'title': 'Yeet Child Foundation'},
   ];
   @override
   void dispose() {
@@ -164,6 +165,11 @@ class _ContactTileState extends State<ContactTile> {
         setState(() {
           isFocused = false;
         });
+      },
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+                ChatScreen(orgName: widget.orgName, imgUrl: widget.imgUrl)));
       },
       child: Container(
         height: 65.h,
