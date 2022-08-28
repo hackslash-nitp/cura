@@ -1,8 +1,9 @@
 import 'package:cura/individual/home_page_individual.dart';
-import 'package:cura/individual/my_chats_screen.dart';
+import 'package:cura/individual/user_chats_menu.dart';
 import 'package:cura/startup_screens/preview_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'organization/org_chats_menu.dart';
 import 'shared/services/firebase_authentication.dart';
 
 Future<void> main() async {
@@ -26,7 +27,7 @@ class ScreenDecider extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: auth.getCurrentUser() == null
-          ? const MyChatsScreen() // directly access by substituting in place of PreviewPage()
+          ? const OrgChatsScreen() // directly access by substituting in place of PreviewPage()
           : const HomePageIndividual(),
     );
   }

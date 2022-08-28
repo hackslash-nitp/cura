@@ -1,17 +1,17 @@
-import 'package:cura/individual/chat_screen.dart';
+import 'package:cura/individual/user_chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../shared/widgets/gradient_background.dart';
 
-class MyChatsScreen extends StatefulWidget {
-  const MyChatsScreen({Key? key}) : super(key: key);
+class UserChatsScreen extends StatefulWidget {
+  const UserChatsScreen({Key? key}) : super(key: key);
 
   @override
-  State<MyChatsScreen> createState() => _MyChatsScreenState();
+  State<UserChatsScreen> createState() => _UserChatsScreenState();
 }
 
-class _MyChatsScreenState extends State<MyChatsScreen> {
+class _UserChatsScreenState extends State<UserChatsScreen> {
   TextEditingController searchController = TextEditingController();
 
   List<Map<String, String>> contactInfo = [
