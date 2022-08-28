@@ -1,6 +1,4 @@
 import 'package:cura/individual/home_page_individual.dart';
-import 'package:cura/organization/organisation-profile.dart';
-import 'package:cura/organization/postfeed.dart';
 import 'package:cura/startup_screens/preview_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +25,7 @@ class ScreenDecider extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: auth.getCurrentUser() == null
-          ? const organisationprofile() // directly access by substituting in place of PreviewPage()
+          ? const PreviewPage() // directly access by substituting in place of PreviewPage()
           : const HomePageIndividual(),
     );
   }
