@@ -682,3 +682,26 @@ bottomDecoration() {
     ),
   );
 }
+
+class UniDirectionalBackground extends StatelessWidget {
+  const UniDirectionalBackground({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+          gradient: LinearGradient(
+        colors: [
+          Color(0xFF6CAFB4),
+          Colors.white,
+        ],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        stops: [0.0, 0.25],
+        tileMode: TileMode.clamp,
+      )),
+    );
+  }
+}

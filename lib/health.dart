@@ -2,13 +2,18 @@
 import 'dart:developer';
 import 'dart:js';
 // import 'dart:js';
+import 'package:path/path.dart';
 
 import 'package:flutter/material.dart';
 import 'main.dart';
 
 class Healthpage extends StatelessWidget {
+  TimeOfDay time = TimeOfDay(hour: 10, minute: 42);
+
   @override
   Widget build(BuildContext context) {
+    final hours = time.hour.toString().padLeft(2, '0');
+    final minutes = time.hour.toString().padLeft(2, '0');
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -35,7 +40,7 @@ class Healthpage extends StatelessWidget {
         ),
         body: Column(
           children: [
-            BiDirectionalBackground(),
+            UniDirectionalBackground(),
             Align(
               // alignment: const Alignment(-.5, .8),
               child: Image.asset(
@@ -67,7 +72,8 @@ class Healthpage extends StatelessWidget {
                       selectdate(),
                       selecttime(),
                     ],
-                  )
+                  ),
+                  selecthealthCheckup(),
                 ],
               ),
             )
@@ -75,31 +81,6 @@ class Healthpage extends StatelessWidget {
         ),
         bottomNavigationBar: bottomDecoration(),
       ),
-    );
-  }
-}
-
-class BiDirectionalBackground extends StatelessWidget {
-  const BiDirectionalBackground({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-        colors: [
-          Color(0xFF6CAFB4),
-          Colors.white,
-          Colors.white,
-          Color(0xFF6CAFB4),
-        ],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        stops: [0.0, 0.25, 0.8, 1.0],
-        tileMode: TileMode.clamp,
-      )),
     );
   }
 }
@@ -211,7 +192,7 @@ selectOrganisation() {
               Text(
                 "   Enter Organisation's name",
                 style: TextStyle(
-                    color: Color.fromARGB(102, 24, 22, 22),
+                    color: Color.fromARGB(102, 173, 19, 19),
                     fontSize: 14,
                     fontFamily: 'PT Sans'),
                 textAlign: TextAlign.left,
@@ -250,6 +231,7 @@ selectOrganisation() {
 }
 
 selectdate() {
+  DateTime date = DateTime.now();
   return Column(
     children: [
       Text(
@@ -280,12 +262,12 @@ selectdate() {
               primary: Color.fromARGB(255, 0, 0, 0),
               backgroundColor: Colors.white),
           onPressed: (() {
-            dateList();
+            // dateList();
           }),
           child: Row(
             children: [
               Text(
-                "Date",
+                "${date.day}/${date.month}/${date.year}",
                 style: TextStyle(
                     color: Color.fromARGB(102, 24, 22, 22),
                     fontSize: 14,
@@ -304,9 +286,17 @@ selectdate() {
                   primary: const Color.fromARGB(255, 137, 184, 189),
                   backgroundColor: Color.fromRGBO(163, 197, 204, 1),
                 ),
-                onPressed: (() {
-                  dateList();
-                }),
+                onPressed: () async {
+                  DateTime? newDate = await showDatePicker(
+                    context: context,
+                    initialDate: date,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                  );
+                  if (newDate == null) return;
+
+                  setState(() => date = newDate);
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -325,7 +315,12 @@ selectdate() {
   );
 }
 
+void setState(DateTime Function() param0) {}
+
 selecttime() {
+  TimeOfDay time = TimeOfDay(hour: 10, minute: 42);
+  final hours = time.hour.toString().padLeft(2, '0');
+  final minutes = time.hour.toString().padLeft(2, '0');
   return Column(
     children: [
       Text(
@@ -355,13 +350,18 @@ selecttime() {
               ),
               primary: Color.fromARGB(255, 0, 0, 0),
               backgroundColor: Colors.white),
-          onPressed: (() {
-            timeList();
-          }),
+          onPressed: () async {
+            TimeOfDay? newTime = await showTimePicker(
+                initialTime: TimeOfDay.now(), context: context);
+            if (newTime == null) {
+              return;
+            }
+          
+          },
           child: Row(
             children: [
               Text(
-                "Date",
+                "$hours:$minutes",
                 style: TextStyle(
                     color: Color.fromARGB(102, 24, 22, 22),
                     fontSize: 14,
@@ -380,9 +380,13 @@ selecttime() {
                   primary: const Color.fromARGB(255, 137, 184, 189),
                   backgroundColor: Color.fromRGBO(163, 197, 204, 1),
                 ),
-                onPressed: (() {
-                  timeList();
-                }),
+                onPressed: () async {
+                  TimeOfDay? newTime = await showTimePicker(
+                      initialTime: TimeOfDay.now(), context: context);
+                  if (newTime == null) {
+                    return;
+                  }
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -479,13 +483,13 @@ selecthealthCheckup() {
 
 class healthcheckupList extends SearchDelegate {
   List<String> searchTerms = [
-    'Organisation 1',
-    'Organisation 2',
-    'Organisation 3',
-    'Organisation 4',
-    'Organisation 5',
-    'Organisation 6',
-    'Organisation 7',
+    'Health 1',
+    'Health 2',
+    'Health 3',
+    'Health 4',
+    'Health 5',
+    'Health 6',
+    'Health 7',
   ];
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -546,14 +550,14 @@ class healthcheckupList extends SearchDelegate {
   }
 }
 
-dateList() {
-  return 
-  showDatePicker(
-    context: context,
-   initialDate: DateTime.now(), 
-   firstDate: DateTime(2001), 
-   lastDate: DateTime(2100),);
-}
+// dateList() {
+//   return showDatePicker(
+//     context: context,
+//     initialDate: DateTime.now(),
+//     firstDate: DateTime(2001),
+//     lastDate: DateTime(2100),
+//   );
+// }
 
 timeList() {
   return Column(
