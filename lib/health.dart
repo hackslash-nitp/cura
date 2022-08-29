@@ -74,6 +74,40 @@ class Healthpage extends StatelessWidget {
                     ],
                   ),
                   selecthealthCheckup(),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: Color.fromRGBO(114, 156, 163, 0),
+                        width: 1.5,
+                      ),
+                    ),
+                    margin: EdgeInsets.all(7),
+                    height: 53,
+                    width: 378,
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            " Submit",
+                            style:
+                                TextStyle(fontSize: 20, fontFamily: 'PT Sans'),
+                          ),
+                        ],
+                      ),
+                      // clipBehavior: (chi),
+                      style: TextButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        primary: Colors.white,
+                        backgroundColor:
+                            const Color.fromARGB(255, 137, 184, 189),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             )
@@ -261,9 +295,17 @@ selectdate() {
               ),
               primary: Color.fromARGB(255, 0, 0, 0),
               backgroundColor: Colors.white),
-          onPressed: (() {
-            // dateList();
-          }),
+          onPressed: () async {
+            DateTime? newDate = await showDatePicker(
+              context: context,
+              initialDate: date,
+              firstDate: DateTime(2000),
+              lastDate: DateTime(2100),
+            );
+            if (newDate == null) return;
+
+            setState(() => date = newDate);
+          },
           child: Row(
             children: [
               Text(
@@ -356,7 +398,6 @@ selecttime() {
             if (newTime == null) {
               return;
             }
-          
           },
           child: Row(
             children: [
@@ -550,17 +591,45 @@ class healthcheckupList extends SearchDelegate {
   }
 }
 
-// dateList() {
-//   return showDatePicker(
-//     context: context,
-//     initialDate: DateTime.now(),
-//     firstDate: DateTime(2001),
-//     lastDate: DateTime(2100),
-//   );
-// }
-
-timeList() {
+submitPage() {
   return Column(
-    children: [],
+    children: [
+      Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            containerShadow(),
+          ],
+        ),
+        child: Column(
+          children: [
+            Align(
+              // alignment: const Alignment(-.5, .8),
+              child: Image.asset(
+                'assets/Right arrow.png',
+                height: 225,
+                width: 200,
+                // alignment: Alignment.topCenter,
+              ),
+            ),
+            Text(
+              "Thank you!",
+              style: TextStyle(
+                color: Color.fromRGBO(146, 183, 192, 1),
+                fontFamily: 'PT Sans',
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              "Thank you for free health \n  checkup",
+              style: TextStyle(
+                fontSize: 22,
+                fontFamily: 'PT Sans',
+              ),
+            )
+          ],
+        ),
+      )
+    ],
   );
 }
