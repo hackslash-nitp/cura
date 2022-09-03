@@ -28,7 +28,7 @@ class ScreenDecider extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: auth.getCurrentUser() == null
-          ? const navigationbar() // directly access by substituting in place of PreviewPage()
+          ? const PreviewPage()// directly access by substituting in place of PreviewPage()
           : const HomePageIndividual(),
     );
   }
