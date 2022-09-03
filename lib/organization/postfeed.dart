@@ -85,9 +85,9 @@ class _postfeedState extends State<postfeed> {
                         SizedBox(
                           width: 155.w,
                         ),
-                        
-                         Icon(Icons.more_vert),
-                         //three dot
+
+                        Icon(Icons.more_vert),
+                        //three dot
                       ],
                     ),
                     Column(
@@ -160,8 +160,8 @@ class _postfeedState extends State<postfeed> {
                         SizedBox(
                           width: 165.w,
                         ),
-                         Icon(Icons.more_vert),
-                         //three dot
+                        Icon(Icons.more_vert),
+                        //three dot
                       ],
                     ),
                     Column(
@@ -211,28 +211,30 @@ class _postfeedState extends State<postfeed> {
                 ),
               )),
               bottomNavigationBar: BottomNavigationBar(
-                items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'home',
-                  backgroundColor: Color.fromARGB(255, 193, 236, 239),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.add),
-                   label: 'add',
-                  backgroundColor: Color.fromARGB(255, 193, 236, 239),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.chat_bubble_outline),
-                   label: 'chat',
-                  backgroundColor: Color.fromARGB(255, 193, 236, 239),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.people),
-                   label: 'profile',
-                  backgroundColor: Color.fromARGB(255, 193, 236, 239),
-                ),
-              ]),
+                  selectedItemColor: Color.fromARGB(255, 22, 115, 121),
+                  unselectedItemColor: Colors.black,
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home),
+                      label: 'home',
+                      backgroundColor: Color.fromARGB(255, 193, 236, 239),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.add),
+                      label: 'add',
+                      backgroundColor: Color.fromARGB(255, 193, 236, 239),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.chat_bubble_outline),
+                      label: 'chat',
+                      backgroundColor: Color.fromARGB(255, 193, 236, 239),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.people),
+                      label: 'profile',
+                      backgroundColor: Color.fromARGB(255, 193, 236, 239),
+                    ),
+                  ]),
             ));
   }
 }
