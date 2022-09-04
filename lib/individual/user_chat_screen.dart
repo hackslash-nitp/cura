@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+  final String orgName, imgUrl;
+  const ChatScreen({Key? key, required this.orgName, required this.imgUrl})
+      : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -106,6 +108,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               time: msgList[index]['time'],
                               showDate: showDate,
                               nextDate: msgList[index + 1]['date'],
+                              orgImgUrl: widget.imgUrl,
                             );
                           }
                           return MessageWidget(
@@ -113,6 +116,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             msg: msgList[index]['msg'],
                             time: msgList[index]['time'],
                             showDate: showDate,
+                            orgImgUrl: widget.imgUrl,
                           );
                         },
                       ),
@@ -226,17 +230,19 @@ class _ChatScreenState extends State<ChatScreen> {
                     CircleAvatar(
                       backgroundColor: Colors.transparent,
                       radius: 30.w,
-                      child: const Image(
-                          image: AssetImage(
-                              'assets/startup_assets/create_account_assets/profile_primary.png')),
+                      child: Image(
+                          image: widget.imgUrl == ""
+                              ? const AssetImage(
+                                  'assets/startup_assets/create_account_assets/profile_primary.png')
+                              : AssetImage(widget.imgUrl)),
                     ),
                     SizedBox(
                       width: 20.w,
                     ),
                     Text(
-                      "Organisation Name",
+                      widget.orgName,
                       style: TextStyle(
-                        fontSize: 26.sp,
+                        fontSize: 22.sp,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -293,7 +299,7 @@ class DateMsgTile extends StatelessWidget {
 
 class MessageWidget extends StatelessWidget {
   final bool isMe, showDate;
-  final String msg, time;
+  final String msg, time, orgImgUrl;
   final String? nextDate;
 
   final Color myMsgColor = const Color(0xFFE0EEEF);
@@ -305,14 +311,15 @@ class MessageWidget extends StatelessWidget {
       required this.msg,
       required this.time,
       required this.showDate,
-      this.nextDate})
+      this.nextDate,
+      required this.orgImgUrl})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final dpUrl = isMe
         ? "assets/startup_assets/create_account_assets/profile_primary.png"
-        : "assets/main_assets/Completed.png";
+        : orgImgUrl;
     const BorderRadius myBorderRadius = BorderRadius.only(
       topLeft: Radius.circular(20),
       topRight: Radius.circular(20),
