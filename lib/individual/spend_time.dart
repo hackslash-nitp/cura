@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:searchfield/searchfield.dart';
 // ignore: unused_import
 import 'package:intl/intl.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+//import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:cura/shared/widgets/message_dialog.dart';
 
 class spend_time extends StatefulWidget {
   const spend_time({super.key});
@@ -17,362 +19,380 @@ class _spend_timeState extends State<spend_time> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-          colors: [
-            Color(0xFF6CAFB4),
-            Colors.white,
-            Colors.white,
-            Color(0xFF6CAFB4),
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          stops: [0.0, 0.25, 0.8, 1.0],
-          tileMode: TileMode.clamp,
-        )
-            /*border: Border.all(
-            // ignore: prefer_const_constructors
-            color: Color(0xFF263238),
-            width: 1,
-            style: BorderStyle.solid,
-          ),*/
-            ),
-        // ignore: prefer_const_constructors
-        // padding: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.014, 0, 0),
-        // ignore: sized_box_for_whitespace, , sort_child_properties_last
-        //width: MediaQuery.of(context).size.width,
-        //height: MediaQuery.of(context).size.height * 0.43,
-        // child: Container(
-        //height: MediaQuery.of(context).size.height * 0.03,
-        //width: double.infinity,
-        // ignore: sort_child_properties_last
-        //padding: const EdgeInsets.only(top: 10),
-        child: Column(
-          children: [
-            Row(children: [
-              Wrap(
-                  spacing: MediaQuery.of(context).size.width * 0.34,
-                  children: const [
-                    Icon(
-                      Icons.keyboard_arrow_left,
-                      color: Colors.black,
-                    ),
-                    Center(
-                        child: Text(
-                      'Spend Time',
-                      textAlign: TextAlign.center,
-                      // ignore: prefer_const_constructors
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ))
-                  ]),
-            ]),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.09,
-            ),
-            Container(
-              padding: EdgeInsets.fromLTRB(
-                0,
-                MediaQuery.of(context).size.height * 0.2,
-                0,
-                MediaQuery.of(context).size.height * 0.57,
+      body: Stack(children: <Widget>[
+        Container(
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+            colors: [
+              Color(0xFF6CAFB4),
+              Colors.white,
+              Colors.white,
+              Color(0xFF6CAFB4),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: [0.0, 0.25, 0.8, 1.0],
+            tileMode: TileMode.clamp,
+          )
+              /*border: Border.all(
+              // ignore: prefer_const_constructors
+              color: Color(0xFF263238),
+              width: 1,
+              style: BorderStyle.solid,
+            ),*/
               ),
-              height: MediaQuery.of(context).size.height * 0.23,
-              width: MediaQuery.of(context).size.width * 0.96,
-              // ignore: prefer_const_constructors
-              decoration: BoxDecoration(
-                // ignore: prefer_const_constructors
-                image: DecorationImage(
-                    // ignore: prefer_const_constructors
-                    image: AssetImage("images/screen_time_one.jpeg"),
-                    fit: BoxFit.fill),
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.031,
-            ),
-            Container(
-              // constraints: const BoxConstraints.expand(),
-              // ignore: prefer_const_constructors
-
-              // ignore: prefer_const_constructors
-              decoration: BoxDecoration(
-                  color: Color(0xFFE2EFF0),
-                  borderRadius: BorderRadius.all(Radius.circular(
-                      MediaQuery.of(context).size.width * 0.063))),
-              // ignore: prefer_const_constructors
-              // padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.1,MediaQuery.of(context).size.height * 0.1,MediaQuery.of(context).size.height * 0.1,MediaQuery.of(context).size.height * 0.1),
-              //MediaQuery.of(context).size.height * 0.44,MediaQuery.of(context).size.height * 0.44,),
-              width: MediaQuery.of(context).size.width * 0.82,
-              height: MediaQuery.of(context).size.height * 0.52,
-              child: Column(
-                children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                  // ignore: sized_box_for_whitespace
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.height * 0.023),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.033,
-                      width: MediaQuery.of(context).size.height * 0.22,
-                      alignment: Alignment.topLeft,
-                      /* padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.023,
-                           MediaQuery.of(context).size.height * 0.025, MediaQuery.of(context).size.height * 0.138, MediaQuery.of(context).size.height * 0.38),*/
-                      child: Text(
-                        'Select Organization',
-                        style: TextStyle(
+          // ignore: prefer_const_constructors
+          // padding: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.014, 0, 0),
+          // ignore: sized_box_for_whitespace, , sort_child_properties_last
+          //width: MediaQuery.of(context).size.width,
+          //height: MediaQuery.of(context).size.height * 0.43,
+          // child: Container(
+          //height: MediaQuery.of(context).size.height * 0.03,
+          //width: double.infinity,
+          // ignore: sort_child_properties_last
+          //padding: const EdgeInsets.only(top: 10),
+          child: SafeArea(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(children: [
+                  Wrap(
+                      spacing: MediaQuery.of(context).size.width * 0.34,
+                      children: const [
+                        Icon(
+                          Icons.keyboard_arrow_left,
                           color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'PT Sans',
                         ),
-                      ),
-                    ),
+                        Center(
+                            child: Text(
+                          'Spend Time',
+                          textAlign: TextAlign.center,
+                          // ignore: prefer_const_constructors
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ))
+                      ]),
+                ]),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.09,
+                ),
+                Container(
+                  padding: EdgeInsets.fromLTRB(
+                    0,
+                    MediaQuery.of(context).size.height * 0.2,
+                    0,
+                    MediaQuery.of(context).size.height * 0.57,
                   ),
+                  height: MediaQuery.of(context).size.height * 0.23,
+                  width: MediaQuery.of(context).size.width * 0.96,
+                  // ignore: prefer_const_constructors
+                  decoration: BoxDecoration(
+                    // ignore: prefer_const_constructors
+                    image: DecorationImage(
+                        // ignore: prefer_const_constructors
+                        image: AssetImage("assets/screen_time_one.jpeg"),
+                        fit: BoxFit.fill),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.031,
+                ),
+                Container(
+                  // constraints: const BoxConstraints.expand(),
+                  // ignore: prefer_const_constructors
 
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                  // ignore: missing_required_param
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.height * 0.023),
-                    /*MediaQuery.of(context).size.height * 0.022, MediaQuery.of(context).size.height * 0.09,MediaQuery.of(context).size.height * 0.03,
-                 MediaQuery.of(context).size.height * 0.033),*/
-                    // ignore: missing_required_param
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.height * 0.4,
-                      child: SearchField(
-                        hint:
-                            "Enter organisation's name", //searchStyle: TextStyle(fontSize:MediaQuery.of(context).size.height*0.036 ),
-                        // padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.05, MediaQuery.of(context).size.height * 0.05, MediaQuery.of(context).size.height * 0.05,MediaQuery.of(context).size.height * 0.05),
-                        // ignore: prefer_const_literals_to_create_immutables
-                        suggestions: [
-                          'Organisation 1',
-                          'Organisation 2',
-                          'Organisation 3',
-                          'Organisation 4',
-                          'Organisation 5',
-                          'Organisation 6',
-                        ],
-                        searchInputDecoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(
-                                MediaQuery.of(context).size.height * 0.02),
-                            borderSide: BorderSide(
-                              // ignore: prefer_const_constructors
-                              color: Colors.grey,
-                              //height: MediaQuery.of(context).size.height*0.038,
-                              //width: MediaQuery.of(context).size.height*,
+                  // ignore: prefer_const_constructors
+                  decoration: BoxDecoration(
+                      color: Color(0xFFE2EFF0),
+                      borderRadius: BorderRadius.all(Radius.circular(
+                          MediaQuery.of(context).size.width * 0.063))),
+                  // ignore: prefer_const_constructors
+                  // padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.1,MediaQuery.of(context).size.height * 0.1,MediaQuery.of(context).size.height * 0.1,MediaQuery.of(context).size.height * 0.1),
+                  //MediaQuery.of(context).size.height * 0.44,MediaQuery.of(context).size.height * 0.44,),
+                  width: MediaQuery.of(context).size.width * 0.82,
+                  height: MediaQuery.of(context).size.height * 0.52,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.01),
+                      // ignore: sized_box_for_whitespace
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.height * 0.023),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.033,
+                          width: MediaQuery.of(context).size.height * 0.22,
+                          alignment: Alignment.topLeft,
+                          /* padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.023,
+                               MediaQuery.of(context).size.height * 0.025, MediaQuery.of(context).size.height * 0.138, MediaQuery.of(context).size.height * 0.38),*/
+                          child: Text(
+                            'Select Organization',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: 'PT Sans',
                             ),
                           ),
-                          fillColor: const Color.fromARGB(255, 186, 231, 235),
-                          filled: true,
-                          suffixIcon: const Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.grey,
-                            //size:MediaQuery.of(context).size.height*0.0093,
+                        ),
+                      ),
+
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.01),
+                      // ignore: missing_required_param
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.height * 0.023),
+                        /*MediaQuery.of(context).size.height * 0.022, MediaQuery.of(context).size.height * 0.09,MediaQuery.of(context).size.height * 0.03,
+                     MediaQuery.of(context).size.height * 0.033),*/
+                        // ignore: missing_required_param
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.height * 0.4,
+                          child: SearchField(
+                            hint:
+                                "Enter organisation's name", //searchStyle: TextStyle(fontSize:MediaQuery.of(context).size.height*0.036 ),
+                            // padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.05, MediaQuery.of(context).size.height * 0.05, MediaQuery.of(context).size.height * 0.05,MediaQuery.of(context).size.height * 0.05),
+                            // ignore: prefer_const_literals_to_create_immutables
+                            suggestions: [
+                              'Organisation 1',
+                              'Organisation 2',
+                              'Organisation 3',
+                              'Organisation 4',
+                              'Organisation 5',
+                              'Organisation 6',
+                            ],
+                            searchInputDecoration: InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(
+                                    MediaQuery.of(context).size.height * 0.02),
+                                borderSide: BorderSide(
+                                  // ignore: prefer_const_constructors
+                                  color: Colors.grey,
+                                  //height: MediaQuery.of(context).size.height*0.038,
+                                  //width: MediaQuery.of(context).size.height*,
+                                ),
+                              ),
+                              fillColor:
+                                  const Color.fromARGB(255, 186, 231, 235),
+                              filled: true,
+                              suffixIcon: const Icon(
+                                Icons.arrow_drop_down,
+                                color: Colors.grey,
+                                //size:MediaQuery.of(context).size.height*0.0093,
+                              ),
+                            ),
+
+                            //hintText: 'Time',
+                            //border: OutlineInputBorder(borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*0.0026),
                           ),
                         ),
-
-                        //hintText: 'Time',
-                        //border: OutlineInputBorder(borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*0.0026),
                       ),
-                    ),
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.height * 0.023),
-                    child: Container(
-                      alignment: Alignment.topLeft,
-                      height: MediaQuery.of(context).size.height * 0.033,
-                      width: MediaQuery.of(context).size.height * 0.22,
-                      /* padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.023,
-                           MediaQuery.of(context).size.height * 0.025, MediaQuery.of(context).size.height * 0.138, MediaQuery.of(context).size.height * 0.38),*/
-                      child: const Text(
-                        'Date',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'PT Sans',
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.01),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.height * 0.023),
+                        child: Container(
+                          alignment: Alignment.topLeft,
+                          height: MediaQuery.of(context).size.height * 0.033,
+                          width: MediaQuery.of(context).size.height * 0.22,
+                          /* padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.023,
+                               MediaQuery.of(context).size.height * 0.025, MediaQuery.of(context).size.height * 0.138, MediaQuery.of(context).size.height * 0.38),*/
+                          child: const Text(
+                            'Date',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: 'PT Sans',
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.height * 0.023),
-                    /*MediaQuery.of(context).size.height * 0.022, MediaQuery.of(context).size.height * 0.17,MediaQuery.of(context).size.height * 0.16,
-                 MediaQuery.of(context).size.height * 0.23),*/
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.height * 0.327,
-                      child: TextField(
-                        controller: _date,
-
-                        //editing controller of this TextField
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                  MediaQuery.of(context).size.height * 0.02)),
-                          // ignore: prefer_const_constructors
-
-                          //height: MediaQuery.of(context).size.height*0.038,
-                          //width: MediaQuery.of(context).size.height*,
-
-                          fillColor: const Color.fromARGB(255, 186, 231, 235),
-                          filled:
-                              true, //border: OutlineInputBorder(borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*0.0026),
-
-                          suffixIcon: Icon(Icons.arrow_drop_down),
-                          //icon of text field
-                          labelText:
-                              "Date", //labelStyle: TextStyle(fontSize:  MediaQuery.of(context).size.height*0.036)//label text of field
-                        ),
-                        readOnly:
-                            true, //set it true, so that user will not able to edit text
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(
-                                  2000), //DateTime.now() - not to allow to choose before today.
-                              lastDate: DateTime(2101));
-
-                          if (pickedDate != null) {
-                            /* print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
-                          String formattedDate=DateFormat('yyyy-MM-dd').format(pickedDate); 
-                          print(formattedDate);*/ //formatted date output using intl package =>  2021-03-16
-                            //you can implement different kind of Date Format here according to your requirement
-                            setState(() {
-                              _date.text = DateFormat('yyyy-MM-dd').format(
-                                  pickedDate); //set output date to TextField value.
-                            });
-                          } else {
-                            // ignore: avoid_print
-                            print("Date is not selected");
-                          }
-                        },
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.01,
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.height * 0.023),
+                        /*MediaQuery.of(context).size.height * 0.022, MediaQuery.of(context).size.height * 0.17,MediaQuery.of(context).size.height * 0.16,
+                     MediaQuery.of(context).size.height * 0.23),*/
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.height * 0.327,
+                          child: TextField(
+                            controller: _date,
 
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.height * 0.023),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.033,
-                      width: MediaQuery.of(context).size.height * 0.22,
-                      alignment: Alignment.topLeft,
-                      /* padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.023,
-                           MediaQuery.of(context).size.height * 0.025, MediaQuery.of(context).size.height * 0.138, MediaQuery.of(context).size.height * 0.38),*/
-                      child: Text(
-                        'Time',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'PT Sans',
+                            //editing controller of this TextField
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      MediaQuery.of(context).size.height *
+                                          0.02)),
+                              // ignore: prefer_const_constructors
+
+                              //height: MediaQuery.of(context).size.height*0.038,
+                              //width: MediaQuery.of(context).size.height*,
+
+                              fillColor:
+                                  const Color.fromARGB(255, 186, 231, 235),
+                              filled:
+                                  true, //border: OutlineInputBorder(borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*0.0026),
+
+                              suffixIcon: Icon(Icons.arrow_drop_down),
+                              //icon of text field
+                              labelText:
+                                  "Date", //labelStyle: TextStyle(fontSize:  MediaQuery.of(context).size.height*0.036)//label text of field
+                            ),
+                            readOnly:
+                                true, //set it true, so that user will not able to edit text
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(
+                                      2000), //DateTime.now() - not to allow to choose before today.
+                                  lastDate: DateTime(2101));
+
+                              if (pickedDate != null) {
+                                /* print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
+                              String formattedDate=DateFormat('yyyy-MM-dd').format(pickedDate); 
+                              print(formattedDate);*/ //formatted date output using intl package =>  2021-03-16
+                                //you can implement different kind of Date Format here according to your requirement
+                                setState(() {
+                                  _date.text = DateFormat('yyyy-MM-dd').format(
+                                      pickedDate); //set output date to TextField value.
+                                });
+                              } else {
+                                // ignore: avoid_print
+                                print("Date is not selected");
+                              }
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                  ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.01,
+                      ),
 
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.height * 0.023),
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.height * 0.2,
-                      child: TextField(
-                        controller:
-                            timeinput, //editing controller of this TextField
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                  MediaQuery.of(context).size.height * 0.02)),
-                          // ignore: prefer_const_constructors
-                          fillColor: const Color.fromARGB(255, 186, 231, 235),
-                          filled: true,
-                          suffixIcon:
-                              Icon(Icons.arrow_drop_down), //icon of text field
-                          labelText:
-                              " Time", //labelStyle: TextStyle(fontSize:  MediaQuery.of(context).size.height*0.036)
-                          //label text of field
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.height * 0.023),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * 0.033,
+                          width: MediaQuery.of(context).size.height * 0.22,
+                          alignment: Alignment.topLeft,
+                          /* padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.023,
+                               MediaQuery.of(context).size.height * 0.025, MediaQuery.of(context).size.height * 0.138, MediaQuery.of(context).size.height * 0.38),*/
+                          child: Text(
+                            'Time',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: 'PT Sans',
+                            ),
+                          ),
                         ),
-
-                        readOnly:
-                            true, //set it true, so that user will not able to edit text
-                        onTap: () async {
-                          TimeOfDay? pickedTime = await showTimePicker(
-                            initialTime: TimeOfDay.now(),
-                            context: context,
-                          );
-
-                          if (pickedTime != null) {
-                            print(pickedTime.format(context)); //output 10:51 PM
-                            DateTime parsedTime = DateFormat.jm()
-                                .parse(pickedTime.format(context).toString());
-                            //converting to DateTime so that we can further format on different pattern.
-                            print(parsedTime); //output 1970-01-01 22:53:00.000
-                            String formattedTime =
-                                DateFormat('HH:mm:ss').format(parsedTime);
-                            print(formattedTime); //output 14:59:00
-                            //DateFormat() is from intl package, you can format the time on any pattern you need.
-
-                            setState(() {
-                              timeinput.text =
-                                  formattedTime; //set the value of text field.
-                            });
-                          } else {
-                            print("Time is not selected");
-                          }
-                        },
                       ),
-                    ),
+
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.01),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.height * 0.023),
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.height * 0.2,
+                          child: TextField(
+                            controller:
+                                timeinput, //editing controller of this TextField
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      MediaQuery.of(context).size.height *
+                                          0.02)),
+                              // ignore: prefer_const_constructors
+                              fillColor:
+                                  const Color.fromARGB(255, 186, 231, 235),
+                              filled: true,
+                              suffixIcon: Icon(
+                                  Icons.arrow_drop_down), //icon of text field
+                              labelText:
+                                  " Time", //labelStyle: TextStyle(fontSize:  MediaQuery.of(context).size.height*0.036)
+                              //label text of field
+                            ),
+
+                            readOnly:
+                                true, //set it true, so that user will not able to edit text
+                            onTap: () async {
+                              TimeOfDay? pickedTime = await showTimePicker(
+                                initialTime: TimeOfDay.now(),
+                                context: context,
+                              );
+
+                              if (pickedTime != null) {
+                                print(pickedTime
+                                    .format(context)); //output 10:51 PM
+                                DateTime parsedTime = DateFormat.jm().parse(
+                                    pickedTime.format(context).toString());
+                                //converting to DateTime so that we can further format on different pattern.
+                                print(
+                                    parsedTime); //output 1970-01-01 22:53:00.000
+                                String formattedTime =
+                                    DateFormat('HH:mm:ss').format(parsedTime);
+                                print(formattedTime); //output 14:59:00
+                                //DateFormat() is from intl package, you can format the time on any pattern you need.
+
+                                setState(() {
+                                  timeinput.text =
+                                      formattedTime; //set the value of text field.
+                                });
+                              } else {
+                                print("Time is not selected");
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.01),
+                      Container(
+                        padding: EdgeInsets.all(0),
+                        decoration: BoxDecoration(
+                          color: Color(0xFF6CAFB4),
+                        ),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  /*borderRadius: BorderRadius.circular(
+                                      MediaQuery.of(context).size.height * 0.02)*/
+                                  ),
+                              primary: Color(0xFF6CAFB4)),
+                          child: Text(
+                            'Submit',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white),
+                          ),
+                          onPressed: (() {
+                            MessageDialog(
+                              title: 'Thank you!',
+                              contentText:
+                                  'Thank you,for giving your precious time',
+                              imageUrl: 'images/imageUrl.jpeg',
+                            );
+                          }),
+                        ),
+                      )
+
+                      // ignore: missing_required_param
+                    ],
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                  Container(
-                    padding: EdgeInsets.all(0),
-                    decoration: BoxDecoration(
-                      color: Color(0xFF6CAFB4),
-                    ),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              /*borderRadius: BorderRadius.circular(
-                                  MediaQuery.of(context).size.height * 0.02)*/
-                              ),
-                          primary: Color(0xFF6CAFB4)),
-                      child: Text(
-                        'Submit',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700, color: Colors.white),
-                      ),
-                      onPressed: (() {
-                        MessageDialog(
-                          title: 'Thank you!',
-                          contentText:
-                              'Thank you,for giving your precious time',
-                          imageUrl: 'images/imageUrl.jpeg',
-                        );
-                      }),
-                    ),
-                  )
-
-                  // ignore: missing_required_param
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+      ]),
 
 // ignore: unused_label
       bottomNavigationBar: Container(
@@ -418,70 +438,6 @@ class _spend_timeState extends State<spend_time> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class MessageDialog extends StatelessWidget {
-  final String title, imageUrl, contentText;
-  const MessageDialog(
-      {Key? key,
-      required this.title,
-      required this.imageUrl,
-      required this.contentText})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(428, 926),
-      builder: (context, child) => SafeArea(
-        child: Dialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(40.r)),
-          child: GestureDetector(
-            onTap: () => Navigator.of(context).pop(),
-            child: Container(
-              height: 500.h,
-              width: 384.w,
-              decoration: BoxDecoration(
-                color: const Color(0xFFF6FAFA),
-                borderRadius: BorderRadius.circular(40.r),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 28.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Image(
-                      image: AssetImage(imageUrl),
-                    ),
-                    const Spacer(),
-                    Text(
-                      title,
-                      style: TextStyle(
-                        color: const Color(0xFFC8D8E0),
-                        fontSize: 36.sp,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      contentText,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: MediaQuery.of(context).size.height * 0.08,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
         ),
       ),
     );
