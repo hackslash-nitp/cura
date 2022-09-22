@@ -115,6 +115,7 @@ class _spend_timeState extends State<spend_time> {
                   width: MediaQuery.of(context).size.width * 0.82,
                   height: MediaQuery.of(context).size.height * 0.52,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.01),
