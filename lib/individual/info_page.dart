@@ -1,19 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-void main() {
-  // ignore: prefer_const_constructors
-  runApp(MaterialApp(debugShowCheckedModeBanner: false, home: MyApp()));
-}
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class IndividualInfoPage extends StatefulWidget {
+  const IndividualInfoPage({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<MyApp> createState() => _IndividualInfoPageState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _IndividualInfoPageState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,6 +82,7 @@ class _MyAppState extends State<MyApp> {
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Email',

@@ -128,22 +128,18 @@ class _organisationprofile extends State<organisationprofile> {
                     SizedBox(
                       height: 20.h,
                     ),
-
-
-
-
                     const Divider(
-   thickness: 1, // thickness of the line
-   indent: 10, // empty space to the leading edge of divider.
-   endIndent: 10, // empty space to the trailing edge of the divider.
-   color: Colors.black, // The color to use when painting the line.
-   height: 10, // The divider's height extent.
- ),
-
- SizedBox(
+                      thickness: 1, // thickness of the line
+                      indent: 10, // empty space to the leading edge of divider.
+                      endIndent:
+                          10, // empty space to the trailing edge of the divider.
+                      color: Colors
+                          .black, // The color to use when painting the line.
+                      height: 10, // The divider's height extent.
+                    ),
+                    SizedBox(
                       height: 10.h,
                     ),
-
                     Column(
                       children: [
                         Container(
@@ -177,7 +173,7 @@ class _organisationprofile extends State<organisationprofile> {
                         SizedBox(
                           height: 44.h,
                         ),
-                         SizedBox(
+                        SizedBox(
                           width: 10.w,
                         ),
                         Image.asset('assets/image1.png',
@@ -252,28 +248,31 @@ class _organisationprofile extends State<organisationprofile> {
                   ]),
                 ),
               )),
-              bottomNavigationBar: BottomNavigationBar(items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'home',
-                  backgroundColor: Color.fromARGB(255, 193, 236, 239),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.add),
-                  label: 'add',
-                  backgroundColor: Color.fromARGB(255, 193, 236, 239),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.chat_bubble_outline),
-                  label: 'chat',
-                  backgroundColor: Color.fromARGB(255, 193, 236, 239),
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.people),
-                  label: 'profile',
-                  backgroundColor: Color.fromARGB(255, 193, 236, 239),
-                ),
-              ]),
+              bottomNavigationBar: BottomNavigationBar(
+                  selectedItemColor: Color.fromARGB(255, 22, 115, 121),
+                  unselectedItemColor: Colors.black,
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home),
+                      label: 'home',
+                      backgroundColor: Color.fromARGB(255, 193, 236, 239),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.add),
+                      label: 'add',
+                      backgroundColor: Color.fromARGB(255, 193, 236, 239),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.chat_bubble_outline),
+                      label: 'chat',
+                      backgroundColor: Color.fromARGB(255, 193, 236, 239),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.people),
+                      label: 'profile',
+                      backgroundColor: Color.fromARGB(255, 193, 236, 239),
+                    ),
+                  ]),
             ));
   }
 }
