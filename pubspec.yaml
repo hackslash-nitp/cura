@@ -41,6 +41,8 @@ dependencies:
   image_picker: ^0.8.5+3
   searchfield: ^0.5.3
   smooth_page_indicator: ^1.0.0+2
+  intl: ^0.17.0
+
 
 dev_dependencies:
 
@@ -69,8 +71,9 @@ flutter:
     - assets/main_assets/
     - assets/startup_assets/create_account_assets/
     - assets/startup_assets/preview_splash_assets/
-    - assets/startup_assets/individual_assets/donation.png
+    - assets/startup_assets/individual_assets/donation.png  
   #   - images/a_dot_burr.jpeg
+
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
