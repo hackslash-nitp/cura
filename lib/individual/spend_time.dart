@@ -141,8 +141,7 @@ class _spend_timeState extends State<spend_time> {
                           height: MediaQuery.of(context).size.height * 0.01),
                       // ignore: sized_box_for_whitespace
                       Padding(
-                        padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.height * 0.023),
+                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.023),
                         child: Container(
                           height: MediaQuery.of(context).size.height * 0.033,
                           width: MediaQuery.of(context).size.height * 0.22,
@@ -389,7 +388,12 @@ class _spend_timeState extends State<spend_time> {
                               "date":date.text,
                               "time":time.text,
                             };
-                            fd.postVolunteerData(vData);
+                            if(orgName.text=="" || date.text=="" || time.text=="") {
+                              print("something missing");
+                            }
+                            else {
+                              fd.postVolunteerData(vData);
+                            }
                             const MessageDialog(
                               title: 'Thank you!',
                               contentText:
