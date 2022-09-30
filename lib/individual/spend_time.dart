@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:searchfield/searchfield.dart';
+import 'package:cura/shared/services/firebase_database.dart';
+
 // ignore: unused_import
 import 'package:intl/intl.dart';
 //import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,8 +16,26 @@ class spend_time extends StatefulWidget {
 }
 
 class _spend_timeState extends State<spend_time> {
-  TextEditingController _date = TextEditingController();
-  TextEditingController timeinput = TextEditingController();
+  TextEditingController date = TextEditingController();
+  TextEditingController time = TextEditingController();
+  TextEditingController orgName = TextEditingController();
+
+  FirestoreDatabase fd = FirestoreDatabase();
+  List<String> organisationNames = [];
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  void getData() async {
+    List organisationProfiles = await fd.getOrganisationProfileData();
+    for (var organisation in organisationProfiles) {
+      organisationNames.add(organisation["orgName"]);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,24 +99,24 @@ class _spend_timeState extends State<spend_time> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.09,
                 ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(
-                    0,
-                    MediaQuery.of(context).size.height * 0.2,
-                    0,
-                    MediaQuery.of(context).size.height * 0.57,
-                  ),
-                  height: MediaQuery.of(context).size.height * 0.23,
-                  width: MediaQuery.of(context).size.width * 0.96,
-                  // ignore: prefer_const_constructors
-                  decoration: BoxDecoration(
-                    // ignore: prefer_const_constructors
-                    image: DecorationImage(
-                        // ignore: prefer_const_constructors
-                        image: AssetImage("assets/screen_time_one.jpeg"),
-                        fit: BoxFit.fill),
-                  ),
-                ),
+                // Container(
+                //   padding: EdgeInsets.fromLTRB(
+                //     0,
+                //     MediaQuery.of(context).size.height * 0.2,
+                //     0,
+                //     MediaQuery.of(context).size.height * 0.57,
+                //   ),
+                //   height: MediaQuery.of(context).size.height * 0.23,
+                //   width: MediaQuery.of(context).size.width * 0.96,
+                //   // ignore: prefer_const_constructors
+                //   decoration: BoxDecoration(
+                //     // ignore: prefer_const_constructors
+                //     image: DecorationImage(
+                //         // ignore: prefer_const_constructors
+                //         image: AssetImage("assets/screen_time_one.jpeg"),
+                //         fit: BoxFit.fill),
+                //   ),
+                // ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.031,
                 ),
@@ -152,18 +172,12 @@ class _spend_timeState extends State<spend_time> {
                         child: SizedBox(
                           width: MediaQuery.of(context).size.height * 0.4,
                           child: SearchField(
-                            hint:
-                                "Enter organisation's name", //searchStyle: TextStyle(fontSize:MediaQuery.of(context).size.height*0.036 ),
+                            hint: "Enter organisation's name",
+                            //searchStyle: TextStyle(fontSize:MediaQuery.of(context).size.height*0.036 ),
                             // padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.05, MediaQuery.of(context).size.height * 0.05, MediaQuery.of(context).size.height * 0.05,MediaQuery.of(context).size.height * 0.05),
                             // ignore: prefer_const_literals_to_create_immutables
-                            suggestions: [
-                              'Organisation 1',
-                              'Organisation 2',
-                              'Organisation 3',
-                              'Organisation 4',
-                              'Organisation 5',
-                              'Organisation 6',
-                            ],
+                            suggestions: organisationNames,
+                            controller: orgName,
                             searchInputDecoration: InputDecoration(
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(
@@ -222,7 +236,7 @@ class _spend_timeState extends State<spend_time> {
                         child: SizedBox(
                           width: MediaQuery.of(context).size.height * 0.327,
                           child: TextField(
-                            controller: _date,
+                            controller: date,
 
                             //editing controller of this TextField
                             decoration: InputDecoration(
@@ -237,31 +251,31 @@ class _spend_timeState extends State<spend_time> {
 
                               fillColor:
                                   const Color.fromARGB(255, 186, 231, 235),
-                              filled:
-                                  true, //border: OutlineInputBorder(borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*0.0026),
+                              filled: true,
+                              //border: OutlineInputBorder(borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*0.0026),
 
                               suffixIcon: Icon(Icons.arrow_drop_down),
                               //icon of text field
                               labelText:
                                   "Date", //labelStyle: TextStyle(fontSize:  MediaQuery.of(context).size.height*0.036)//label text of field
                             ),
-                            readOnly:
-                                true, //set it true, so that user will not able to edit text
+                            readOnly: true,
+                            //set it true, so that user will not able to edit text
                             onTap: () async {
                               DateTime? pickedDate = await showDatePicker(
                                   context: context,
                                   initialDate: DateTime.now(),
-                                  firstDate: DateTime(
-                                      2000), //DateTime.now() - not to allow to choose before today.
+                                  firstDate: DateTime(2000),
+                                  //DateTime.now() - not to allow to choose before today.
                                   lastDate: DateTime(2101));
 
                               if (pickedDate != null) {
                                 /* print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
-                              String formattedDate=DateFormat('yyyy-MM-dd').format(pickedDate); 
+                              String formattedDate=DateFormat('yyyy-MM-dd').format(pickedDate);
                               print(formattedDate);*/ //formatted date output using intl package =>  2021-03-16
                                 //you can implement different kind of Date Format here according to your requirement
                                 setState(() {
-                                  _date.text = DateFormat('yyyy-MM-dd').format(
+                                  date.text = DateFormat('yyyy-MM-dd').format(
                                       pickedDate); //set output date to TextField value.
                                 });
                               } else {
@@ -285,7 +299,7 @@ class _spend_timeState extends State<spend_time> {
                           alignment: Alignment.topLeft,
                           /* padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.023,
                                MediaQuery.of(context).size.height * 0.025, MediaQuery.of(context).size.height * 0.138, MediaQuery.of(context).size.height * 0.38),*/
-                          child: Text(
+                          child:const Text(
                             'Time',
                             style: TextStyle(
                               color: Colors.black,
@@ -304,48 +318,40 @@ class _spend_timeState extends State<spend_time> {
                         child: SizedBox(
                           width: MediaQuery.of(context).size.height * 0.2,
                           child: TextField(
-                            controller:
-                                timeinput, //editing controller of this TextField
+                            controller: time,
+                            //editing controller of this TextField
                             decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(
                                       MediaQuery.of(context).size.height *
                                           0.02)),
                               // ignore: prefer_const_constructors
-                              fillColor:
-                                  const Color.fromARGB(255, 186, 231, 235),
+                              fillColor:const Color.fromARGB(255, 186, 231, 235),
                               filled: true,
-                              suffixIcon: Icon(
-                                  Icons.arrow_drop_down), //icon of text field
-                              labelText:
-                                  " Time", //labelStyle: TextStyle(fontSize:  MediaQuery.of(context).size.height*0.036)
+                              suffixIcon: Icon(Icons.arrow_drop_down),
+                              //icon of text field
+                              labelText: "Time", //labelStyle: TextStyle(fontSize:  MediaQuery.of(context).size.height*0.036)
                               //label text of field
                             ),
 
-                            readOnly:
-                                true, //set it true, so that user will not able to edit text
+                            readOnly: true,
+                            //set it true, so that user will not able to edit text
                             onTap: () async {
                               TimeOfDay? pickedTime = await showTimePicker(
                                 initialTime: TimeOfDay.now(),
                                 context: context,
                               );
-
-                              if (pickedTime != null) {
-                                print(pickedTime
-                                    .format(context)); //output 10:51 PM
-                                DateTime parsedTime = DateFormat.jm().parse(
-                                    pickedTime.format(context).toString());
-                                //converting to DateTime so that we can further format on different pattern.
-                                print(
-                                    parsedTime); //output 1970-01-01 22:53:00.000
-                                String formattedTime =
-                                    DateFormat('HH:mm:ss').format(parsedTime);
-                                print(formattedTime); //output 14:59:00
-                                //DateFormat() is from intl package, you can format the time on any pattern you need.
-
+                              //
+                              // if (pickedTime != null) {//output 10:51 PM
+                              //   DateTime parsedTime = DateFormat.jm().parse(
+                              //       pickedTime.format(context).toString());
+                              //   //converting to DateTime so that we can further format on different pattern.//output 1970-01-01 22:53:00.000
+                              //   String formattedTime = DateFormat('HH:mm:ss').format(parsedTime);
+                              //   print(formattedTime); //output 14:59:00
+                              //   //DateFormat() is from intl package, you can format the time on any pattern you need.
+                                if(pickedTime!=null){
                                 setState(() {
-                                  timeinput.text =
-                                      formattedTime; //set the value of text field.
+                                  time.text = "${pickedTime.hour}:${pickedTime.minute}";//set the value of text field.
                                 });
                               } else {
                                 print("Time is not selected");
@@ -375,7 +381,16 @@ class _spend_timeState extends State<spend_time> {
                                 color: Colors.white),
                           ),
                           onPressed: (() {
-                            MessageDialog(
+                            // print(orgName.text);
+                            // print(date.text);
+                            // print(time.text);
+                            Map<String,dynamic> vData = {
+                              "orgName":orgName.text,
+                              "date":date.text,
+                              "time":time.text,
+                            };
+                            fd.postVolunteerData(vData);
+                            const MessageDialog(
                               title: 'Thank you!',
                               contentText:
                                   'Thank you,for giving your precious time',
