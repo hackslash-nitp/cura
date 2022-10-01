@@ -6,10 +6,10 @@ class IndividualInfoPage extends StatefulWidget {
   const IndividualInfoPage({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _IndividualInfoPageState();
+  State<IndividualInfoPage> createState() => _IndividualInfoPageState();
 }
 
-class _IndividualInfoPageState extends State<MyApp> {
+class _IndividualInfoPageState extends State<IndividualInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
