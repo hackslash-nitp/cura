@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cura/shared/widgets/navigation-bar.dart';
 import 'package:flutter/material.dart';
 
 class IndividualInfoPage extends StatefulWidget {
@@ -13,175 +14,50 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: individualdrawer(),
-      appBar: AppBar(
-        elevation: 0.00,
-        backgroundColor: Colors.transparent,
-        iconTheme: IconThemeData(
+        endDrawer: individualdrawer(),
+        appBar: AppBar(
+          elevation: 0.00,
+          backgroundColor: Colors.transparent,
+          iconTheme: IconThemeData(
+              color: Colors.black,
+              size: MediaQuery.of(context).size.height * 0.025),
+          leading: IconButton(
+            onPressed: () => {},
+            icon: Icon(Icons.keyboard_arrow_left),
             color: Colors.black,
-            size: MediaQuery.of(context).size.height * 0.025),
-        leading: IconButton(
-          onPressed: () => {},
-          icon: Icon(Icons.keyboard_arrow_left),
-          color: Colors.black,
+          ),
         ),
-      ),
-      body: Container(
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CircleAvatar(
-                  radius: MediaQuery.of(context).size.height * 0.065,
-                  backgroundImage: (AssetImage("images/profile_girl.jpg")),
-                ),
-                Column(
-                  children: [
-                    Text(
-                      'Donor Name \nDesignation',
-                      style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.height * 0.044,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.013),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.height * 0.087,
-                      height: MediaQuery.of(context).size.height * 0.032,
-                      child: ElevatedButton(
-                        onPressed: () => {},
-                        child: Text(
-                          'Edit',
-                          style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.015,
-                              fontWeight: FontWeight.w700),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Color.fromRGBO(199, 226, 228, 1),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  MediaQuery.of(context).size.height * 0.0076)),
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-            //const SizedBox(height: 17,),
-            Divider(
-              height: MediaQuery.of(context).size.height * 0.02,
-              thickness: 1,
-              color: Color.fromRGBO(0, 0, 0, 0.75),
-            ),
-            Container(
-                height: MediaQuery.of(context).size.height * 0.6,
-                width: double.infinity,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+        body: Container(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CircleAvatar(
+                    radius: MediaQuery.of(context).size.height * 0.065,
+                    backgroundImage: (AssetImage("assets/profile_girl.jpg")),
+                  ),
+                  Column(
                     children: [
                       Text(
-                        'Email',
+                        'Donor Name \nDesignation',
                         style: TextStyle(
                             fontSize:
-                                MediaQuery.of(context).size.height * 0.026,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Text(
-                        'xyz@gmail.com',
-                        style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.height * 0.02,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.026,
-                      ),
-                      Text(
-                        'Contact Number',
-                        style: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.026,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Text(
-                        '9584899876',
-                        style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.height * 0.02,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.026,
-                      ),
-                      Text(
-                        'City',
-                        style: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.026,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Text(
-                        'Patna',
-                        style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.height * 0.02,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.026,
-                      ),
-                      Text(
-                        'Country',
-                        style: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.026,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      Text(
-                        'India',
-                        style: TextStyle(
-                            fontSize: MediaQuery.of(context).size.height * 0.02,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.026,
-                      ),
-                      Text(
-                        'About',
-                        style: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.026,
+                                MediaQuery.of(context).size.height * 0.044,
                             fontWeight: FontWeight.w700),
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.104,
-                        width: MediaQuery.of(context).size.height * 0.43,
-                        child: TextField(
-                          decoration: InputDecoration(
-                              fillColor: Color.fromRGBO(199, 226, 228, 1),
-                              filled: true,
-                              hintText: 'About\n',
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      MediaQuery.of(context).size.height *
-                                          0.02))),
-                        ),
-                      ),
+                          height: MediaQuery.of(context).size.height * 0.013),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.02,
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.height * 0.43,
-                        height: MediaQuery.of(context).size.height * 0.06,
+                        width: MediaQuery.of(context).size.height * 0.087,
+                        height: MediaQuery.of(context).size.height * 0.032,
                         child: ElevatedButton(
                           onPressed: () => {},
                           child: Text(
-                            'My Donations',
+                            'Edit',
                             style: TextStyle(
                                 fontSize:
-                                    MediaQuery.of(context).size.height * 0.028,
+                                    MediaQuery.of(context).size.height * 0.015,
                                 fontWeight: FontWeight.w700),
                           ),
                           style: ElevatedButton.styleFrom(
@@ -194,55 +70,143 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
                         ),
                       )
                     ],
-                  ),
-                ))
-          ],
-        ),
-      ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(35),
-          border: Border.all(
-            color: Color.fromARGB(255, 156, 212, 235),
+                  )
+                ],
+              ),
+              //const SizedBox(height: 17,),
+              Divider(
+                height: MediaQuery.of(context).size.height * 0.02,
+                thickness: 1,
+                color: Color.fromRGBO(0, 0, 0, 0.75),
+              ),
+              Container(
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  width: double.infinity,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Email',
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.026,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          'xyz@gmail.com',
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.02,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.026,
+                        ),
+                        Text(
+                          'Contact Number',
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.026,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          '9584899876',
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.02,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.026,
+                        ),
+                        Text(
+                          'City',
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.026,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          'Patna',
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.02,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.026,
+                        ),
+                        Text(
+                          'Country',
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.026,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          'India',
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.02,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.026,
+                        ),
+                        Text(
+                          'About',
+                          style: TextStyle(
+                              fontSize:
+                                  MediaQuery.of(context).size.height * 0.026,
+                              fontWeight: FontWeight.w700),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.104,
+                          width: MediaQuery.of(context).size.height * 0.43,
+                          child: TextField(
+                            decoration: InputDecoration(
+                                fillColor: Color.fromRGBO(199, 226, 228, 1),
+                                filled: true,
+                                hintText: 'About\n',
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        MediaQuery.of(context).size.height *
+                                            0.02))),
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02,
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.height * 0.43,
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              primary: Color.fromRGBO(199, 226, 228, 1),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      MediaQuery.of(context).size.height *
+                                          0.0076)),
+                            ),
+                            child: Text(
+                              'My Donations',
+                              style: TextStyle(
+                                  fontSize: MediaQuery.of(context).size.height *
+                                      0.028,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ))
+            ],
           ),
         ),
-        height: MediaQuery.of(context).size.height * 0.063,
-        width: 414,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            MaterialButton(
-              onPressed: () {},
-              child: Icon(
-                Icons.home_filled,
-              ),
-            ),
-            //SizedBox(width: 10),
-            MaterialButton(
-              onPressed: () {},
-              child: Icon(
-                Icons.add_chart,
-              ),
-            ),
-            //SizedBox(width: 10),
-            MaterialButton(
-              onPressed: () {},
-              child: Icon(
-                Icons.message_outlined,
-              ),
-            ),
-            //SizedBox(width: 10),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.person,
-                color: Color(0xffF989E7),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+        bottomNavigationBar: CustomNavigationBar(currentIndex: 3));
   }
 }
 

@@ -8,14 +8,14 @@ import 'package:intl/intl.dart';
 
 import 'package:cura/shared/widgets/message_dialog.dart';
 
-class spend_time extends StatefulWidget {
-  const spend_time({super.key});
+class SpendTime extends StatefulWidget {
+  const SpendTime({super.key});
 
   @override
-  State<spend_time> createState() => _spend_timeState();
+  State<SpendTime> createState() => _SpendTimeState();
 }
 
-class _spend_timeState extends State<spend_time> {
+class _SpendTimeState extends State<SpendTime> {
   TextEditingController date = TextEditingController();
   TextEditingController time = TextEditingController();
   TextEditingController orgName = TextEditingController();
@@ -78,12 +78,11 @@ class _spend_timeState extends State<spend_time> {
                 Row(children: [
                   Wrap(
                       spacing: MediaQuery.of(context).size.width * 0.34,
-                      children: const [
-                        Icon(
-                          Icons.keyboard_arrow_left,
-                          color: Colors.black,
-                        ),
-                        Center(
+                      children: [
+                        IconButton(
+                            icon: const Icon(Icons.keyboard_arrow_left),
+                            onPressed: () => Navigator.of(context).pop()),
+                        const Center(
                             child: Text(
                           'Spend Time',
                           textAlign: TextAlign.center,
@@ -141,7 +140,8 @@ class _spend_timeState extends State<spend_time> {
                           height: MediaQuery.of(context).size.height * 0.01),
                       // ignore: sized_box_for_whitespace
                       Padding(
-                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.height * 0.023),
+                        padding: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.height * 0.023),
                         child: Container(
                           height: MediaQuery.of(context).size.height * 0.033,
                           width: MediaQuery.of(context).size.height * 0.22,
@@ -298,7 +298,7 @@ class _spend_timeState extends State<spend_time> {
                           alignment: Alignment.topLeft,
                           /* padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.023,
                                MediaQuery.of(context).size.height * 0.025, MediaQuery.of(context).size.height * 0.138, MediaQuery.of(context).size.height * 0.38),*/
-                          child:const Text(
+                          child: const Text(
                             'Time',
                             style: TextStyle(
                               color: Colors.black,
@@ -325,11 +325,13 @@ class _spend_timeState extends State<spend_time> {
                                       MediaQuery.of(context).size.height *
                                           0.02)),
                               // ignore: prefer_const_constructors
-                              fillColor:const Color.fromARGB(255, 186, 231, 235),
+                              fillColor:
+                                  const Color.fromARGB(255, 186, 231, 235),
                               filled: true,
                               suffixIcon: Icon(Icons.arrow_drop_down),
                               //icon of text field
-                              labelText: "Time", //labelStyle: TextStyle(fontSize:  MediaQuery.of(context).size.height*0.036)
+                              labelText:
+                                  "Time", //labelStyle: TextStyle(fontSize:  MediaQuery.of(context).size.height*0.036)
                               //label text of field
                             ),
 
@@ -348,9 +350,10 @@ class _spend_timeState extends State<spend_time> {
                               //   String formattedTime = DateFormat('HH:mm:ss').format(parsedTime);
                               //   print(formattedTime); //output 14:59:00
                               //   //DateFormat() is from intl package, you can format the time on any pattern you need.
-                                if(pickedTime!=null){
+                              if (pickedTime != null) {
                                 setState(() {
-                                  time.text = "${pickedTime.hour}:${pickedTime.minute}";//set the value of text field.
+                                  time.text =
+                                      "${pickedTime.hour}:${pickedTime.minute}"; //set the value of text field.
                                 });
                               } else {
                                 print("Time is not selected");
@@ -383,15 +386,16 @@ class _spend_timeState extends State<spend_time> {
                             // print(orgName.text);
                             // print(date.text);
                             // print(time.text);
-                            Map<String,dynamic> vData = {
-                              "orgName":orgName.text,
-                              "date":date.text,
-                              "time":time.text,
+                            Map<String, dynamic> vData = {
+                              "orgName": orgName.text,
+                              "date": date.text,
+                              "time": time.text,
                             };
-                            if(orgName.text=="" || date.text=="" || time.text=="") {
+                            if (orgName.text == "" ||
+                                date.text == "" ||
+                                time.text == "") {
                               print("something missing");
-                            }
-                            else {
+                            } else {
                               fd.postVolunteerData(vData);
                             }
                             const MessageDialog(

@@ -1,4 +1,5 @@
 import 'package:cura/individual/user_chat_screen.dart';
+import 'package:cura/shared/widgets/navigation-bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -35,6 +36,7 @@ class _UserChatsScreenState extends State<UserChatsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
+      bottomNavigationBar: const CustomNavigationBar(currentIndex: 2),
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.transparent,

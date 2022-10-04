@@ -1,4 +1,10 @@
+import 'package:cura/individual/adopt.dart';
+import 'package:cura/individual/donation_page.dart';
+import 'package:cura/individual/health.dart';
+import 'package:cura/individual/spend_time.dart';
+import 'package:cura/organization/postfeed.dart';
 import 'package:cura/shared/widgets/gradient_background.dart';
+import 'package:cura/shared/widgets/navigation-bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../shared/services/firebase_authentication.dart';
@@ -40,12 +46,21 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
 
   @override
   Widget build(BuildContext context) {
+    List navRoutes = [
+      const AdoptPage(),
+      const HealthPage(),
+      const DonationPage(),
+      const SpendTime(),
+      const postfeed()
+    ];
+
     TextEditingController searchController = TextEditingController();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: ScreenUtilInit(
         designSize: const Size(238, 926),
         builder: (context, child) => Scaffold(
+            bottomNavigationBar: const CustomNavigationBar(currentIndex: 0),
             extendBodyBehindAppBar: true,
             body: Stack(
               children: <Widget>[
@@ -107,17 +122,21 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
                           child: ListView.separated(
                               physics: const BouncingScrollPhysics(),
                               itemCount: imgUrls.length,
-                              itemBuilder: ((context, index) => HomePageContent(
-                                    imgUrl: imgUrls[index],
-                                    heading: headings[index],
-                                    subHeading: subHeadings[index],
-                                    index: index,
-                                  )),
+                              itemBuilder: ((context, index) {
+                                return HomePageContent(
+                                  imgUrl: imgUrls[index],
+                                  heading: headings[index],
+                                  subHeading: subHeadings[index],
+                                  index: index,
+                                  widget: navRoutes[index],
+                                  isOdd: index % 2 == 0,
+                                );
+                              }),
                               separatorBuilder: ((context, index) =>
                                   SizedBox(height: 23.h))))
                     ],
                   ),
-                )
+                ),
               ],
             )),
       ),
@@ -128,64 +147,125 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
 class HomePageContent extends StatelessWidget {
   final String imgUrl, heading, subHeading;
   final int index;
+  final bool isOdd;
+  final Widget widget;
+
   const HomePageContent(
       {Key? key,
       required this.imgUrl,
       required this.heading,
       required this.subHeading,
-      required this.index})
+      required this.index,
+      required this.widget,
+      required this.isOdd})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 5.w),
-      child: Container(
-        height: 250.h,
-        width: double.infinity,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(25.r),
-            boxShadow: const [
-              BoxShadow(blurRadius: 5, color: Colors.grey, offset: Offset(0, 3))
-            ]),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              SizedBox(
-                width: 100.w,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Text(
-                      heading,
-                      style: TextStyle(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.w700,
-                          color: const Color(0xFF92B7C0)),
-                    ),
-                    Text(
-                      subHeading,
-                      style: TextStyle(
-                          fontSize: 10.sp,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700),
-                    )
-                  ],
+    return GestureDetector(
+      onTap: () => Navigator.of(context)
+          .push(MaterialPageRoute(builder: ((context) => widget))),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 5.w),
+        child: Container(
+          height: 200.h,
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(25.r),
+              boxShadow: const [
+                BoxShadow(
+                    blurRadius: 5, color: Colors.grey, offset: Offset(0, 3))
+              ]),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  flex: isOdd ? 3 : 4,
+                  child: isOdd
+                      ? TextPart(heading: heading, subHeading: subHeading)
+                      : ImagePart(imgUrl: imgUrl, index: index),
                 ),
-              ),
-              Image(
-                image: AssetImage(imgUrl),
-                height: index != 3 ? 150.h : 120.h,
-              )
-            ],
+                const Spacer(),
+                Expanded(
+                  flex: isOdd ? 4 : 3,
+                  child: isOdd
+                      ? ImagePart(imgUrl: imgUrl, index: index)
+                      : TextPart(heading: heading, subHeading: subHeading),
+                )
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class ImagePart extends StatelessWidget {
+  const ImagePart({
+    Key? key,
+    required this.imgUrl,
+    required this.index,
+  }) : super(key: key);
+
+  final String imgUrl;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: const Color(0xFFC7E2E4),
+          borderRadius: BorderRadius.circular(25.r),
+          boxShadow: const [
+            BoxShadow(
+                color: Color(0x55000000), offset: Offset(0, 2), blurRadius: 2.0)
+          ]),
+      child: Center(
+        child: Image(
+          image: AssetImage(imgUrl),
+          height: index != 3 ? 150.h : 120.h,
+        ),
+      ),
+    );
+  }
+}
+
+class TextPart extends StatelessWidget {
+  const TextPart({
+    Key? key,
+    required this.heading,
+    required this.subHeading,
+  }) : super(key: key);
+
+  final String heading;
+  final String subHeading;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        Text(
+          heading,
+          style: TextStyle(
+              fontSize: 15.sp,
+              fontWeight: FontWeight.w700,
+              color: const Color(0xFF92B7C0)),
+        ),
+        Text(
+          subHeading,
+          style: TextStyle(
+              fontSize: 10.sp,
+              color: const Color.fromRGBO(0, 0, 0, 0.58),
+              fontWeight: FontWeight.w700),
+        )
+      ],
     );
   }
 }

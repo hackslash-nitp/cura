@@ -48,7 +48,9 @@ class _DonationPageState extends State<DonationPage> {
                                 Icons.arrow_back_ios_new,
                                 size: 15.w,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
                             ),
                           ],
                         ),
