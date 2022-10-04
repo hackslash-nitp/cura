@@ -24,7 +24,7 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
     "assets/Parents-cuate 1.png",
     "assets/Nursing home-rafiki 1.png",
     "assets/Humanitarian Help-bro 1.png",
-    "assets/screen_time_one.jpeg",
+    "assets/Group discussion-bro 1.png",
     "assets/Social share-bro 1.png"
   ];
 
