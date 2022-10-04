@@ -31,8 +31,8 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
         showUnselectedLabels: false,
         currentIndex: widget.currentIndex,
         onTap: ((value) {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => navItems[value]));
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => navItems[value]));
         }),
         items: const [
           BottomNavigationBarItem(
@@ -41,7 +41,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
             backgroundColor: Color(0xFFC7E2E4),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add),
+            icon: Icon(Icons.add_box_outlined),
             label: "Add",
             backgroundColor: Color(0xFFC7E2E4),
           ),
