@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:cura/shared/services/firebase_authentication.dart';
 import 'package:cura/shared/widgets/navigation-bar.dart';
 import 'package:cura/startup_screens/login.dart';
@@ -326,7 +324,10 @@ class _individualdrawerState extends State<individualdrawer> {
                   onTap: () async {
                     await _auth.logoutUser(context);
                     Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => UserLogin()),
+                        MaterialPageRoute(
+                            builder: (context) => UserLogin(
+                                  isPhoneLogin: true,
+                                )),
                         (route) => false);
                   },
                 ),

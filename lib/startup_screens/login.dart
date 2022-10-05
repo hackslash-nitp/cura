@@ -1,6 +1,4 @@
 import 'package:cura/shared/widgets/widgets.dart';
-import 'package:cura/startup_screens/preview_page.dart';
-import '../shared/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../shared/widgets/gradient_background.dart';
@@ -18,10 +16,12 @@ class Otp {
 }
 
 class UserLogin extends StatefulWidget {
-  const UserLogin({Key? key}) : super(key: key);
+  final bool isPhoneLogin;
+  const UserLogin({Key? key, required this.isPhoneLogin}) : super(key: key);
 
   @override
-  State<UserLogin> createState() => _UserLoginState();
+  State<UserLogin> createState() =>
+      _UserLoginState(isPhoneVerification: isPhoneLogin);
 }
 
 class _UserLoginState extends State<UserLogin> {
@@ -41,8 +41,10 @@ class _UserLoginState extends State<UserLogin> {
   TextEditingController inputText = TextEditingController();
   TextEditingController passwordText = TextEditingController();
 
-  bool _isPhoneVerification = true;
+  bool isPhoneVerification;
   bool _isLogin = true;
+
+  _UserLoginState({required this.isPhoneVerification});
 
   @override
   void dispose() {
@@ -77,8 +79,7 @@ class _UserLoginState extends State<UserLogin> {
                       children: <Widget>[
                         IconButton(
                             onPressed: () {
-                              Navigation.navigateToPageWithReplacement(
-                                  context, const PreviewPage());
+                              Navigator.of(context).pop();
                             },
                             icon: Icon(
                               Icons.arrow_back_ios_new,
@@ -123,7 +124,7 @@ class _UserLoginState extends State<UserLogin> {
                                 height: 40.h,
                                 width: 141.w,
                                 decoration: BoxDecoration(
-                                  color: _isPhoneVerification
+                                  color: isPhoneVerification
                                       ? _primaryColor
                                       : _secondaryColor,
                                   borderRadius:
@@ -134,7 +135,7 @@ class _UserLoginState extends State<UserLogin> {
                                 child: MaterialButton(
                                   onPressed: () {
                                     setState(() {
-                                      _isPhoneVerification = true;
+                                      isPhoneVerification = true;
                                     });
                                   },
                                   child: Text(
@@ -151,7 +152,7 @@ class _UserLoginState extends State<UserLogin> {
                                 height: 40.h,
                                 width: 141.w,
                                 decoration: BoxDecoration(
-                                  color: _isPhoneVerification
+                                  color: isPhoneVerification
                                       ? _secondaryColor
                                       : _primaryColor,
                                   borderRadius:
@@ -162,7 +163,7 @@ class _UserLoginState extends State<UserLogin> {
                                 child: MaterialButton(
                                   onPressed: () {
                                     setState(() {
-                                      _isPhoneVerification = false;
+                                      isPhoneVerification = false;
                                     });
                                   },
                                   child: Text(
@@ -180,13 +181,13 @@ class _UserLoginState extends State<UserLogin> {
                           SizedBox(
                             height: 22.h,
                           ),
-                          _isPhoneVerification
+                          isPhoneVerification
                               ? phoneInputField()
                               : emailInputField(),
                           SizedBox(
                             height: 40.h,
                           ),
-                          _isPhoneVerification
+                          isPhoneVerification
                               ? passField(context, "OTP: ")
                               : passField(context, "Password: "),
                           SizedBox(
@@ -201,7 +202,7 @@ class _UserLoginState extends State<UserLogin> {
                             ),
                             child: MaterialButton(
                               onPressed: () async {
-                                if (_isPhoneVerification) {
+                                if (isPhoneVerification) {
                                   if (_inputValue == null) {
                                     CustomSnackbar.showSnackBar(
                                         context,
@@ -236,7 +237,7 @@ class _UserLoginState extends State<UserLogin> {
                                 }
                               },
                               child: Text(
-                                _isPhoneVerification
+                                isPhoneVerification
                                     ? "GET OTP"
                                     : _isLogin
                                         ? "LOG IN"
@@ -291,8 +292,8 @@ class _UserLoginState extends State<UserLogin> {
 
   TextField passField(BuildContext context, String text) {
     return TextField(
-      controller: _isPhoneVerification ? _otpController : passwordText,
-      keyboardType: _isPhoneVerification
+      controller: isPhoneVerification ? _otpController : passwordText,
+      keyboardType: isPhoneVerification
           ? TextInputType.number
           : TextInputType.emailAddress,
       onChanged: (value) {
@@ -300,8 +301,8 @@ class _UserLoginState extends State<UserLogin> {
           _password = value.trim();
         });
       },
-      obscureText: !_isPhoneVerification,
-      maxLength: _isPhoneVerification ? 6 : null,
+      obscureText: !isPhoneVerification,
+      maxLength: isPhoneVerification ? 6 : null,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
         label: Text(
@@ -313,7 +314,7 @@ class _UserLoginState extends State<UserLogin> {
         ),
         floatingLabelBehavior: FloatingLabelBehavior.always,
         floatingLabelAlignment: FloatingLabelAlignment.start,
-        suffixIcon: _isPhoneVerification
+        suffixIcon: isPhoneVerification
             ? IconButton(
                 onPressed: () => CustomSnackbar.showSnackBar(
                     context, "OTP has been resent", Colors.black),
