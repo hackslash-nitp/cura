@@ -1,5 +1,4 @@
 import 'package:cura/individual/home_page_individual.dart';
-import 'package:cura/startup_screens/intro_screen.dart';
 import 'package:cura/startup_screens/preview_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -20,15 +19,13 @@ class ScreenDecider extends StatelessWidget {
   Widget build(BuildContext context) {
     FirebaseAuthentication auth = FirebaseAuthentication();
     return MaterialApp(
-      title: 'Cura',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      debugShowCheckedModeBanner: false,
-      // home: auth.getCurrentUser() == null
-      //     ? const PreviewPage() // directly access by substituting in place of PreviewPage()
-      //     : const HomePageIndividual()
-      home: const IntroScreen(),
-    );
+        title: 'Cura',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        debugShowCheckedModeBanner: false,
+        home: auth.getCurrentUser() == null
+            ? const PreviewPage() // directly access by substituting in place of PreviewPage()
+            : const HomePageIndividual());
   }
 }

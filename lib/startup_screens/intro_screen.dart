@@ -1,3 +1,4 @@
+import 'package:cura/startup_screens/login.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -60,7 +61,11 @@ class IntroScreen extends StatelessWidget {
                       width: 300.w,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                const UserLogin(isPhoneLogin: false)));
+                      },
                       child: Container(
                         height: 70.h,
                         width: double.infinity,
@@ -93,7 +98,11 @@ class IntroScreen extends StatelessWidget {
                     ),
                     const Spacer(),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                const UserLogin(isPhoneLogin: true)));
+                      },
                       child: Container(
                         height: 70.h,
                         width: double.infinity,
