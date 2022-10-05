@@ -60,92 +60,49 @@ class IntroScreen extends StatelessWidget {
                       image: const AssetImage("assets/Group 44.png"),
                       width: 300.w,
                     ),
-                    GestureDetector(
+                    IntroRoutingComponent(
+                      icon: Icons.email_rounded,
+                      text: "Email",
+                      isEmail: true,
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>
                                 const UserLogin(isPhoneLogin: false)));
                       },
-                      child: Container(
-                        height: 70.h,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          color: const Color(0xFF92B7C0),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.email_rounded,
-                              size: 30.w,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 20.w,
-                            ),
-                            Text(
-                              "Email",
-                              style: TextStyle(
-                                  fontSize: 24.sp,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white),
-                            )
-                          ],
-                        ),
-                      ),
                     ),
                     const Spacer(),
-                    GestureDetector(
+                    IntroRoutingComponent(
+                      icon: Icons.phone,
+                      text: "Phone",
+                      isEmail: false,
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) =>
                                 const UserLogin(isPhoneLogin: true)));
                       },
-                      child: Container(
-                        height: 70.h,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          border: Border.all(
-                              color: const Color(0xFF92B7C0), width: 1),
-                          color: Colors.white,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.phone,
-                              size: 30.w,
-                              color: const Color(0xFF92B7C0),
-                            ),
-                            SizedBox(
-                              width: 20.w,
-                            ),
-                            Text("Phone",
-                                style: TextStyle(
-                                  fontSize: 24.sp,
-                                  fontWeight: FontWeight.w700,
-                                  color: const Color(0xFF92B7C0),
-                                ))
-                          ],
-                        ),
-                      ),
                     ),
                     const Spacer(),
-                    RichText(
-                        text: TextSpan(
-                            text: 'Terms & Conditions',
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => termsDialog);
+                      },
+                      child: SizedBox(
+                        width: 500.w,
+                        height: 50.h,
+                        child: Center(
+                          child: Text(
+                            "Terms & Conditions",
                             style: TextStyle(
                                 fontSize: 12.sp,
                                 color: const Color(0xFF92B7C0),
-                                fontWeight: FontWeight.w500),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                print("T&C");
-                              })),
+                                fontWeight: FontWeight.w500,
+                                decoration: TextDecoration.underline),
+                          ),
+                        ),
+                      ),
+                    ),
                     const Spacer()
                   ],
                 ),
@@ -153,3 +110,93 @@ class IntroScreen extends StatelessWidget {
             )));
   }
 }
+
+class IntroRoutingComponent extends StatelessWidget {
+  final IconData? icon;
+  final String text;
+  final void Function()? onTap;
+  final bool isEmail;
+
+  final primaryColor = const Color(0xFF92B7C0);
+
+  const IntroRoutingComponent(
+      {Key? key,
+      required this.icon,
+      required this.text,
+      required this.onTap,
+      required this.isEmail})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 70.h,
+        width: double.infinity,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.r),
+            color: isEmail ? primaryColor : Colors.white,
+            border:
+                isEmail ? null : Border.all(color: primaryColor, width: 1.0)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              icon,
+              size: 30.w,
+              color: isEmail ? Colors.white : primaryColor,
+            ),
+            SizedBox(
+              width: 20.w,
+            ),
+            Text(
+              text,
+              style: TextStyle(
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.w700,
+                  color: isEmail ? Colors.white : primaryColor),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+Dialog termsDialog = Dialog(
+  elevation: 2,
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(17.r)),
+  child: Container(
+      height: 512.h,
+      width: 380.w,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(17.r), color: Colors.white),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          const Spacer(),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.h),
+            child: Text(
+              "TERMS & CONDITIONS",
+              style: TextStyle(
+                fontSize: 24.sp,
+                fontWeight: FontWeight.w400,
+                color: const Color(0xFF343030),
+              ),
+            ),
+          ),
+          const Spacer(),
+          Expanded(
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              children: <Widget>[],
+            ),
+          ),
+          const Spacer()
+        ],
+      )),
+);
