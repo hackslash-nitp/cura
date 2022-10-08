@@ -1,3 +1,4 @@
+
 import 'package:cura/individual/home_page_individual.dart';
 import 'package:cura/startup_screens/preview_page.dart';
 import 'package:firebase_core/firebase_core.dart';
