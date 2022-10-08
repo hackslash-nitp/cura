@@ -20,14 +20,13 @@ class ScreenDecider extends StatelessWidget {
   Widget build(BuildContext context) {
     FirebaseAuthentication auth = FirebaseAuthentication();
     return MaterialApp(
-      title: 'Cura',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: auth.getCurrentUser() == null
-          ? const PreviewPage() // directly access by substituting in place of PreviewPage()
-          : const HomePageIndividual(),
-    );
+        title: 'Cura',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        debugShowCheckedModeBanner: false,
+        home: auth.getCurrentUser() == null
+            ? const PreviewPage() // directly access by substituting in place of PreviewPage()
+            : const HomePageIndividual());
   }
 }

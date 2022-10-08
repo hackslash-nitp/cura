@@ -1,4 +1,5 @@
 import 'package:cura/main.dart';
+import 'package:cura/shared/widgets/navigation-bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -13,8 +14,9 @@ class _postfeedState extends State<postfeed> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        designSize: Size(428, 926),
+        designSize: const Size(428, 926),
         builder: (context, child) => Scaffold(
+              bottomNavigationBar: const CustomNavigationBar(currentIndex: 1),
               body: SafeArea(
                   child: SizedBox(
                 width: double.infinity,
@@ -40,7 +42,9 @@ class _postfeedState extends State<postfeed> {
                             Icons.arrow_back_ios_new,
                             size: 15.w,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
                         ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(110.w, 0, 0, 0),
@@ -210,31 +214,6 @@ class _postfeedState extends State<postfeed> {
                   ]),
                 ),
               )),
-              bottomNavigationBar: BottomNavigationBar(
-                  selectedItemColor: Color.fromARGB(255, 22, 115, 121),
-                  unselectedItemColor: Colors.black,
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      label: 'home',
-                      backgroundColor: Color.fromARGB(255, 193, 236, 239),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.add),
-                      label: 'add',
-                      backgroundColor: Color.fromARGB(255, 193, 236, 239),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.chat_bubble_outline),
-                      label: 'chat',
-                      backgroundColor: Color.fromARGB(255, 193, 236, 239),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.people),
-                      label: 'profile',
-                      backgroundColor: Color.fromARGB(255, 193, 236, 239),
-                    ),
-                  ]),
             ));
   }
 }

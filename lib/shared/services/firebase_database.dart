@@ -47,8 +47,7 @@ class FirestoreDatabase {
         .set(profileData);
   }
 
-  Future<void> postOrganizationProfileData(
-      Map<String, dynamic> profileData) async {
+  Future<void> postOrganizationProfileData(Map<String, dynamic> profileData) async {
     String? uid;
     final currentUser = _auth.getCurrentUser();
     if (currentUser == null) {
@@ -62,4 +61,24 @@ class FirestoreDatabase {
         .doc(uid)
         .set(profileData);
   }
+  Future<List> getOrganisationProfileData() async{
+    final orgUsers = _db.collection("users").doc("organisationUsers").collection("profileData");
+    QuerySnapshot snap = await orgUsers.get();
+    List allData = snap.docs;
+    List orgProfiles = [];
+    for(var d in allData){
+      orgProfiles.add(d.data());
+    }
+    return orgProfiles;
+  }
+  
+  Future<void> postVolunteerData(Map<String,dynamic> volunteerData) async{
+    await _db.collection("users")
+        .doc("individualUsers")
+        .collection("volunteerDetails")
+        .doc()
+        .set(volunteerData);
+  }
+
 }
+

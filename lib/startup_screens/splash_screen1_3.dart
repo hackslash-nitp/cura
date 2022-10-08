@@ -1,4 +1,4 @@
-import 'package:cura/startup_screens/login.dart';
+import 'package:cura/startup_screens/intro_screen.dart';
 import 'package:cura/startup_screens/preview_page.dart';
 import 'package:flutter/material.dart';
 import 'splash_slide.dart';
@@ -163,7 +163,7 @@ fundraising.''',
                                 ),
                                 onPressed: () => Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: ((context) => const UserLogin()),
+                                    builder: ((context) => const IntroScreen()),
                                   ),
                                 ),
                                 child: Padding(
