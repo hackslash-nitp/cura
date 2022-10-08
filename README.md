@@ -1,4 +1,4 @@
-# cura
+# Cura
 
 A new Flutter project.
 
