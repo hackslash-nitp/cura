@@ -20,8 +20,7 @@ class UserLogin extends StatefulWidget {
   const UserLogin({Key? key, required this.isPhoneLogin}) : super(key: key);
 
   @override
-  State<UserLogin> createState() =>
-      _UserLoginState(isPhoneVerification: isPhoneLogin);
+  State<UserLogin> createState() => _UserLoginState(isPhoneVerification: isPhoneLogin);
 }
 
 class _UserLoginState extends State<UserLogin> {
@@ -134,6 +133,7 @@ class _UserLoginState extends State<UserLogin> {
                                 ),
                                 child: MaterialButton(
                                   onPressed: () {
+                                    FocusManager.instance.primaryFocus?.unfocus();
                                     setState(() {
                                       isPhoneVerification = true;
                                     });
@@ -162,6 +162,7 @@ class _UserLoginState extends State<UserLogin> {
                                 ),
                                 child: MaterialButton(
                                   onPressed: () {
+                                    FocusManager.instance.primaryFocus?.unfocus();
                                     setState(() {
                                       isPhoneVerification = false;
                                     });
