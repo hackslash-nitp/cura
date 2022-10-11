@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:cura/shared/widgets/gradient_background.dart';
-import 'package:cura/main.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:searchfield/searchfield.dart';
-// import 'package:searchfield/searchfield.dart';
 
-class health extends StatefulWidget {
-  const health({Key? key}) : super(key: key);
+class HealthPage extends StatefulWidget {
+  const HealthPage({Key? key}) : super(key: key);
 
   @override
-  State<health> createState() => _healthState();
+  State<HealthPage> createState() => _HealthPageState();
 }
 
-class _healthState extends State<health> {
+class _HealthPageState extends State<HealthPage> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -215,20 +212,5 @@ class _healthState extends State<health> {
                     ),
               )
             );
-
-//import 'package:flutter/material.dart';
-
-//class HealthPage extends StatefulWidget {
-//  const HealthPage({super.key});
-
- // @override
- // State<HealthPage> createState() => _HealthPageState();
-//}
-
-//class _HealthPageState extends State<HealthPage> {
-//  @override
-//  Widget build(BuildContext context) {
-//   return Container();
-//
-//  }
-//}
+ }
+}
