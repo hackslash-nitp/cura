@@ -58,7 +58,7 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: ScreenUtilInit(
-        designSize: const Size(238, 926),
+        designSize: const Size(428, 926),
         builder: (context, child) => Scaffold(
             bottomNavigationBar: const CustomNavigationBar(currentIndex: 0),
             extendBodyBehindAppBar: true,
@@ -163,8 +163,7 @@ class HomePageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context)
-          .push(MaterialPageRoute(builder: ((context) => widget))),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: ((context) => widget))),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 5.w),
         child: Container(
@@ -254,14 +253,14 @@ class TextPart extends StatelessWidget {
         Text(
           heading,
           style: TextStyle(
-              fontSize: 15.sp,
+              fontSize: 32.sp,
               fontWeight: FontWeight.w700,
               color: const Color(0xFF92B7C0)),
         ),
         Text(
           subHeading,
-          style: TextStyle(
-              fontSize: 10.sp,
+          style:TextStyle(
+              fontSize: 18.sp,
               color: const Color.fromRGBO(0, 0, 0, 0.58),
               fontWeight: FontWeight.w700),
         )
