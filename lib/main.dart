@@ -2,6 +2,7 @@
 import 'package:cura/individual/health.dart';
 import 'package:cura/individual/home_page_individual.dart';
 import 'package:cura/startup_screens/preview_page.dart';
+import 'package:cura/individual/spend_time.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'shared/services/firebase_authentication.dart';
@@ -27,7 +28,7 @@ class ScreenDecider extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         home: auth.getCurrentUser() == null
-            ? const PreviewPage() // directly access by substituting in place of PreviewPage()
+            ? const SpendTime() // directly access by substituting in place of PreviewPage()
             : const HomePageIndividual());
   }
 }

@@ -7,7 +7,7 @@ class SupportPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0)),
           color: Color(0xFFC7E2E4),
@@ -19,7 +19,7 @@ class SupportPage extends StatelessWidget {
           children: <Widget>[
             MaterialButton(
               onPressed: () {},
-              child: Icon(
+              child: const Icon(
                 Icons.home_filled,
                 color: Color.fromARGB(255, 41, 159, 168),
               ),
