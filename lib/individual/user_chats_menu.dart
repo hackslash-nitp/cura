@@ -1,6 +1,7 @@
 import 'package:cura/individual/user_chat_screen.dart';
 import 'package:cura/shared/widgets/navigation-bar.dart';
 import 'package:flutter/material.dart';
+import 'package:cura/individual/home_page_individual.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../shared/widgets/gradient_background.dart';
@@ -47,7 +48,7 @@ class _UserChatsScreenState extends State<UserChatsScreen> {
             color: Colors.black,
           ),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePageIndividual()));
           },
         ),
         elevation: 0.0,

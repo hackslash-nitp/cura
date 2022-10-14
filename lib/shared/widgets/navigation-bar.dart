@@ -31,8 +31,12 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
         showUnselectedLabels: false,
         currentIndex: widget.currentIndex,
         onTap: ((value) {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => navItems[value]));
+          if(value!=widget.currentIndex) {
+            Navigator.pushReplacement(context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => navItems[value],),
+            );
+          }
         }),
         items: const [
           BottomNavigationBarItem(
