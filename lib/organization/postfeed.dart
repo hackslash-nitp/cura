@@ -1,6 +1,7 @@
 import 'package:cura/main.dart';
 import 'package:cura/shared/widgets/navigation-bar.dart';
 import 'package:flutter/material.dart';
+import 'package:cura/individual/home_page_individual.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class postfeed extends StatefulWidget {
@@ -43,7 +44,7 @@ class _postfeedState extends State<postfeed> {
                             size: 15.w,
                           ),
                           onPressed: () {
-                            Navigator.of(context).pop();
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePageIndividual()));
                           },
                         ),
                         Padding(

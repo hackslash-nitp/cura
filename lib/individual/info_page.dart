@@ -1,3 +1,4 @@
+import 'package:cura/individual/home_page_individual.dart';
 import 'package:cura/shared/services/firebase_authentication.dart';
 import 'package:cura/shared/widgets/navigation-bar.dart';
 import 'package:cura/startup_screens/login.dart';
@@ -24,7 +25,7 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
               color: Colors.black,
               size: MediaQuery.of(context).size.height * 0.025),
           leading: IconButton(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePageIndividual())),
             icon: Icon(Icons.keyboard_arrow_left),
             color: Colors.black,
           ),
