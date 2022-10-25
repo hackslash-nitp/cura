@@ -74,25 +74,6 @@ class _UserLoginState extends State<UserLogin> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(
-                      children: <Widget>[
-                        IconButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            icon: Icon(
-                              Icons.arrow_back_ios_new,
-                              size: 15.h,
-                            )),
-                        Text(
-                          _isLogin ? "Log In" : "Sign Up",
-                          style: TextStyle(
-                            fontSize: 24.sp,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 50.w),
                       child: Column(

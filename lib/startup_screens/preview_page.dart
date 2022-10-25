@@ -55,29 +55,26 @@ class _PreviewPageState extends State<PreviewPage> {
                     SizedBox(
                       width: 250.w,
                       height: 57.h,
-                      child: Expanded(
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.r),
-                            ),
-                            primary: Colors.white,
-                            backgroundColor:
-                                const Color.fromARGB(255, 137, 184, 189),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.r),
                           ),
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pushReplacement(MaterialPageRoute(
-                              builder: (context) => const SplashScreen(),
-                            ));
-                          },
-                          child: Text(
-                            "GET STARTED",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.w700),
-                          ),
+                          backgroundColor:
+                              const Color.fromARGB(255, 137, 184, 189),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                            builder: (context) => const SplashScreen(),
+                          ));
+                        },
+                        child: Text(
+                          "GET STARTED",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w700),
                         ),
                       ),
                     ),
