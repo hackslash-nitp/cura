@@ -2,7 +2,7 @@ import 'package:cura/organization/org_chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../shared/widgets/gradient_background.dart';
-import 'package:cura/stringScreenArguments.dart';
+import 'package:cura/shared/services/stringScreenArguments.dart';
 
 class OrgChatsScreen extends StatefulWidget {
   const OrgChatsScreen({Key? key}) : super(key: key);
