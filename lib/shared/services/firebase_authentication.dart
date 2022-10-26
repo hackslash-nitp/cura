@@ -17,13 +17,11 @@ class FirebaseAuthentication {
   }
 
   //Function to login user using email and password
-  Future<String?> loginUserWithEmail(
-      String email, String password, BuildContext context) async {
+  Future<String?> loginUserWithEmail(String email, String password, BuildContext context) async {
     try {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
-          .then((value) => Navigation.navigateToPageWithReplacement(
-              context, const HomePageIndividual()));
+          .then((value) => Navigation.navigateToPageWithReplacement(context, HomePageIndividual.routeName));
     } on FirebaseAuthException catch (e) {
       CustomErrorDialog.showErrorDialog(context, e.message!);
       return null;
@@ -32,8 +30,7 @@ class FirebaseAuthentication {
   }
 
   //Function to login user with phone number
-  Future<void> loginUserWithPhoneNumber(
-      String phoneNumber, BuildContext context, bool isSignUp) async {
+  Future<void> loginUserWithPhoneNumber(String phoneNumber, BuildContext context, bool isSignUp) async {
     try {
       await _auth.verifyPhoneNumber(
           timeout: const Duration(seconds: 60),
@@ -46,10 +43,8 @@ class FirebaseAuthentication {
             if (cred.smsCode != null) {
               try {
                 await _auth.signInWithCredential(cred).then((value) => isSignUp
-                    ? Navigation.navigateToPageWithReplacement(
-                        context, const HomePageIndividual())
-                    : Navigation.navigateToPageWithReplacement(
-                        context, const CreateAccountPage()));
+                    ? Navigation.navigateToPageWithReplacement(context, HomePageIndividual.routeName)
+                    : Navigation.navigateToPageWithReplacement(context, CreateAccountPage.routeName));
               } on FirebaseAuthException catch (e) {
                 CustomErrorDialog.showErrorDialog(context, e.message!);
               }
@@ -66,15 +61,12 @@ class FirebaseAuthentication {
   }
 
   //Function to sign-up user
-  Future<void> signupUser(
-      String email, String password, BuildContext context) async {
+  Future<void> signupUser(String email, String password, BuildContext context) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      await _auth.createUserWithEmailAndPassword(email: email, password: password);
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
-          .then((value) => Navigation.navigateToPageWithReplacement(
-              context, const CreateAccountPage()));
+          .then((value) => Navigation.navigateToPageWithReplacement(context, CreateAccountPage.routeName));
     } on FirebaseAuthException catch (e) {
       CustomErrorDialog.showErrorDialog(context, e.message!);
     }
