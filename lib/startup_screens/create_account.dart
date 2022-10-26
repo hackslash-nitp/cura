@@ -1,10 +1,11 @@
 import 'package:cura/individual/account_setup.dart';
+import 'package:cura/organization/account_setup.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import '../organization/account_setup.dart';
 import '../shared/services/firebase_authentication.dart';
 
 class CreateAccountPage extends StatefulWidget {
+  static const String routeName = '/CreateAccountPage';
   const CreateAccountPage({Key? key}) : super(key: key);
 
   @override
@@ -36,8 +37,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                           ],
                         ),
                       ),
-                      child: Image.asset(
-                          "assets/startup_assets/create_account_assets/create_account.png")),
+                      child: Image.asset("assets/startup_assets/create_account_assets/create_account.png")),
                 ),
                 Expanded(
                   child: Container(
@@ -81,16 +81,11 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Image.asset(
-                                    "assets/startup_assets/create_account_assets/profile_primary.png",
-                                    color: hasChanged
-                                        ? const Color(0xFFbbbbbb)
-                                        : const Color(0xFF92B7C0)),
+                                Image.asset("assets/startup_assets/create_account_assets/profile_primary.png",
+                                    color: hasChanged ? const Color(0xFFbbbbbb) : const Color(0xFF92B7C0)),
                                 Text("HELPER",
                                     style: TextStyle(
-                                      color: hasChanged
-                                          ? const Color(0xFFbbbbbb)
-                                          : const Color(0xFF729CA3),
+                                      color: hasChanged ? const Color(0xFFbbbbbb) : const Color(0xFF729CA3),
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.w600,
                                     )),
@@ -99,17 +94,12 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Image.asset(
-                                    "assets/startup_assets/create_account_assets/profile_primary.png",
-                                    color: hasChanged
-                                        ? const Color(0xFF92B7C0)
-                                        : const Color(0xFFbbbbbb)),
+                                Image.asset("assets/startup_assets/create_account_assets/profile_primary.png",
+                                    color: hasChanged ? const Color(0xFF92B7C0) : const Color(0xFFbbbbbb)),
                                 Text(
                                   "ORGANISATION",
                                   style: TextStyle(
-                                    color: hasChanged
-                                        ? const Color(0xFF729CA3)
-                                        : const Color(0xFFbbbbbb),
+                                    color: hasChanged ? const Color(0xFF729CA3) : const Color(0xFFbbbbbb),
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -136,24 +126,17 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                           onPressed: () {
                             //next button functionality
                             option == 0
-                                ? Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        const IndividualAccountSetup()))
-                                : Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) =>
-                                        const OrgAccountSetup()));
+                                ? Navigator.of(context).pushNamed(IndividualAccountSetup.routeName)
+                                : Navigator.of(context).pushNamed(OrgAccountSetup.routeName);
                           },
                           style: TextButton.styleFrom(
                             alignment: Alignment.topCenter,
                             primary: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(28.0)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28.0)),
                             backgroundColor: const Color(0xFF92B7C0),
                             minimumSize: const Size(100.0, 40.0),
                           ),
-                          child: const Text("Next",
-                              style: TextStyle(
-                                  fontSize: 20.0, fontWeight: FontWeight.w500)),
+                          child: const Text("Next", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w500)),
                         ),
                       ],
                     ),
@@ -165,9 +148,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
               padding: const EdgeInsets.only(left: 8.0),
               child: IconButton(
                 onPressed: () async {
-                  await _auth
-                      .logoutUser(context)
-                      .then((value) => Navigator.of(context).pop());
+                  await _auth.logoutUser(context).then((value) => Navigator.of(context).pop());
                 },
                 icon: const Icon(Icons.arrow_back_ios),
               ),

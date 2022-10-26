@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatScreen extends StatefulWidget {
+  static const String routeName = '/ChatScreen';
   final String orgName, imgUrl;
-  const ChatScreen({Key? key, required this.orgName, required this.imgUrl})
-      : super(key: key);
+  const ChatScreen({Key? key, required this.orgName, required this.imgUrl}) : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -30,15 +30,9 @@ class _ChatScreenState extends State<ChatScreen> {
   ];
   final List<Map<String, dynamic>> msgList = [
     {'msg': 'Hey!', 'time': '4:00 pm', 'isMe': true, 'date': '18 August 2022'},
+    {'msg': 'Hello sir! How can we help you ?', 'time': '4:01 pm', 'isMe': false, 'date': '18 August 2022'},
     {
-      'msg': 'Hello sir! How can we help you ?',
-      'time': '4:01 pm',
-      'isMe': false,
-      'date': '18 August 2022'
-    },
-    {
-      'msg':
-          'I want to come to your foundation. What’s the time allowed for outsiders to come?',
+      'msg': 'I want to come to your foundation. What’s the time allowed for outsiders to come?',
       'time': '4:02 pm',
       'isMe': true,
       'date': '18 August 2022'
@@ -49,12 +43,7 @@ class _ChatScreenState extends State<ChatScreen> {
       'isMe': false,
       'date': '19 August 2022'
     },
-    {
-      'msg': 'Okay! Thank you.',
-      'time': '4:04 pm',
-      'isMe': true,
-      'date': '20 August 2022'
-    },
+    {'msg': 'Okay! Thank you.', 'time': '4:04 pm', 'isMe': true, 'date': '20 August 2022'},
   ];
 
   @override
@@ -81,8 +70,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   Expanded(
                     child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
@@ -99,8 +87,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             return DateMsgTile(
                               convDate: msgList[0]['date'],
                             );
-                          } else if (index != msgList.length - 1 &&
-                              currentDate != msgList[index + 1]['date']) {
+                          } else if (index != msgList.length - 1 && currentDate != msgList[index + 1]['date']) {
                             showDate = true;
                             return MessageWidget(
                               isMe: msgList[index]['isMe'],
@@ -138,10 +125,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         children: <Widget>[
                           Transform.rotate(
                             angle: 45.0 * 3.14159 / 180,
-                            child: IconButton(
-                                onPressed: () {},
-                                iconSize: 28.h,
-                                icon: const Icon(Icons.attach_file)),
+                            child: IconButton(onPressed: () {}, iconSize: 28.h, icon: const Icon(Icons.attach_file)),
                           ),
                           Expanded(
                             child: TextField(
@@ -164,14 +148,8 @@ class _ChatScreenState extends State<ChatScreen> {
                               ),
                             ),
                           ),
-                          IconButton(
-                              onPressed: () {},
-                              iconSize: 28.h,
-                              icon: const Icon(Icons.add_photo_alternate)),
-                          IconButton(
-                              onPressed: () {},
-                              iconSize: 28.h,
-                              icon: const Icon(Icons.mic)),
+                          IconButton(onPressed: () {}, iconSize: 28.h, icon: const Icon(Icons.add_photo_alternate)),
+                          IconButton(onPressed: () {}, iconSize: 28.h, icon: const Icon(Icons.mic)),
                           IconButton(
                               onPressed: () {
                                 //The following code is for formatting purposes to display date.
@@ -181,13 +159,10 @@ class _ChatScreenState extends State<ChatScreen> {
                                 String meridian = hour < 11 ? "am" : "pm";
                                 hour = hour % 11;
                                 hour = hour == 0 ? 12 : hour - 1;
-                                String timeInHours =
-                                    hour < 10 ? "0$hour" : hour.toString();
+                                String timeInHours = hour < 10 ? "0$hour" : hour.toString();
                                 //--------------------------------------------------------------------
                                 int minutes = time.minute;
-                                String minute = minutes < 10
-                                    ? "0$minutes"
-                                    : minutes.toString();
+                                String minute = minutes < 10 ? "0$minutes" : minutes.toString();
                                 //--------------------------------------------------------------------
                                 String month = months[time.month - 1];
                                 setState(() {
@@ -232,8 +207,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       radius: 30.w,
                       child: Image(
                           image: widget.imgUrl == ""
-                              ? const AssetImage(
-                                  'assets/startup_assets/create_account_assets/profile_primary.png')
+                              ? const AssetImage('assets/startup_assets/create_account_assets/profile_primary.png')
                               : AssetImage(widget.imgUrl)),
                     ),
                     SizedBox(
@@ -317,9 +291,7 @@ class MessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dpUrl = isMe
-        ? "assets/startup_assets/create_account_assets/profile_primary.png"
-        : orgImgUrl;
+    final dpUrl = isMe ? "assets/startup_assets/create_account_assets/profile_primary.png" : orgImgUrl;
     const BorderRadius myBorderRadius = BorderRadius.only(
       topLeft: Radius.circular(20),
       topRight: Radius.circular(20),
@@ -370,8 +342,7 @@ class MessageWidget extends StatelessWidget {
       children: [
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment:
-              isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+          mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
           children: isMe ? rowItems.reversed.toList() : rowItems,
         ),
         const SizedBox(

@@ -1,8 +1,8 @@
 import 'package:cura/organization/org_chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../shared/widgets/gradient_background.dart';
+import 'package:cura/stringScreenArguments.dart';
 
 class OrgChatsScreen extends StatefulWidget {
   const OrgChatsScreen({Key? key}) : super(key: key);
@@ -85,8 +85,7 @@ class _OrgChatsScreenState extends State<OrgChatsScreen> {
                         minLines: null,
                         expands: true,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20.w, vertical: 10.h),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
                           border: InputBorder.none,
                           suffixIcon: IconButton(
                             onPressed: () {},
@@ -167,9 +166,8 @@ class _ContactTileState extends State<ContactTile> {
         });
       },
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => OrgChatScreen(
-                userName: widget.orgName, imgUrl: widget.imgUrl)));
+        Navigator.of(context).pushNamed(OrgChatScreen.routeName,
+            arguments: StringScreenArguments(nameProvided: widget.orgName, imgUrl: widget.imgUrl));
       },
       child: Container(
         height: 65.h,
@@ -192,8 +190,7 @@ class _ContactTileState extends State<ContactTile> {
                   backgroundColor: Colors.transparent,
                   child: Image(
                     image: widget.imgUrl == ''
-                        ? const AssetImage(
-                            "assets/startup_assets/create_account_assets/profile_primary.png")
+                        ? const AssetImage("assets/startup_assets/create_account_assets/profile_primary.png")
                         : AssetImage(widget.imgUrl),
                   ),
                 ),

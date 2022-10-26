@@ -5,6 +5,7 @@ import 'splash_slide.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SplashScreen extends StatefulWidget {
+  static const String routeName = '/SplashScreen';
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
@@ -32,8 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
       "title1": "Trusted, ",
       "title2": '''transparent
 fundraising.''',
-      "text":
-          "Grow online donations, track your suppoters, host an event, deep-dive into metrics, and more.",
+      "text": "Grow online donations, track your suppoters, host an event, deep-dive into metrics, and more.",
     }
   ];
   @override
@@ -66,16 +66,9 @@ fundraising.''',
                     ),
                     onPressed: () {
                       if (currentPage == 0) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PreviewPage(),
-                          ),
-                        );
+                        Navigator.of(context).pushNamed(PreviewPage.routeName);
                       } else {
-                        controller.previousPage(
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.easeInOut);
+                        controller.previousPage(duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
                       }
                     },
                   ),
@@ -90,8 +83,7 @@ fundraising.''',
                           backgroundColor: MaterialStateProperty.all(
                             const Color.fromARGB(87, 219, 246, 248),
                           ),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50.r),
                               side: const BorderSide(
@@ -102,10 +94,8 @@ fundraising.''',
                         ),
                         child: Text(
                           "Skip",
-                          style: TextStyle(
-                              color: const Color(0xFF645B5B),
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w400),
+                          style:
+                              TextStyle(color: const Color(0xFF645B5B), fontSize: 15.sp, fontWeight: FontWeight.w400),
                           softWrap: true,
                         )),
                   ),
@@ -145,8 +135,7 @@ fundraising.''',
                     children: <Widget>[
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: List.generate(
-                            splashContent.length, (index) => buildDot(index)),
+                        children: List.generate(splashContent.length, (index) => buildDot(index)),
                       ),
                       const Spacer(),
                       Padding(
@@ -158,23 +147,14 @@ fundraising.''',
                                     borderRadius: BorderRadius.circular(15.r),
                                   ),
                                   primary: Colors.white,
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 127, 176, 176),
+                                  backgroundColor: const Color.fromARGB(255, 127, 176, 176),
                                 ),
-                                onPressed: () => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: ((context) => const IntroScreen()),
-                                  ),
-                                ),
+                                onPressed: () => Navigator.of(context).pushNamed(IntroScreen.routeName),
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 10.h, horizontal: 34.w),
+                                  padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 34.w),
                                   child: Text(
                                     "Get Started",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20.sp,
-                                        fontWeight: FontWeight.w400),
+                                    style: TextStyle(color: Colors.white, fontSize: 20.sp, fontWeight: FontWeight.w400),
                                   ),
                                 ),
                               )
@@ -183,12 +163,9 @@ fundraising.''',
                                 child: FloatingActionButton(
                                   onPressed: () {
                                     controller.nextPage(
-                                        duration:
-                                            const Duration(milliseconds: 500),
-                                        curve: Curves.easeInOut);
+                                        duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
                                   },
-                                  backgroundColor:
-                                      const Color.fromARGB(255, 108, 166, 170),
+                                  backgroundColor: const Color.fromARGB(255, 108, 166, 170),
                                   child: Icon(
                                     Icons.arrow_forward,
                                     size: 50.r,
@@ -216,9 +193,7 @@ fundraising.''',
         height: 8,
         width: currentPage == index ? 8 : 8,
         decoration: BoxDecoration(
-          color: currentPage == index
-              ? const Color.fromARGB(255, 57, 121, 125)
-              : const Color(0xFFD8D8D8),
+          color: currentPage == index ? const Color.fromARGB(255, 57, 121, 125) : const Color(0xFFD8D8D8),
           borderRadius: BorderRadius.circular(5),
         ),
       ),

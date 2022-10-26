@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:searchfield/searchfield.dart';
 
 class DonationPage extends StatefulWidget {
+  static const String routeName = '/DonationPage';
   const DonationPage({Key? key}) : super(key: key);
 
   @override
@@ -46,10 +47,7 @@ class _DonationPageState extends State<DonationPage> {
                           padding: EdgeInsets.fromLTRB(110.w, 0, 0, 0),
                           child: Text(
                             "Donation",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 25.w,
-                                fontWeight: FontWeight.w500),
+                            style: TextStyle(color: Colors.black, fontSize: 25.w, fontWeight: FontWeight.w500),
                             softWrap: true,
                           ),
                         ),
@@ -90,13 +88,10 @@ class _DonationPageState extends State<DonationPage> {
                           Row(
                             children: [
                               Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(35.w, 10.h, 10.w, 10.h),
+                                padding: EdgeInsets.fromLTRB(35.w, 10.h, 10.w, 10.h),
                                 child: Text(
                                   "Enter the Amount",
-                                  style: TextStyle(
-                                      fontSize: 18.w,
-                                      fontWeight: FontWeight.w700),
+                                  style: TextStyle(fontSize: 18.w, fontWeight: FontWeight.w700),
                                 ),
                               ),
                             ],
@@ -106,8 +101,7 @@ class _DonationPageState extends State<DonationPage> {
                             child: TextFormField(
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
-                                fillColor:
-                                    const Color.fromARGB(255, 172, 220, 226),
+                                fillColor: const Color.fromARGB(255, 172, 220, 226),
                                 filled: true,
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.r),
@@ -118,10 +112,7 @@ class _DonationPageState extends State<DonationPage> {
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.r),
-                                  borderSide: BorderSide(
-                                      color: const Color.fromARGB(
-                                          255, 120, 194, 204),
-                                      width: 3.w),
+                                  borderSide: BorderSide(color: const Color.fromARGB(255, 120, 194, 204), width: 3.w),
                                 ),
                                 hintText: 'Amount',
                               ),
@@ -130,8 +121,7 @@ class _DonationPageState extends State<DonationPage> {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Padding(
-                              padding:
-                                  EdgeInsets.fromLTRB(40.w, 10.w, 10.w, 10.w),
+                              padding: EdgeInsets.fromLTRB(40.w, 10.w, 10.w, 10.w),
                               child: Text(
                                 "To",
                                 textAlign: TextAlign.left,
@@ -156,19 +146,14 @@ class _DonationPageState extends State<DonationPage> {
                               ],
                               searchInputDecoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.grey, width: 2.w),
+                                  borderSide: BorderSide(color: Colors.grey, width: 2.w),
                                   borderRadius: BorderRadius.circular(30.r),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.r),
-                                  borderSide: BorderSide(
-                                      color: const Color.fromARGB(
-                                          255, 137, 184, 189),
-                                      width: 2.w),
+                                  borderSide: BorderSide(color: const Color.fromARGB(255, 137, 184, 189), width: 2.w),
                                 ),
-                                fillColor:
-                                    const Color.fromARGB(255, 186, 231, 235),
+                                fillColor: const Color.fromARGB(255, 186, 231, 235),
                                 filled: true,
                                 suffixIcon: const Icon(
                                   Icons.arrow_drop_down,
@@ -181,8 +166,7 @@ class _DonationPageState extends State<DonationPage> {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Padding(
-                              padding:
-                                  EdgeInsets.fromLTRB(40.w, 10.h, 10.w, 10.h),
+                              padding: EdgeInsets.fromLTRB(40.w, 10.h, 10.w, 10.h),
                               child: Text(
                                 "Address",
                                 textAlign: TextAlign.left,
@@ -209,19 +193,14 @@ class _DonationPageState extends State<DonationPage> {
                               ],
                               searchInputDecoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.grey, width: 2.w),
+                                  borderSide: BorderSide(color: Colors.grey, width: 2.w),
                                   borderRadius: BorderRadius.circular(30.r),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.r),
-                                  borderSide: BorderSide(
-                                      color: const Color.fromARGB(
-                                          255, 137, 184, 189),
-                                      width: 2.w),
+                                  borderSide: BorderSide(color: const Color.fromARGB(255, 137, 184, 189), width: 2.w),
                                 ),
-                                fillColor:
-                                    const Color.fromARGB(255, 186, 231, 235),
+                                fillColor: const Color.fromARGB(255, 186, 231, 235),
                                 filled: true,
                                 suffixIcon: const Icon(
                                   Icons.arrow_drop_down,
@@ -254,8 +233,7 @@ class _DonationPageState extends State<DonationPage> {
                         padding: EdgeInsets.fromLTRB(8.w, 0, 0, 5.h),
                         child: Text(
                           "Donate as Anonymous",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 15.sp),
+                          style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15.sp),
                         ),
                       )
                     ],
@@ -275,10 +253,7 @@ class _DonationPageState extends State<DonationPage> {
                     onPressed: () {},
                     child: Text(
                       "Continue",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w700),
+                      style: TextStyle(color: Colors.white, fontSize: 20.sp, fontWeight: FontWeight.w700),
                     ),
                   ),
                 ),

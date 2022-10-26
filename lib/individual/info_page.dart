@@ -5,6 +5,7 @@ import 'package:cura/startup_screens/login.dart';
 import 'package:flutter/material.dart';
 
 class IndividualInfoPage extends StatefulWidget {
+  static const String routeName = '/IndividualInfoPage';
   const IndividualInfoPage({Key? key}) : super(key: key);
 
   @override
@@ -21,11 +22,9 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
         appBar: AppBar(
           elevation: 0.00,
           backgroundColor: Colors.transparent,
-          iconTheme: IconThemeData(
-              color: Colors.black,
-              size: MediaQuery.of(context).size.height * 0.025),
+          iconTheme: IconThemeData(color: Colors.black, size: MediaQuery.of(context).size.height * 0.025),
           leading: IconButton(
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePageIndividual())),
+            onPressed: () => Navigator.of(context).pushNamed(HomePageIndividual.routeName),
             icon: Icon(Icons.keyboard_arrow_left),
             color: Colors.black,
           ),
@@ -55,12 +54,9 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
                       Text(
                         'Donor Name \nDesignation',
                         style: TextStyle(
-                            fontSize:
-                                MediaQuery.of(context).size.height * 0.044,
-                            fontWeight: FontWeight.w700),
+                            fontSize: MediaQuery.of(context).size.height * 0.044, fontWeight: FontWeight.w700),
                       ),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.013),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.013),
                       SizedBox(
                         width: MediaQuery.of(context).size.height * 0.087,
                         height: MediaQuery.of(context).size.height * 0.032,
@@ -69,16 +65,12 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
                           child: Text(
                             'Edit',
                             style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).size.height * 0.015,
-                                fontWeight: FontWeight.w700),
+                                fontSize: MediaQuery.of(context).size.height * 0.015, fontWeight: FontWeight.w700),
                           ),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromRGBO(199, 226, 228, 1),
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    MediaQuery.of(context).size.height *
-                                        0.0076)),
+                                borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height * 0.0076)),
                           ),
                         ),
                       )
@@ -103,16 +95,12 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
                         Text(
                           'Email',
                           style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.026,
-                              fontWeight: FontWeight.w700),
+                              fontSize: MediaQuery.of(context).size.height * 0.026, fontWeight: FontWeight.w700),
                         ),
                         Text(
                           'xyz@gmail.com',
                           style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.02,
-                              fontWeight: FontWeight.w400),
+                              fontSize: MediaQuery.of(context).size.height * 0.02, fontWeight: FontWeight.w400),
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.026,
@@ -120,16 +108,12 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
                         Text(
                           'Contact Number',
                           style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.026,
-                              fontWeight: FontWeight.w700),
+                              fontSize: MediaQuery.of(context).size.height * 0.026, fontWeight: FontWeight.w700),
                         ),
                         Text(
                           '9584899876',
                           style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.02,
-                              fontWeight: FontWeight.w400),
+                              fontSize: MediaQuery.of(context).size.height * 0.02, fontWeight: FontWeight.w400),
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.026,
@@ -137,16 +121,12 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
                         Text(
                           'City',
                           style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.026,
-                              fontWeight: FontWeight.w700),
+                              fontSize: MediaQuery.of(context).size.height * 0.026, fontWeight: FontWeight.w700),
                         ),
                         Text(
                           'Patna',
                           style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.02,
-                              fontWeight: FontWeight.w400),
+                              fontSize: MediaQuery.of(context).size.height * 0.02, fontWeight: FontWeight.w400),
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.026,
@@ -154,16 +134,12 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
                         Text(
                           'Country',
                           style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.026,
-                              fontWeight: FontWeight.w700),
+                              fontSize: MediaQuery.of(context).size.height * 0.026, fontWeight: FontWeight.w700),
                         ),
                         Text(
                           'India',
                           style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.02,
-                              fontWeight: FontWeight.w400),
+                              fontSize: MediaQuery.of(context).size.height * 0.02, fontWeight: FontWeight.w400),
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.026,
@@ -171,9 +147,7 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
                         Text(
                           'About',
                           style: TextStyle(
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.026,
-                              fontWeight: FontWeight.w700),
+                              fontSize: MediaQuery.of(context).size.height * 0.026, fontWeight: FontWeight.w700),
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.104,
@@ -184,9 +158,7 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
                                 filled: true,
                                 hintText: 'About\n',
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        MediaQuery.of(context).size.height *
-                                            0.02))),
+                                    borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height * 0.02))),
                           ),
                         ),
                         SizedBox(
@@ -200,16 +172,12 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
                             style: ElevatedButton.styleFrom(
                               primary: Color.fromRGBO(199, 226, 228, 1),
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      MediaQuery.of(context).size.height *
-                                          0.0076)),
+                                  borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height * 0.0076)),
                             ),
                             child: Text(
                               'My Donations',
                               style: TextStyle(
-                                  fontSize: MediaQuery.of(context).size.height *
-                                      0.028,
-                                  fontWeight: FontWeight.w700),
+                                  fontSize: MediaQuery.of(context).size.height * 0.028, fontWeight: FontWeight.w700),
                             ),
                           ),
                         )
@@ -257,10 +225,7 @@ class _individualdrawerState extends State<individualdrawer> {
                 ),
                 const Text(
                   "Welcome!\nDonor Name",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                 )
               ],
             ),
@@ -324,12 +289,14 @@ class _individualdrawerState extends State<individualdrawer> {
                   ),
                   onTap: () async {
                     await _auth.logoutUser(context);
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) => UserLogin(
-                                  isPhoneLogin: true,
-                                )),
-                        (route) => false);
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil(UserLogin.routeName, (route) => false, arguments: true);
+                    // Navigator.of(context).pushAndRemoveUntil(
+                    //     MaterialPageRoute(
+                    //         builder: (context) => UserLogin(
+                    //               isPhoneLogin: true,
+                    //             )),
+                    //     (route) => false);
                   },
                 ),
               ],
