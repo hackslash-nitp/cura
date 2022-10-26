@@ -28,7 +28,7 @@ class SplashSlide extends StatelessWidget {
             Text(
               headTitle1,
               style: TextStyle(
-                fontSize: 30.sp,
+                fontSize: 25.sp,
                 fontWeight: FontWeight.bold,
                 color: const Color.fromARGB(213, 85, 202, 213),
               ),
@@ -37,7 +37,7 @@ class SplashSlide extends StatelessWidget {
             Text(
               headTitle2,
               style: TextStyle(
-                fontSize: 30.sp,
+                fontSize: 25.sp,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
