@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:cura/shared/widgets/message_dialog.dart';
 
 class SpendTime extends StatefulWidget {
+  static const String routeName = '/SpendTime';
   const SpendTime({super.key});
 
   @override
@@ -44,44 +45,43 @@ class _SpendTimeState extends State<SpendTime> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-            Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children:[
-              IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back_ios_new,
-                    size: 15.0,
-                  )),
-              const Text(
-                "Spend Time",
-                style: TextStyle(
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.w700,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_ios_new,
+                        size: 15.0,
+                      )),
+                  const Text(
+                    "Spend Time",
+                    style: TextStyle(
+                      fontSize: 22.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 48.0,
+                  ),
+                ],
               ),
-              const SizedBox(
-                width: 48.0,
-              ),
-            ],
-            ),
               Padding(
-                padding:const EdgeInsets.symmetric(horizontal:15.0,vertical:40.0),
+                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 40.0),
                 child: Container(
-                  padding:const EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.all(15.0),
                   decoration: BoxDecoration(
                       color: const Color(0xFFE2EFF0),
-                      borderRadius: BorderRadius.all(Radius.circular(
-                          MediaQuery.of(context).size.width * 0.063))),
+                      borderRadius: BorderRadius.all(Radius.circular(MediaQuery.of(context).size.width * 0.063))),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                       // ignore: sized_box_for_whitespace
                       Container(
-                        margin: const EdgeInsets.only(bottom:10.0),
+                        margin: const EdgeInsets.only(bottom: 10.0),
                         child: const Text(
                           'Select Organization',
                           style: TextStyle(
@@ -94,10 +94,10 @@ class _SpendTimeState extends State<SpendTime> {
 
                       // ignore: missing_required_param
                       Container(
-                        padding: const EdgeInsets.only(top:2.5,bottom: 2.5,left:10.0),
+                        padding: const EdgeInsets.only(top: 2.5, bottom: 2.5, left: 10.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30.0),
-                          color:const Color.fromARGB(255, 186, 231, 235),
+                          color: const Color.fromARGB(255, 186, 231, 235),
                         ),
                         child: SearchField(
                           hint: "Enter organisation's name",
@@ -106,7 +106,7 @@ class _SpendTimeState extends State<SpendTime> {
                           searchInputDecoration: const InputDecoration(
                             enabledBorder: InputBorder.none,
                             focusedBorder: InputBorder.none,
-                            suffixIcon:Icon(
+                            suffixIcon: Icon(
                               Icons.arrow_drop_down,
                             ),
                           ),
@@ -116,7 +116,7 @@ class _SpendTimeState extends State<SpendTime> {
                         ),
                       ),
                       Container(
-                        margin:const EdgeInsets.only(top:10.0,bottom:10.0),
+                        margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
                         child: const Text(
                           'Date',
                           style: TextStyle(
@@ -131,8 +131,7 @@ class _SpendTimeState extends State<SpendTime> {
 
                         //editing controller of this TextField
                         decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0)),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0)),
                           // ignore: prefer_const_constructors
 
                           //height: MediaQuery.of(context).size.height*0.038,
@@ -163,8 +162,8 @@ class _SpendTimeState extends State<SpendTime> {
                           print(formattedDate);*/ //formatted date output using intl package =>  2021-03-16
                             //you can implement different kind of Date Format here according to your requirement
                             setState(() {
-                              date.text = DateFormat('yyyy-MM-dd').format(
-                                  pickedDate); //set output date to TextField value.
+                              date.text =
+                                  DateFormat('yyyy-MM-dd').format(pickedDate); //set output date to TextField value.
                             });
                           } else {
                             // ignore: avoid_print
@@ -174,7 +173,7 @@ class _SpendTimeState extends State<SpendTime> {
                       ),
 
                       Container(
-                        margin:const EdgeInsets.only(top:10.0,bottom:10.0),
+                        margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
                         child: const Text(
                           'Time',
                           style: TextStyle(
@@ -189,7 +188,7 @@ class _SpendTimeState extends State<SpendTime> {
                         controller: time,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0),
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
                           // ignore: prefer_const_constructors
                           fillColor: const Color.fromARGB(255, 186, 231, 235),
@@ -210,19 +209,18 @@ class _SpendTimeState extends State<SpendTime> {
                           );
                           if (pickedTime != null) {
                             setState(() {
-                              time.text =
-                                  "${pickedTime.hour}:${pickedTime.minute}"; //set the value of text field.
+                              time.text = "${pickedTime.hour}:${pickedTime.minute}"; //set the value of text field.
                             });
                           } else {
                             print("Time is not selected");
                           }
                         },
                       ),
-                      const SizedBox(height:10.0),
+                      const SizedBox(height: 10.0),
                       SizedBox(
-                        width:double.infinity,
+                        width: double.infinity,
                         child: ElevatedButton(
-                          style:ElevatedButton.styleFrom(
+                          style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF729CA3),
                           ),
                           onPressed: (() {
@@ -231,24 +229,20 @@ class _SpendTimeState extends State<SpendTime> {
                               "date": date.text,
                               "time": time.text,
                             };
-                            if (orgName.text == "" ||
-                                date.text == "" ||
-                                time.text == "") {
+                            if (orgName.text == "" || date.text == "" || time.text == "") {
                               print("something missing");
                             } else {
                               fd.postVolunteerData(vData);
                             }
                             const MessageDialog(
                               title: 'Thank you!',
-                              contentText:
-                                  'Thank you,for giving your precious time',
+                              contentText: 'Thank you,for giving your precious time',
                               imageUrl: 'images/imageUrl.jpeg',
                             );
                           }),
-                          child:const Text(
+                          child: const Text(
                             'Submit',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700, color: Colors.white),
+                            style: TextStyle(fontWeight: FontWeight.w700, color: Colors.white),
                           ),
                         ),
                       )

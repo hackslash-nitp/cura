@@ -3,6 +3,7 @@ import 'splash_screen1_3.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PreviewPage extends StatefulWidget {
+  static const String routeName = '/PreviewPage';
   const PreviewPage({Key? key}) : super(key: key);
 
   @override
@@ -30,8 +31,7 @@ class _PreviewPageState extends State<PreviewPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Image(
-                          image: const AssetImage(
-                              "assets/startup_assets/preview_splash_assets/Group 43.png"),
+                          image: const AssetImage("assets/startup_assets/preview_splash_assets/Group 43.png"),
                           width: 400.w,
                           height: 450.h,
                         ),
@@ -60,21 +60,18 @@ class _PreviewPageState extends State<PreviewPage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.r),
                           ),
-                          backgroundColor:
-                              const Color.fromARGB(255, 137, 184, 189),
+                          backgroundColor: const Color.fromARGB(255, 137, 184, 189),
                         ),
                         onPressed: () {
-                          Navigator.of(context)
-                              .pushReplacement(MaterialPageRoute(
-                            builder: (context) => const SplashScreen(),
-                          ));
+                          Navigator.of(context).pushReplacementNamed(SplashScreen.routeName);
                         },
                         child: Text(
                           "GET STARTED",
                           style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w700),
+                            color: Colors.white,
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),

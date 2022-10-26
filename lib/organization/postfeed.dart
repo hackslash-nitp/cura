@@ -1,10 +1,10 @@
-import 'package:cura/main.dart';
 import 'package:cura/shared/widgets/navigation-bar.dart';
 import 'package:flutter/material.dart';
 import 'package:cura/individual/home_page_individual.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class postfeed extends StatefulWidget {
+  static const String routeName = '/postfeed';
   const postfeed({Key? key}) : super(key: key);
 
   @override
@@ -44,7 +44,7 @@ class _postfeedState extends State<postfeed> {
                             size: 15.w,
                           ),
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePageIndividual()));
+                            Navigator.of(context).pushNamed(HomePageIndividual.routeName);
                           },
                         ),
                         Padding(
@@ -53,10 +53,7 @@ class _postfeedState extends State<postfeed> {
                             child: Text(
                               "Posts Feed",
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 25.w,
-                                  fontWeight: FontWeight.w500),
+                              style: TextStyle(color: Colors.black, fontSize: 25.w, fontWeight: FontWeight.w500),
                               softWrap: true,
                             ),
                           ),
@@ -69,21 +66,18 @@ class _postfeedState extends State<postfeed> {
                         SizedBox(
                           height: 44.h,
                         ),
-                        Image.asset('assets/preview1.png',
-                            height: 45.h, width: 45.w),
+                        Image.asset('assets/preview1.png', height: 45.h, width: 45.w),
                         SizedBox(
                           width: 10.w,
                         ),
                         Column(children: [
                           Text(
                             "Younity Foundation ",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700, fontSize: 16.sp),
+                            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16.sp),
                           ),
                           Text(
                             "27 june 2022  8:00 AM",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400, fontSize: 12.sp),
+                            style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12.sp),
                           ),
                         ]),
 
@@ -101,8 +95,7 @@ class _postfeedState extends State<postfeed> {
                         SizedBox(
                           height: 10.h,
                         ),
-                        Image.asset('assets/children.png',
-                            height: 222.h, width: 381.w),
+                        Image.asset('assets/children.png', height: 222.h, width: 381.w),
                         Container(
                           height: 50.h,
                           width: 372.w,
@@ -111,27 +104,24 @@ class _postfeedState extends State<postfeed> {
                               border: Border.all(
                                 color: Color(0xFF6CAFB4),
                               )),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.favorite),
-                                SizedBox(
-                                  width: 80.w,
-                                ),
-                                Icon(Icons.comment),
-                                SizedBox(
-                                  width: 80.w,
-                                ),
-                                Icon(Icons.share),
-                              ]),
+                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                            Icon(Icons.favorite),
+                            SizedBox(
+                              width: 80.w,
+                            ),
+                            Icon(Icons.comment),
+                            SizedBox(
+                              width: 80.w,
+                            ),
+                            Icon(Icons.share),
+                          ]),
                         ),
                         SizedBox(
                           height: 5.h,
                         ),
                         Text(
                           "lorem ipsum dolor sit amet, consectetur adipis elit.",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 14.sp),
+                          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp),
                         ),
                         SizedBox(
                           height: 15.h,
@@ -144,21 +134,18 @@ class _postfeedState extends State<postfeed> {
                         SizedBox(
                           height: 44.h,
                         ),
-                        Image.asset('assets/Ellipse4.png',
-                            height: 45.h, width: 45.w),
+                        Image.asset('assets/Ellipse4.png', height: 45.h, width: 45.w),
                         SizedBox(
                           width: 10.w,
                         ),
                         Column(children: [
                           Text(
                             "Helping Hands ",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700, fontSize: 16.sp),
+                            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16.sp),
                           ),
                           Text(
                             "27 june 2022  8:00 AM",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400, fontSize: 12.sp),
+                            style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12.sp),
                           ),
                         ]),
 
@@ -175,8 +162,7 @@ class _postfeedState extends State<postfeed> {
                         SizedBox(
                           height: 10.h,
                         ),
-                        Image.asset('assets/old-people.png',
-                            height: 222.h, width: 381.w),
+                        Image.asset('assets/old-people.png', height: 222.h, width: 381.w),
                         Container(
                           height: 50.h,
                           width: 372.w,
@@ -185,27 +171,24 @@ class _postfeedState extends State<postfeed> {
                               border: Border.all(
                                 color: Color(0xFF6CAFB4),
                               )),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.favorite),
-                                SizedBox(
-                                  width: 80.w,
-                                ),
-                                Icon(Icons.comment),
-                                SizedBox(
-                                  width: 80.w,
-                                ),
-                                Icon(Icons.share),
-                              ]),
+                          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                            Icon(Icons.favorite),
+                            SizedBox(
+                              width: 80.w,
+                            ),
+                            Icon(Icons.comment),
+                            SizedBox(
+                              width: 80.w,
+                            ),
+                            Icon(Icons.share),
+                          ]),
                         ),
                         SizedBox(
                           height: 5.h,
                         ),
                         Text(
                           "lorem ipsum dolor sit amet, consectetur adipis elit.",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 14.sp),
+                          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp),
                         ),
                         SizedBox(
                           height: 10.h,

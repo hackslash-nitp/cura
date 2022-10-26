@@ -1,11 +1,9 @@
-
-import 'package:cura/individual/health.dart';
 import 'package:cura/individual/home_page_individual.dart';
 import 'package:cura/startup_screens/preview_page.dart';
-import 'package:cura/individual/spend_time.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'shared/services/firebase_authentication.dart';
+import 'RouteGenerator.dart';
 
 Future<void> main() async {
   //Don't change the following code
@@ -22,13 +20,13 @@ class ScreenDecider extends StatelessWidget {
   Widget build(BuildContext context) {
     FirebaseAuthentication auth = FirebaseAuthentication();
     return MaterialApp(
-        title: 'Cura',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        debugShowCheckedModeBanner: false,
-        home: auth.getCurrentUser() == null
-            ? const PreviewPage()
-            : const HomePageIndividual());
+      title: 'Cura',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      debugShowCheckedModeBanner: false,
+      initialRoute: auth.getCurrentUser() == null ? PreviewPage.routeName : HomePageIndividual.routeName,
+      onGenerateRoute: RouteGenerator.generateRoute,
+    );
   }
 }

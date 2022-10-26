@@ -1,9 +1,9 @@
 import 'package:cura/startup_screens/login.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class IntroScreen extends StatelessWidget {
+  static const String routeName = '/IntroScreen';
   const IntroScreen({super.key});
 
   @override
@@ -37,20 +37,17 @@ class IntroScreen extends StatelessWidget {
                         children: <Widget>[
                           const Image(
                             alignment: Alignment.topLeft,
-                            image: AssetImage(
-                                "assets/startup_assets/preview_splash_assets/star.png"),
+                            image: AssetImage("assets/startup_assets/preview_splash_assets/star.png"),
                           ),
                           Center(
                             child: Text(
                               "Welcome!",
-                              style: TextStyle(
-                                  fontSize: 36.sp, fontWeight: FontWeight.w700),
+                              style: TextStyle(fontSize: 36.sp, fontWeight: FontWeight.w700),
                             ),
                           ),
                           const Image(
                             alignment: Alignment.bottomRight,
-                            image: AssetImage(
-                                "assets/startup_assets/preview_splash_assets/star.png"),
+                            image: AssetImage("assets/startup_assets/preview_splash_assets/star.png"),
                           ),
                         ],
                       ),
@@ -65,9 +62,7 @@ class IntroScreen extends StatelessWidget {
                       text: "Email",
                       isEmail: true,
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                const UserLogin(isPhoneLogin: false)));
+                        Navigator.of(context).pushNamed(UserLogin.routeName, arguments: false);
                       },
                     ),
                     const Spacer(),
@@ -76,17 +71,13 @@ class IntroScreen extends StatelessWidget {
                       text: "Phone",
                       isEmail: false,
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                const UserLogin(isPhoneLogin: true)));
+                        Navigator.of(context).pushNamed(UserLogin.routeName, arguments: true);
                       },
                     ),
                     const Spacer(),
                     GestureDetector(
                       onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) => termsDialog);
+                        showDialog(context: context, builder: (context) => termsDialog);
                       },
                       child: SizedBox(
                         width: 500.w,
@@ -120,11 +111,7 @@ class IntroRoutingComponent extends StatelessWidget {
   final primaryColor = const Color(0xFF92B7C0);
 
   const IntroRoutingComponent(
-      {Key? key,
-      required this.icon,
-      required this.text,
-      required this.onTap,
-      required this.isEmail})
+      {Key? key, required this.icon, required this.text, required this.onTap, required this.isEmail})
       : super(key: key);
 
   @override
@@ -137,8 +124,7 @@ class IntroRoutingComponent extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.r),
             color: isEmail ? primaryColor : Colors.white,
-            border:
-                isEmail ? null : Border.all(color: primaryColor, width: 1.0)),
+            border: isEmail ? null : Border.all(color: primaryColor, width: 1.0)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -153,10 +139,8 @@ class IntroRoutingComponent extends StatelessWidget {
             ),
             Text(
               text,
-              style: TextStyle(
-                  fontSize: 24.sp,
-                  fontWeight: FontWeight.w700,
-                  color: isEmail ? Colors.white : primaryColor),
+              style:
+                  TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w700, color: isEmail ? Colors.white : primaryColor),
             )
           ],
         ),
@@ -171,8 +155,7 @@ Dialog termsDialog = Dialog(
   child: Container(
       height: 512.h,
       width: 380.w,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(17.r), color: Colors.white),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(17.r), color: Colors.white),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
