@@ -264,8 +264,10 @@ class _UserLoginState extends State<UserLogin> {
                 onPressed: () => CustomSnackbar.showSnackBar(context, "OTP has been resent", Colors.black),
                 iconSize: 25.h,
                 icon: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Icon(Icons.refresh),
+                    const Expanded(child: Icon(Icons.refresh)),
                     Text(
                       "Resend",
                       style: TextStyle(fontSize: 8.sp),
@@ -273,7 +275,7 @@ class _UserLoginState extends State<UserLogin> {
                   ],
                 ),
               )
-            : const SizedBox(),
+            : null,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.r),
         ),
