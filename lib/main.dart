@@ -26,7 +26,7 @@ class ScreenDecider extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: auth.getCurrentUser() == null ? IndividualInfoPage.routeName : IndividualInfoPage.routeName,
+      initialRoute: auth.getCurrentUser() == null ? PreviewPage.routeName : HomePageIndividual.routeName,
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
