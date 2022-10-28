@@ -2,17 +2,12 @@ import 'package:cura/individual/my_donations.dart';
 import 'package:cura/individual/support_team_page.dart';
 import 'package:cura/startup_screens/login.dart';
 import 'package:flutter/material.dart';
-
+import 'package:cura/shared/services/RouteGenerator.dart';
 import '../../individual/account_setup.dart';
 
-class mydrawer extends StatefulWidget {
-  const mydrawer({Key? key}) : super(key: key);
+class mydrawer extends StatelessWidget {
+  mydrawer({Key? key}) : super(key: key);
 
-  @override
-  State<mydrawer> createState() => _mydrawerState();
-}
-
-class _mydrawerState extends State<mydrawer> {
   @override
   final List<String> entries = [
     'Doner Contact',
@@ -27,9 +22,9 @@ class _mydrawerState extends State<mydrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: const Color.fromARGB(255, 166, 223, 250),
+      backgroundColor: Color.fromARGB(255, 166, 223, 250),
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
             gradient: LinearGradient(
           colors: [
             Color(0xFF6CAFB4),
@@ -46,9 +41,9 @@ class _mydrawerState extends State<mydrawer> {
           physics: ClampingScrollPhysics(),
           children: [
             Container(
-              padding: const EdgeInsets.only(top: 37, left: 16),
+              padding: EdgeInsets.only(top: 37, left: 16),
               child: Column(
-                children: const [
+                children: [
                   //profile image
                   SizedBox(
                     height: 104,
@@ -71,7 +66,7 @@ class _mydrawerState extends State<mydrawer> {
                 ],
               ),
             ),
-            const SizedBox(
+            SizedBox(
               height: 41,
             ),
 
@@ -84,48 +79,35 @@ class _mydrawerState extends State<mydrawer> {
                       return ListTile(
                         onTap: () {
                           if (entries[index] == 'Donation Records') {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const MyDonationsScreen()),
-                            );
+                            Navigator.of(context)
+                                .pushNamed(MyDonationsScreen.routeName);
                           }
 
                           if (entries[index] == 'Edit Profile') {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const IndividualAccountSetup()),
-                            );
+                            Navigator.of(context)
+                                .pushNamed(IndividualAccountSetup.routeName);
                           }
                           if (entries[index] == 'Support Team') {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SupportPage()),
-                            );
+                            Navigator.of(context)
+                                .pushNamed(SupportPage.routeName);
                           }
 
                           if (entries[index] == 'Log Out') {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const UserLogin()),
-                            );
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                UserLogin.routeName, (route) => false,
+                                arguments: true);
                           }
                         },
                         tileColor: Color.fromARGB(255, 255, 253, 253),
                         title: Text(entries[index],
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
                               color: Colors.black,
                             )),
                       );
                     }),
                     separatorBuilder: (((context, index) {
-                      return const Divider(
+                      return Divider(
                         height: 4,
                         thickness: 1,
                         color: Color.fromARGB(204, 42, 129, 151),
