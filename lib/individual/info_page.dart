@@ -239,14 +239,8 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
   }
 }
 
-class individualdrawer extends StatefulWidget {
-  const individualdrawer({Key? key}) : super(key: key);
-
-  @override
-  State<individualdrawer> createState() => _individualdrawerState();
-}
-
-class _individualdrawerState extends State<individualdrawer> {
+class individualdrawer extends StatelessWidget {
+  individualdrawer({Key? key}) : super(key: key);
   final FirebaseAuthentication _auth = FirebaseAuthentication();
   @override
   Widget build(BuildContext context) {
@@ -312,7 +306,10 @@ class _individualdrawerState extends State<individualdrawer> {
                     'Edit Profile',
                     style: TextStyle(fontSize: 14, color: Colors.black),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushNamed(IndividualAccountSetup.routeName);
+                  },
                 ),
                 const Divider(
                   height: 4,
