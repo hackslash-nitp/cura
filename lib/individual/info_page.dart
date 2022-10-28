@@ -1,8 +1,12 @@
 import 'package:cura/individual/home_page_individual.dart';
 import 'package:cura/shared/services/firebase_authentication.dart';
+import 'package:cura/shared/services/firebase_database.dart';
 import 'package:cura/shared/widgets/navigation-bar.dart';
 import 'package:cura/startup_screens/login.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+Map userData = {};
 
 class IndividualInfoPage extends StatefulWidget {
   static const String routeName = '/IndividualInfoPage';
@@ -14,9 +18,23 @@ class IndividualInfoPage extends StatefulWidget {
 
 class _IndividualInfoPageState extends State<IndividualInfoPage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
+
+  FirestoreDatabase fd = FirestoreDatabase();
+  bool isLoading = true;
+
   @override
+  void initState(){
+    isLoading = true;
+    fd.getIndividualProfileData("HrL6U2OxuiMm2ualJw7kJhExIzX2").then((value) {
+      userData = value;
+      setState(() {
+        isLoading = false;
+      });
+    });
+    super.initState();
+  }
   Widget build(BuildContext context) {
-    return Scaffold(
+    return isLoading?Scaffold(body:Center(child:CircularProgressIndicator())):Scaffold(
         key: _key,
         drawer: individualdrawer(),
         appBar: AppBar(
@@ -47,12 +65,12 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
                 children: [
                   CircleAvatar(
                     radius: MediaQuery.of(context).size.height * 0.065,
-                    backgroundImage: (AssetImage("assets/profile_girl.jpg")),
+                    backgroundImage: (NetworkImage(userData['imgUrl'])),
                   ),
                   Column(
                     children: [
                       Text(
-                        'Donor Name \nDesignation',
+                         userData["individualName"] + "\n" + userData["occupation"],
                         style: TextStyle(
                             fontSize: MediaQuery.of(context).size.height * 0.044, fontWeight: FontWeight.w700),
                       ),
@@ -98,7 +116,7 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
                               fontSize: MediaQuery.of(context).size.height * 0.026, fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          'xyz@gmail.com',
+                          userData["individualEmail"],
                           style: TextStyle(
                               fontSize: MediaQuery.of(context).size.height * 0.02, fontWeight: FontWeight.w400),
                         ),
@@ -111,7 +129,7 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
                               fontSize: MediaQuery.of(context).size.height * 0.026, fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          '9584899876',
+                          userData["individualContact"],
                           style: TextStyle(
                               fontSize: MediaQuery.of(context).size.height * 0.02, fontWeight: FontWeight.w400),
                         ),
@@ -124,7 +142,7 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
                               fontSize: MediaQuery.of(context).size.height * 0.026, fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          'Patna',
+                          userData["city"],
                           style: TextStyle(
                               fontSize: MediaQuery.of(context).size.height * 0.02, fontWeight: FontWeight.w400),
                         ),
@@ -137,7 +155,7 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
                               fontSize: MediaQuery.of(context).size.height * 0.026, fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          'India',
+                          userData["country"],
                           style: TextStyle(
                               fontSize: MediaQuery.of(context).size.height * 0.02, fontWeight: FontWeight.w400),
                         ),
@@ -149,17 +167,10 @@ class _IndividualInfoPageState extends State<IndividualInfoPage> {
                           style: TextStyle(
                               fontSize: MediaQuery.of(context).size.height * 0.026, fontWeight: FontWeight.w700),
                         ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.104,
-                          width: MediaQuery.of(context).size.height * 0.43,
-                          child: TextField(
-                            decoration: InputDecoration(
-                                fillColor: Color.fromRGBO(199, 226, 228, 1),
-                                filled: true,
-                                hintText: 'About\n',
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height * 0.02))),
-                          ),
+                        Text(
+                          userData["bio"],
+                          style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.height * 0.02, fontWeight: FontWeight.w400),
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02,
@@ -214,8 +225,8 @@ class _individualdrawerState extends State<individualdrawer> {
                 Container(
                   height: 100,
                   width: 100,
-                  child: const CircleAvatar(
-                    backgroundImage: (AssetImage("assets/image1.png")),
+                  child: CircleAvatar(
+                    backgroundImage: (NetworkImage(userData['imgUrl'])),
                     backgroundColor: Colors.transparent,
                     // backgroundImage: AssetImage('assets/cura_logo.png'),
                   ),
@@ -223,9 +234,9 @@ class _individualdrawerState extends State<individualdrawer> {
                 const SizedBox(
                   height: 11,
                 ),
-                const Text(
-                  "Welcome!\nDonor Name",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                 Text(
+                  "Welcome!\n" + userData["individualName"],
+                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                 )
               ],
             ),

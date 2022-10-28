@@ -47,6 +47,12 @@ class FirestoreDatabase {
         .set(profileData);
   }
 
+  Future<Map> getIndividualProfileData (String id) async{
+    DocumentReference user = _db.collection("users").doc("individualUsers").collection("profileData").doc(id);
+    DocumentSnapshot userData = await user.get();
+    return userData.data() as Map;
+  }
+
   Future<void> postOrganizationProfileData(Map<String, dynamic> profileData) async {
     String? uid;
     final currentUser = _auth.getCurrentUser();
@@ -61,6 +67,7 @@ class FirestoreDatabase {
         .doc(uid)
         .set(profileData);
   }
+
   Future<List> getOrganisationProfileData() async{
     final orgUsers = _db.collection("users").doc("organisationUsers").collection("profileData");
     QuerySnapshot snap = await orgUsers.get();
