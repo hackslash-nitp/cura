@@ -293,7 +293,10 @@ class individualdrawer extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushNamed(MyDonationsScreen.routeName);
+                  },
                 ),
                 const Divider(
                   height: 4,
