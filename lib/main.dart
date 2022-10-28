@@ -1,4 +1,5 @@
 import 'package:cura/individual/home_page_individual.dart';
+import 'package:cura/individual/info_page.dart';
 import 'package:cura/startup_screens/preview_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class ScreenDecider extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: auth.getCurrentUser() == null ? PreviewPage.routeName : HomePageIndividual.routeName,
+      initialRoute: auth.getCurrentUser() == null ? IndividualInfoPage.routeName : IndividualInfoPage.routeName,
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
