@@ -272,15 +272,15 @@ class individualdrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: const Color.fromRGBO(146, 183, 192, 0.8),
+      backgroundColor: Color.fromRGBO(146, 183, 192, 0.8),
       child: Column(
         children: [
           Container(
-            padding: const EdgeInsets.only(top: 37, left: 16),
+            padding: EdgeInsets.only(top: 37, left: 16),
             child: Column(
               children: [
                 //profile image
-                SizedBox(
+                Container(
                   height: 100,
                   width: 100,
                   child: CircleAvatar(
@@ -294,7 +294,7 @@ class individualdrawer extends StatelessWidget {
                 ),
                 Text(
                   "Welcome!\n${userData["individualName"]}",
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
@@ -312,7 +312,7 @@ class individualdrawer extends StatelessWidget {
             child: Column(
               children: [
                 ListTile(
-                  tileColor: const Color.fromRGBO(199, 226, 228, 1),
+                  tileColor: Color.fromRGBO(199, 226, 228, 1),
                   title: const Text(
                     'Your Donations',
                     style: TextStyle(
@@ -331,7 +331,7 @@ class individualdrawer extends StatelessWidget {
                   color: Color.fromRGBO(146, 183, 192, 0.8),
                 ),
                 ListTile(
-                  tileColor: const Color.fromRGBO(199, 226, 228, 1),
+                  tileColor: Color.fromRGBO(199, 226, 228, 1),
                   title: const Text(
                     'Edit Profile',
                     style: TextStyle(fontSize: 14, color: Colors.black),
@@ -347,7 +347,7 @@ class individualdrawer extends StatelessWidget {
                   color: Color.fromRGBO(146, 183, 192, 0.8),
                 ),
                 ListTile(
-                  tileColor: const Color.fromRGBO(199, 226, 228, 1),
+                  tileColor: Color.fromRGBO(199, 226, 228, 1),
                   title: const Text(
                     'Settings',
                     style: TextStyle(fontSize: 14, color: Colors.black),
@@ -360,7 +360,7 @@ class individualdrawer extends StatelessWidget {
                   color: Color.fromRGBO(146, 183, 192, 0.8),
                 ),
                 ListTile(
-                  tileColor: const Color.fromRGBO(199, 226, 228, 1),
+                  tileColor: Color.fromRGBO(199, 226, 228, 1),
                   title: const Text(
                     'Log Out',
                     style: TextStyle(fontSize: 14, color: Colors.black),
@@ -370,6 +370,12 @@ class individualdrawer extends StatelessWidget {
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         UserLogin.routeName, (route) => false,
                         arguments: true);
+                    // Navigator.of(context).pushAndRemoveUntil(
+                    //     MaterialPageRoute(
+                    //         builder: (context) => UserLogin(
+                    //               isPhoneLogin: true,
+                    //             )),
+                    //     (route) => false);
                   },
                 ),
               ],
