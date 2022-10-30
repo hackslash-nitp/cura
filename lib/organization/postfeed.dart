@@ -241,57 +241,6 @@ class _postfeedState extends State<postfeed> {
                           ),
                         ],
                       ),
-                      // Column(
-                      //   crossAxisAlignment: CrossAxisAlignment.center,
-                      //   children: [
-                      //     SizedBox(
-                      //       height: 10.h,
-                      //     ),
-                      //     Image.asset('assets/old-people.png',
-                      //         height: 200.h, width: 362.w),
-                      //     Container(
-                      //       height: 50.h,
-                      //       width: 372.w,
-                      //       decoration: BoxDecoration(
-                      //           color: Colors.white,
-                      //           border: Border.all(
-                      //             color: Color(0xFF6CAFB4),
-                      //           )),
-                      //       child: Row(
-                      //           mainAxisAlignment: MainAxisAlignment.center,
-                      //           children: [
-                      //             FavoriteButton(
-                      //               iconSize: 60.r,
-                      //               valueChanged: (_) {},
-                      //             ),
-                      //             SizedBox(
-                      //               width: 80.w,
-                      //             ),
-                      //             Icon(Icons.comment),
-                      //             SizedBox(
-                      //               width: 80.w,
-                      //             ),
-                      //             IconButton(
-                      //                 icon: Icon(Icons.share),
-                      //                 onPressed: () {
-                      //                   SocialShare.shareOptions("Hello world",
-                      //                       imagePath: 'imagepath');
-                      //                 }),
-                      //           ]),
-                      //     ),
-                      //     SizedBox(
-                      //       height: 5.h,
-                      //     ),
-                      //     Text(
-                      //       "lorem ipsum dolor sit amet, consectetur adipis elit.",
-                      //       style: TextStyle(
-                      //           fontWeight: FontWeight.w700, fontSize: 14.sp),
-                      //     ),
-                      //     SizedBox(
-                      //       height: 10.h,
-                      //     ),
-                      //   ],
-                      // ),
                     ]),
                   ),
                 ),
