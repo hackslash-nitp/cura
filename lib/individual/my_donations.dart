@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyDonationsScreen extends StatefulWidget {
+  static const routeName = "/MyDonations";
   const MyDonationsScreen({Key? key}) : super(key: key);
 
   @override
@@ -43,7 +44,9 @@ class _MyDonationsScreenState extends State<MyDonationsScreen> {
                     IconButton(
                       iconSize: 14.w,
                       icon: const Icon(Icons.arrow_back_ios_new),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
                     ),
                     Text(
                       "My Donations",

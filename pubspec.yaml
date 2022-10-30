@@ -42,6 +42,9 @@ dependencies:
   searchfield: ^0.5.3
   smooth_page_indicator: ^1.0.0+2
   intl: ^0.17.0
+  favorite_button: ^0.0.4
+  share: ^2.0.4
+  social_share: ^2.2.1
 
 
 dev_dependencies:

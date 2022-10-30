@@ -1,3 +1,5 @@
+import 'package:cura/individual/my_donations.dart';
+import 'package:cura/individual/support_team_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cura/individual/health.dart';
 import 'package:cura/individual/home_page_individual.dart';
@@ -26,19 +28,25 @@ class RouteGenerator {
       case ChatScreen.routeName:
         // Getting arguments passed in while calling Navigator.pushNamed
         final args = settings.arguments as StringScreenArguments;
-        return MaterialPageRoute(builder: (context) => ChatScreen(orgName: args.nameProvided, imgUrl: args.imgUrl));
+        return MaterialPageRoute(
+            builder: (context) =>
+                ChatScreen(orgName: args.nameProvided, imgUrl: args.imgUrl));
       case CreateAccountPage.routeName:
-        return MaterialPageRoute(builder: (context) => const CreateAccountPage());
+        return MaterialPageRoute(
+            builder: (context) => const CreateAccountPage());
       case DonationPage.routeName:
         return MaterialPageRoute(builder: (context) => const DonationPage());
       case HealthPage.routeName:
         return MaterialPageRoute(builder: (context) => const HealthPage());
       case HomePageIndividual.routeName:
-        return MaterialPageRoute(builder: (context) => const HomePageIndividual());
+        return MaterialPageRoute(
+            builder: (context) => const HomePageIndividual());
       case IndividualAccountSetup.routeName:
-        return MaterialPageRoute(builder: (context) => const IndividualAccountSetup());
+        return MaterialPageRoute(
+            builder: (context) => const IndividualAccountSetup());
       case IndividualInfoPage.routeName:
-        return MaterialPageRoute(builder: (context) => const IndividualInfoPage());
+        return MaterialPageRoute(
+            builder: (context) => const IndividualInfoPage());
       case IntroScreen.routeName:
         return MaterialPageRoute(builder: (context) => const IntroScreen());
       case OrgAccountSetup.routeName:
@@ -46,7 +54,9 @@ class RouteGenerator {
       case OrgChatScreen.routeName:
         // Getting arguments passed in while calling Navigator.pushNamed
         final args = settings.arguments as StringScreenArguments;
-        return MaterialPageRoute(builder: (context) => OrgChatScreen(userName: args.nameProvided, imgUrl: args.imgUrl));
+        return MaterialPageRoute(
+            builder: (context) => OrgChatScreen(
+                userName: args.nameProvided, imgUrl: args.imgUrl));
       case postfeed.routeName:
         return MaterialPageRoute(builder: (context) => const postfeed());
       case PreviewPage.routeName:
@@ -57,10 +67,16 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (context) => const SplashScreen());
       case UserChatsScreen.routeName:
         return MaterialPageRoute(builder: (context) => const UserChatsScreen());
+      case MyDonationsScreen.routeName:
+        return MaterialPageRoute(
+            builder: (context) => const MyDonationsScreen());
+      case SupportPage.routeName:
+        return MaterialPageRoute(builder: (context) => const SupportPage());
       case UserLogin.routeName:
         // Getting arguments passed in while calling Navigator.pushNamed
         final args = settings.arguments as bool;
-        return MaterialPageRoute(builder: (context) => UserLogin(isPhoneLogin: args));
+        return MaterialPageRoute(
+            builder: (context) => UserLogin(isPhoneLogin: args));
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();

@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 
 class SupportPage extends StatelessWidget {
+  static const routeName = "/SupportPage";
   const SupportPage({Key? key}) : super(key: key);
 
   @override
@@ -92,7 +93,8 @@ class SupportPage extends StatelessWidget {
                     side: BorderSide(color: Color(0xFF7E9FE8), width: 1),
                     borderRadius: BorderRadius.circular(10.0)),
                 tileColor: Color(0xFFE0EEEF),
-                title: Text("Contact Live Chat",style:TextStyle(fontWeight: FontWeight.w700)),
+                title: Text("Contact Live Chat",
+                    style: TextStyle(fontWeight: FontWeight.w700)),
                 trailing: Icon(Icons.arrow_forward_ios,
                     size: 15.0, color: Color(0xFF49ADF4)),
               ),
@@ -102,18 +104,17 @@ class SupportPage extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 36.0,
-                  child:
-                      Icon(Icons.email_outlined, color: Color(0xFF49ADF4)),
+                  child: Icon(Icons.email_outlined, color: Color(0xFF49ADF4)),
                   backgroundColor: Color(0xFFE0EEEF),
                 ),
-                SizedBox(height:10.0),
+                SizedBox(height: 10.0),
                 Text(
                   "Send us an email",
                   style: TextStyle(
                     fontSize: 14.0,
                   ),
                 ),
-                SizedBox(height:10.0),
+                SizedBox(height: 10.0),
                 Text(
                   "info@curo.io",
                   style: TextStyle(
@@ -124,7 +125,7 @@ class SupportPage extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height/8,
+              height: MediaQuery.of(context).size.height / 8,
             ),
           ],
         ),
