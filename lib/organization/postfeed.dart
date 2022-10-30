@@ -3,7 +3,6 @@ import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:cura/individual/home_page_individual.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:share/share.dart';
 import 'package:social_share/social_share.dart';
 
 class postfeed extends StatefulWidget {
