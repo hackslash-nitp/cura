@@ -42,6 +42,9 @@ dependencies:
   searchfield: ^0.5.3
   smooth_page_indicator: ^1.0.0+2
   intl: ^0.17.0
+  favorite_button: ^0.0.4
+  share: ^2.0.4
+  social_share: ^2.2.1
 
 
 dev_dependencies:
@@ -51,9 +54,16 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
+  flutter_launcher_icons: "^0.10.0"
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path_android: "assets/launcher/cura_logo.png"
+  image_path_ios: "assets/launcher/cura_logo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
