@@ -27,7 +27,7 @@ class ScreenDecider extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: auth.getCurrentUser() == null
-          ? CreatePost.routeName
+          ? PreviewPage.routeName
           : HomePageIndividual.routeName,
       onGenerateRoute: RouteGenerator.generateRoute,
     );
