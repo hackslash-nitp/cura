@@ -19,6 +19,7 @@ import '../../organization/org_chat_screen.dart';
 import 'package:cura/startup_screens/create_account.dart';
 import 'package:cura/startup_screens/login.dart';
 import 'stringScreenArguments.dart';
+import 'package:cura/shared/screens/create_post.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -68,8 +69,9 @@ class RouteGenerator {
       case UserChatsScreen.routeName:
         return MaterialPageRoute(builder: (context) => const UserChatsScreen());
       case MyDonationsScreen.routeName:
-        return MaterialPageRoute(
-            builder: (context) => const MyDonationsScreen());
+        return MaterialPageRoute(builder: (context) => const MyDonationsScreen());
+      case CreatePost.routeName:
+        return MaterialPageRoute(builder: (context) => const CreatePost());
       case SupportPage.routeName:
         return MaterialPageRoute(builder: (context) => const SupportPage());
       case UserLogin.routeName:
