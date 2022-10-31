@@ -1,6 +1,7 @@
-import 'package:cura/individual/home_page_individual.dart';
+ import 'package:cura/individual/home_page_individual.dart';
 import 'package:cura/startup_screens/preview_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:cura/shared/screens/create_post.dart';
 import 'package:flutter/material.dart';
 import 'shared/services/firebase_authentication.dart';
 import 'package:cura/shared/services/RouteGenerator.dart';
