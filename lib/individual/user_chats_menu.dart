@@ -1,11 +1,13 @@
 import 'package:cura/individual/user_chat_screen.dart';
 import 'package:cura/shared/widgets/navigation-bar.dart';
 import 'package:flutter/material.dart';
+import 'package:cura/individual/home_page_individual.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../shared/widgets/gradient_background.dart';
+import 'package:cura/shared/services/stringScreenArguments.dart';
 
 class UserChatsScreen extends StatefulWidget {
+  static const String routeName = '/UserChatScreen';
   const UserChatsScreen({Key? key}) : super(key: key);
 
   @override
@@ -47,7 +49,7 @@ class _UserChatsScreenState extends State<UserChatsScreen> {
             color: Colors.black,
           ),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pushNamed(HomePageIndividual.routeName);
           },
         ),
         elevation: 0.0,
@@ -87,8 +89,7 @@ class _UserChatsScreenState extends State<UserChatsScreen> {
                         minLines: null,
                         expands: true,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20.w, vertical: 10.h),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
                           border: InputBorder.none,
                           suffixIcon: IconButton(
                             onPressed: () {},
@@ -169,9 +170,8 @@ class _ContactTileState extends State<ContactTile> {
         });
       },
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-                ChatScreen(orgName: widget.orgName, imgUrl: widget.imgUrl)));
+        Navigator.of(context).pushNamed(ChatScreen.routeName,
+            arguments: StringScreenArguments(nameProvided: widget.orgName, imgUrl: widget.imgUrl));
       },
       child: Container(
         height: 65.h,
@@ -194,8 +194,7 @@ class _ContactTileState extends State<ContactTile> {
                   backgroundColor: Colors.transparent,
                   child: Image(
                     image: widget.imgUrl == ''
-                        ? const AssetImage(
-                            "assets/startup_assets/create_account_assets/profile_primary.png")
+                        ? const AssetImage("assets/startup_assets/create_account_assets/profile_primary.png")
                         : AssetImage(widget.imgUrl),
                   ),
                 ),

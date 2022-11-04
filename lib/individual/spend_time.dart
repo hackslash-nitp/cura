@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:cura/shared/widgets/message_dialog.dart';
 
 class SpendTime extends StatefulWidget {
+  static const String routeName = '/SpendTime';
+
   const SpendTime({super.key});
 
   @override
@@ -37,67 +39,56 @@ class _SpendTimeState extends State<SpendTime> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(children: <Widget>[
         const BiDirectionalBackground(),
         SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Row(children: [
-                Wrap(
-                    spacing: MediaQuery.of(context).size.width * 0.34,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_ios_new,
+                        size: 15.0,
+                      )),
+                  const Text(
+                    "Spend Time",
+                    style: TextStyle(
+                      fontSize: 22.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 48.0,
+                  ),
+                ],
+              ),
+              Flexible(
+                child: Image.asset("assets/spendTime.png"),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                child: Container(
+                  padding: const EdgeInsets.all(15.0),
+                  decoration: BoxDecoration(
+                      color: const Color(0xFFE2EFF0),
+                      borderRadius: BorderRadius.all(Radius.circular(
+                          MediaQuery.of(context).size.width * 0.063))),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      IconButton(
-                          icon: const Icon(Icons.keyboard_arrow_left),
-                          onPressed: () => Navigator.of(context).pop()),
-                      const Center(
-                          child: Text(
-                        'Spend Time',
-                        textAlign: TextAlign.center,
-                        // ignore: prefer_const_constructors
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ))
-                    ]),
-              ]),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.09,
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.031,
-              ),
-              Container(
-                // constraints: const BoxConstraints.expand(),
-                // ignore: prefer_const_constructors
-
-                // ignore: prefer_const_constructors
-                decoration: BoxDecoration(
-                    color: Color(0xFFE2EFF0),
-                    borderRadius: BorderRadius.all(Radius.circular(
-                        MediaQuery.of(context).size.width * 0.063))),
-                // ignore: prefer_const_constructors
-                // padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.1,MediaQuery.of(context).size.height * 0.1,MediaQuery.of(context).size.height * 0.1,MediaQuery.of(context).size.height * 0.1),
-                //MediaQuery.of(context).size.height * 0.44,MediaQuery.of(context).size.height * 0.44,),
-                width: MediaQuery.of(context).size.width * 0.82,
-                height: MediaQuery.of(context).size.height * 0.52,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                    // ignore: sized_box_for_whitespace
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.height * 0.023),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.033,
-                        width: MediaQuery.of(context).size.height * 0.22,
-                        alignment: Alignment.topLeft,
-                        /* padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.023,
-                             MediaQuery.of(context).size.height * 0.025, MediaQuery.of(context).size.height * 0.138, MediaQuery.of(context).size.height * 0.38),*/
-                        child: Text(
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.01),
+                      // ignore: sized_box_for_whitespace
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 10.0),
+                        child: const Text(
                           'Select Organization',
                           style: TextStyle(
                             color: Colors.black,
@@ -106,42 +97,24 @@ class _SpendTimeState extends State<SpendTime> {
                           ),
                         ),
                       ),
-                    ),
 
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                    // ignore: missing_required_param
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.height * 0.023),
-                      /*MediaQuery.of(context).size.height * 0.022, MediaQuery.of(context).size.height * 0.09,MediaQuery.of(context).size.height * 0.03,
-                   MediaQuery.of(context).size.height * 0.033),*/
                       // ignore: missing_required_param
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.height * 0.4,
+                      Container(
+                        padding: const EdgeInsets.only(
+                            top: 2.0, bottom: 2.0, left: 10.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: const Color.fromARGB(255, 186, 231, 235),
+                        ),
                         child: SearchField(
                           hint: "Enter organisation's name",
-                          //searchStyle: TextStyle(fontSize:MediaQuery.of(context).size.height*0.036 ),
-                          // padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.05, MediaQuery.of(context).size.height * 0.05, MediaQuery.of(context).size.height * 0.05,MediaQuery.of(context).size.height * 0.05),
-                          // ignore: prefer_const_literals_to_create_immutables
                           suggestions: organisationNames,
                           controller: orgName,
-                          searchInputDecoration: InputDecoration(
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                  MediaQuery.of(context).size.height * 0.02),
-                              borderSide: BorderSide(
-                                // ignore: prefer_const_constructors
-                                color: Colors.grey,
-                                //height: MediaQuery.of(context).size.height*0.038,
-                                //width: MediaQuery.of(context).size.height*,
-                              ),
-                            ),
-                            fillColor: const Color.fromARGB(255, 186, 231, 235),
-                            filled: true,
-                            suffixIcon: const Icon(
+                          searchInputDecoration: const InputDecoration(
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            suffixIcon: Icon(
                               Icons.arrow_drop_down,
-                              color: Colors.grey,
-                              //size:MediaQuery.of(context).size.height*0.0093,
                             ),
                           ),
 
@@ -149,17 +122,8 @@ class _SpendTimeState extends State<SpendTime> {
                           //border: OutlineInputBorder(borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*0.0026),
                         ),
                       ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.height * 0.023),
-                      child: Container(
-                        alignment: Alignment.topLeft,
-                        height: MediaQuery.of(context).size.height * 0.033,
-                        width: MediaQuery.of(context).size.height * 0.22,
-                        /* padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.023,
-                             MediaQuery.of(context).size.height * 0.025, MediaQuery.of(context).size.height * 0.138, MediaQuery.of(context).size.height * 0.38),*/
+                      Container(
+                        margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
                         child: const Text(
                           'Date',
                           style: TextStyle(
@@ -169,79 +133,55 @@ class _SpendTimeState extends State<SpendTime> {
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.01,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.height * 0.023),
-                      /*MediaQuery.of(context).size.height * 0.022, MediaQuery.of(context).size.height * 0.17,MediaQuery.of(context).size.height * 0.16,
-                   MediaQuery.of(context).size.height * 0.23),*/
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.height * 0.327,
-                        child: TextField(
-                          controller: date,
+                      TextField(
+                        controller: date,
 
-                          //editing controller of this TextField
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                    MediaQuery.of(context).size.height * 0.02)),
-                            // ignore: prefer_const_constructors
+                        //editing controller of this TextField
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0)),
+                          // ignore: prefer_const_constructors
 
-                            //height: MediaQuery.of(context).size.height*0.038,
-                            //width: MediaQuery.of(context).size.height*,
+                          //height: MediaQuery.of(context).size.height*0.038,
+                          //width: MediaQuery.of(context).size.height*,
 
-                            fillColor: const Color.fromARGB(255, 186, 231, 235),
-                            filled: true,
-                            //border: OutlineInputBorder(borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*0.0026),
+                          fillColor: const Color.fromARGB(255, 186, 231, 235),
+                          filled: true,
+                          //border: OutlineInputBorder(borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*0.0026),
 
-                            suffixIcon: Icon(Icons.arrow_drop_down),
-                            //icon of text field
-                            labelText:
-                                "Date", //labelStyle: TextStyle(fontSize:  MediaQuery.of(context).size.height*0.036)//label text of field
-                          ),
-                          readOnly: true,
-                          //set it true, so that user will not able to edit text
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(2000),
-                                //DateTime.now() - not to allow to choose before today.
-                                lastDate: DateTime(2101));
-
-                            if (pickedDate != null) {
-                              /* print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
-                            String formattedDate=DateFormat('yyyy-MM-dd').format(pickedDate);
-                            print(formattedDate);*/ //formatted date output using intl package =>  2021-03-16
-                              //you can implement different kind of Date Format here according to your requirement
-                              setState(() {
-                                date.text = DateFormat('yyyy-MM-dd').format(
-                                    pickedDate); //set output date to TextField value.
-                              });
-                            } else {
-                              // ignore: avoid_print
-                              print("Date is not selected");
-                            }
-                          },
+                          suffixIcon: const Icon(Icons.arrow_drop_down),
+                          //icon of text field
+                          labelText:
+                              "Date", //labelStyle: TextStyle(fontSize:  MediaQuery.of(context).size.height*0.036)//label text of field
                         ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.01,
-                    ),
+                        readOnly: true,
+                        //set it true, so that user will not able to edit text
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              //DateTime.now() - not to allow to choose before today.
+                              lastDate: DateTime(2101));
 
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.height * 0.023),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.033,
-                        width: MediaQuery.of(context).size.height * 0.22,
-                        alignment: Alignment.topLeft,
-                        /* padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.height * 0.023,
-                             MediaQuery.of(context).size.height * 0.025, MediaQuery.of(context).size.height * 0.138, MediaQuery.of(context).size.height * 0.38),*/
+                          if (pickedDate != null) {
+                            /* print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
+                          String formattedDate=DateFormat('yyyy-MM-dd').format(pickedDate);
+                          print(formattedDate);*/ //formatted date output using intl package =>  2021-03-16
+                            //you can implement different kind of Date Format here according to your requirement
+                            setState(() {
+                              date.text = DateFormat('yyyy-MM-dd').format(
+                                  pickedDate); //set output date to TextField value.
+                            });
+                          } else {
+                            // ignore: avoid_print
+                            print("Date is not selected");
+                          }
+                        },
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
                         child: const Text(
                           'Time',
                           style: TextStyle(
@@ -251,104 +191,79 @@ class _SpendTimeState extends State<SpendTime> {
                           ),
                         ),
                       ),
-                    ),
 
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.height * 0.023),
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.height * 0.2,
-                        child: TextField(
-                          controller: time,
-                          //editing controller of this TextField
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(
-                                    MediaQuery.of(context).size.height * 0.02)),
-                            // ignore: prefer_const_constructors
-                            fillColor: const Color.fromARGB(255, 186, 231, 235),
-                            filled: true,
-                            suffixIcon: Icon(Icons.arrow_drop_down),
-                            //icon of text field
-                            labelText:
-                                "Time", //labelStyle: TextStyle(fontSize:  MediaQuery.of(context).size.height*0.036)
-                            //label text of field
+                      TextField(
+                        controller: time,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
+                          // ignore: prefer_const_constructors
+                          fillColor: const Color.fromARGB(255, 186, 231, 235),
+                          filled: true,
+                          suffixIcon: const Icon(Icons.arrow_drop_down),
+                          //icon of text field
+                          labelText:
+                              "Time", //labelStyle: TextStyle(fontSize:  MediaQuery.of(context).size.height*0.036)
+                          //label text of field
+                        ),
 
-                          readOnly: true,
-                          //set it true, so that user will not able to edit text
-                          onTap: () async {
-                            TimeOfDay? pickedTime = await showTimePicker(
-                              initialTime: TimeOfDay.now(),
-                              context: context,
-                            );
-                            //
-                            // if (pickedTime != null) {//output 10:51 PM
-                            //   DateTime parsedTime = DateFormat.jm().parse(
-                            //       pickedTime.format(context).toString());
-                            //   //converting to DateTime so that we can further format on different pattern.//output 1970-01-01 22:53:00.000
-                            //   String formattedTime = DateFormat('HH:mm:ss').format(parsedTime);
-                            //   print(formattedTime); //output 14:59:00
-                            //   //DateFormat() is from intl package, you can format the time on any pattern you need.
-                            if (pickedTime != null) {
-                              setState(() {
-                                time.text =
-                                    "${pickedTime.hour}:${pickedTime.minute}"; //set the value of text field.
-                              });
-                            } else {
-                              print("Time is not selected");
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                    Container(
-                      padding: EdgeInsets.all(0),
-                      decoration: BoxDecoration(
-                        color: Color(0xFF6CAFB4),
-                      ),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                /*borderRadius: BorderRadius.circular(
-                                    MediaQuery.of(context).size.height * 0.02)*/
-                                ),
-                            primary: Color(0xFF6CAFB4)),
-                        child: Text(
-                          'Submit',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700, color: Colors.white),
-                        ),
-                        onPressed: (() {
-                          // print(orgName.text);
-                          // print(date.text);
-                          // print(time.text);
-                          Map<String, dynamic> vData = {
-                            "orgName": orgName.text,
-                            "date": date.text,
-                            "time": time.text,
-                          };
-                          if (orgName.text == "" ||
-                              date.text == "" ||
-                              time.text == "") {
-                            print("something missing");
-                          } else {
-                            fd.postVolunteerData(vData);
-                          }
-                          const MessageDialog(
-                            title: 'Thank you!',
-                            contentText:
-                                'Thank you,for giving your precious time',
-                            imageUrl: 'images/imageUrl.jpeg',
+                        readOnly: true,
+                        //set it true, so that user will not able to edit text
+                        onTap: () async {
+                          TimeOfDay? pickedTime = await showTimePicker(
+                            initialTime: TimeOfDay.now(),
+                            context: context,
                           );
-                        }),
+                          if (pickedTime != null) {
+                            setState(() {
+                              time.text =
+                                  "${pickedTime.hour}:${pickedTime.minute}"; //set the value of text field.
+                            });
+                          } else {
+                            print("Time is not selected");
+                          }
+                        },
                       ),
-                    )
+                      const SizedBox(height: 10.0),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF729CA3),
+                          ),
+                          onPressed: (() {
+                            Map<String, dynamic> vData = {
+                              "orgName": orgName.text,
+                              "date": date.text,
+                              "time": time.text,
+                            };
+                            if (orgName.text == "" ||
+                                date.text == "" ||
+                                time.text == "") {
+                              print("something missing");
+                            } else {
+                              fd.postVolunteerData(vData);
+                            }
+                            const MessageDialog(
+                              title: 'Thank you!',
+                              contentText:
+                                  'Thank you,for giving your precious time',
+                              imageUrl: 'images/imageUrl.jpeg',
+                            );
+                          }),
+                          child: const Text(
+                            'Submit',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white),
+                          ),
+                        ),
+                      )
 
-                    // ignore: missing_required_param
-                  ],
+                      // ignore: missing_required_param
+                    ],
+                  ),
                 ),
               ),
             ],

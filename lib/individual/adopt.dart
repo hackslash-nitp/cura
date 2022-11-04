@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AdoptPage extends StatefulWidget {
+  static const routeName = '/AdoptPage';
   const AdoptPage({super.key});
 
   @override
@@ -12,17 +13,11 @@ class AdoptPage extends StatefulWidget {
 }
 
 class _AdoptPageState extends State<AdoptPage> {
-  final List<String> imgUrls = [
-    "assets/images 1.png",
-    "assets/photo-1562457753-6867bda028cd 1.png"
-  ];
+  final List<String> imgUrls = ["assets/images 1.png", "assets/photo-1562457753-6867bda028cd 1.png"];
 
   final List<String> headings = ["Shan Wan", "Hennrick"];
 
-  final List<String> subHeadings = [
-    "Detail of Person and age",
-    "Detail of Person and age"
-  ];
+  final List<String> subHeadings = ["Detail of Person and age", "Detail of Person and age"];
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +37,7 @@ class _AdoptPageState extends State<AdoptPage> {
           ),
           title: Text(
             "Adopt",
-            style: TextStyle(
-                fontSize: 28.sp,
-                fontWeight: FontWeight.w700,
-                color: Colors.black),
+            style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.w700, color: Colors.black),
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -109,8 +101,12 @@ class AdoptPageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: ((context) => widget ?? const HomePageIndividual()))),
+      // Instead of Having widgets you can have a string of routes pushed using pushNamed in future development
+
+      onTap: () => (widget == null)
+          ? Navigator.of(context).pushNamed(HomePageIndividual.routeName)
+          : Navigator.of(context).push(MaterialPageRoute(builder: (context) => widget!)),
+
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 5.w),
         child: Container(
@@ -119,10 +115,7 @@ class AdoptPageContent extends StatelessWidget {
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(25.r),
-              boxShadow: const [
-                BoxShadow(
-                    blurRadius: 5, color: Colors.grey, offset: Offset(0, 3))
-              ]),
+              boxShadow: const [BoxShadow(blurRadius: 5, color: Colors.grey, offset: Offset(0, 3))]),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
             child: Row(
@@ -188,17 +181,11 @@ class AdoptTextPart extends StatelessWidget {
       children: <Widget>[
         Text(
           heading,
-          style: TextStyle(
-              fontSize: 28.sp,
-              fontWeight: FontWeight.w700,
-              color: const Color(0xFF92B7C0)),
+          style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.w700, color: const Color(0xFF92B7C0)),
         ),
         Text(
           subHeading,
-          style: TextStyle(
-              fontSize: 18.sp,
-              color: const Color.fromRGBO(0, 0, 0, 0.58),
-              fontWeight: FontWeight.w700),
+          style: TextStyle(fontSize: 18.sp, color: const Color.fromRGBO(0, 0, 0, 0.58), fontWeight: FontWeight.w700),
         )
       ],
     );

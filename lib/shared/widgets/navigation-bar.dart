@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   final int currentIndex;
-  const CustomNavigationBar({Key? key, required this.currentIndex})
-      : super(key: key);
+  const CustomNavigationBar({Key? key, required this.currentIndex}) : super(key: key);
 
   @override
   State<CustomNavigationBar> createState() => _CustomNavigationBarState();
@@ -16,11 +15,11 @@ class CustomNavigationBar extends StatefulWidget {
 class _CustomNavigationBarState extends State<CustomNavigationBar> {
   @override
   Widget build(BuildContext context) {
-    List<Widget> navItems = [
-      const HomePageIndividual(),
-      const postfeed(),
-      const UserChatsScreen(),
-      const IndividualInfoPage()
+    List<String> navItems = [
+      HomePageIndividual.routeName,
+      postfeed.routeName,
+      UserChatsScreen.routeName,
+      IndividualInfoPage.routeName,
     ];
 
     return BottomNavigationBar(
@@ -31,8 +30,11 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
         showUnselectedLabels: false,
         currentIndex: widget.currentIndex,
         onTap: ((value) {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => navItems[value]));
+          if (value != widget.currentIndex) {
+            Navigator.of(context).pushReplacementNamed(
+              navItems[value],
+            );
+          }
         }),
         items: const [
           BottomNavigationBarItem(

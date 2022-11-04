@@ -9,6 +9,7 @@ import '../shared/widgets/gradient_background.dart';
 import '../shared/services/firebase_database.dart';
 
 class IndividualAccountSetup extends StatefulWidget {
+  static const String routeName = '/IndividualAccountSetup';
   const IndividualAccountSetup({Key? key}) : super(key: key);
 
   @override
@@ -33,8 +34,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
 
   @override
   void initState() {
-    controllerList =
-        List.generate(8, (index) => TextEditingController(), growable: false);
+    controllerList = List.generate(8, (index) => TextEditingController(), growable: false);
     super.initState();
   }
 
@@ -59,8 +59,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+                    padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
                     child: Row(
                       children: <Widget>[
                         IconButton(
@@ -85,8 +84,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                     children: <Widget>[
                       CircleAvatar(
                         backgroundImage: userImage == null
-                            ? const AssetImage(
-                                'assets/startup_assets/create_account_assets/profile_primary.png')
+                            ? const AssetImage('assets/startup_assets/create_account_assets/profile_primary.png')
                             : FileImage(userImage!) as ImageProvider,
                         radius: 50.r,
                         backgroundColor: Colors.transparent,
@@ -96,17 +94,14 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                           TextButton(
                             onPressed: () async {
                               if (!isSelected) {
-                                CustomSnackbar.showSnackBar(context,
-                                    "Select an image first", Colors.red);
+                                CustomSnackbar.showSnackBar(context, "Select an image first", Colors.red);
                                 return;
                               }
-                              imgUrl = await storage.postFile(
-                                  userImage!, "DisplayPictures/${imgName!}");
+                              imgUrl = await storage.postFile(userImage!, "DisplayPictures/${imgName!}");
                             },
                             style: buttonStyle,
                             child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 20.w, vertical: 4.h),
+                              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 4.h),
                               child: Text(
                                 "Upload Profile Picture",
                                 style: TextStyle(
@@ -123,8 +118,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               TextButton(
                                 onPressed: () async {
                                   try {
-                                    final image = await ImagePicker()
-                                        .pickImage(source: ImageSource.gallery);
+                                    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
                                     if (image == null) return;
                                     setState(() {
                                       userImage = File(image.path);
@@ -137,8 +131,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                                 },
                                 style: buttonStyle,
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w, vertical: 4.h),
+                                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                                   child: Text(
                                     "From Gallery",
                                     style: TextStyle(
@@ -153,8 +146,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               TextButton(
                                 onPressed: () async {
                                   try {
-                                    final image = await ImagePicker()
-                                        .pickImage(source: ImageSource.camera);
+                                    final image = await ImagePicker().pickImage(source: ImageSource.camera);
                                     if (image == null) return;
                                     setState(() {
                                       userImage = File(image.path);
@@ -162,14 +154,12 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                                       imgName = image.name;
                                     });
                                   } catch (e) {
-                                    print(
-                                        "An error has occured! ${e.toString()}");
+                                    print("An error has occured! ${e.toString()}");
                                   }
                                 },
                                 style: buttonStyle,
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w, vertical: 4.h),
+                                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                                   child: Text(
                                     "Take Now",
                                     style: TextStyle(
@@ -211,12 +201,10 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                       height: 450.h,
                       width: double.infinity,
                       child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 30.w, vertical: 20.h),
+                        padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.h),
                         child: ListView(
                           children: <Widget>[
-                            getInputTextField(controllerList[0],
-                                "Enter your Name", TextInputType.name, (val) {
+                            getInputTextField(controllerList[0], "Enter your Name", TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your name";
                               }
@@ -225,13 +213,8 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                             SizedBox(
                               height: 34.h,
                             ),
-                            getInputTextField(
-                                controllerList[1],
-                                "Enter your Email",
-                                TextInputType.emailAddress, (val) {
-                              if (val == null ||
-                                  val.isEmpty ||
-                                  !val.contains('@')) {
+                            getInputTextField(controllerList[1], "Enter your Email", TextInputType.emailAddress, (val) {
+                              if (val == null || val.isEmpty || !val.contains('@')) {
                                 return "Please enter a proper email address";
                               }
                               return null;
@@ -239,10 +222,8 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                             SizedBox(
                               height: 34.h,
                             ),
-                            getInputTextField(
-                                controllerList[2],
-                                "Enter your Phone Number",
-                                TextInputType.number, (val) {
+                            getInputTextField(controllerList[2], "Enter your Phone Number", TextInputType.number,
+                                (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your contact number";
                               }
@@ -251,10 +232,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                             SizedBox(
                               height: 34.h,
                             ),
-                            getInputTextField(
-                                controllerList[3],
-                                "Enter your Occupation",
-                                TextInputType.name, (val) {
+                            getInputTextField(controllerList[3], "Enter your Occupation", TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your occupation";
                               }
@@ -269,24 +247,18 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                                 Container(
                                   width: 170.w,
                                   decoration: BoxDecoration(
-                                    color: const Color.fromRGBO(
-                                        117, 212, 227, 0.2),
+                                    color: const Color.fromRGBO(117, 212, 227, 0.2),
                                     borderRadius: BorderRadius.circular(10.r),
                                   ),
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 18.w),
+                                  padding: EdgeInsets.symmetric(horizontal: 18.w),
                                   child: DropdownButtonHideUnderline(
                                     child: DropdownButton(
                                         value: userGender,
                                         style: TextStyle(
-                                            fontSize: 18.sp,
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.black),
+                                            fontSize: 18.sp, fontWeight: FontWeight.w700, color: Colors.black),
                                         hint: Text("Gender",
                                             style: TextStyle(
-                                                fontSize: 18.sp,
-                                                fontWeight: FontWeight.w700,
-                                                color: Colors.black)),
+                                                fontSize: 18.sp, fontWeight: FontWeight.w700, color: Colors.black)),
                                         items: gender.map((value) {
                                           return DropdownMenuItem(
                                             value: value,
@@ -302,16 +274,14 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                                 ),
                                 GestureDetector(
                                   onTap: () async {
-                                    final DateTime? picked =
-                                        await showDatePicker(
-                                            context: context,
-                                            initialDate: DateTime(2012, 1),
-                                            firstDate: DateTime(1940, 1),
-                                            lastDate: DateTime(2012, 1));
+                                    final DateTime? picked = await showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime(2012, 1),
+                                        firstDate: DateTime(1940, 1),
+                                        lastDate: DateTime(2012, 1));
                                     if (picked != null) {
                                       setState(() {
-                                        dob =
-                                            "${picked.day}/${picked.month}/${picked.year}";
+                                        dob = "${picked.day}/${picked.month}/${picked.year}";
                                       });
                                     }
                                   },
@@ -319,15 +289,12 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                                     height: 60.h,
                                     width: 170.w,
                                     decoration: BoxDecoration(
-                                      color: const Color.fromRGBO(
-                                          117, 212, 227, 0.2),
+                                      color: const Color.fromRGBO(117, 212, 227, 0.2),
                                       borderRadius: BorderRadius.circular(10.r),
                                     ),
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10.w),
+                                    padding: EdgeInsets.symmetric(horizontal: 10.w),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         Text(
                                           dob ?? "Date of Birth",
@@ -346,10 +313,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                             SizedBox(
                               height: 34.h,
                             ),
-                            getInputTextField(
-                                controllerList[4],
-                                "Enter your Country",
-                                TextInputType.name, (val) {
+                            getInputTextField(controllerList[4], "Enter your Country", TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your country";
                               }
@@ -358,8 +322,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                             SizedBox(
                               height: 34.h,
                             ),
-                            getInputTextField(controllerList[5],
-                                "Enter your City", TextInputType.name, (val) {
+                            getInputTextField(controllerList[5], "Enter your City", TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your city";
                               }
@@ -369,9 +332,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                               height: 34.h,
                             ),
                             getInputTextField(
-                                controllerList[6],
-                                "Enter your Educational Qualification",
-                                TextInputType.name, (val) {
+                                controllerList[6], "Enter your Educational Qualification", TextInputType.name, (val) {
                               if (val == null || val.isEmpty) {
                                 return "Please enter your name";
                               }
@@ -380,8 +341,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                             SizedBox(
                               height: 34.h,
                             ),
-                            getInputTextField(controllerList[7],
-                                "Write your Bio...", TextInputType.name, (val) {
+                            getInputTextField(controllerList[7], "Write your Bio...", TextInputType.name, (val) {
                               return null;
                             }),
                           ],
@@ -399,14 +359,11 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                       ),
                       child: TextButton(
                         onPressed: () async {
-                          if (_indFormKey.currentState!.validate() &&
-                              dob != null &&
-                              userGender != null) {
+                          if (_indFormKey.currentState!.validate() && dob != null && userGender != null) {
                             IndividualUser individual = IndividualUser(
                                 individualName: controllerList[0].text.trim(),
                                 individualEmail: controllerList[1].text.trim(),
-                                individualContact:
-                                    controllerList[2].text.trim(),
+                                individualContact: controllerList[2].text.trim(),
                                 occupation: controllerList[3].text.trim(),
                                 country: controllerList[4].text.trim(),
                                 city: controllerList[5].text.trim(),
@@ -417,10 +374,7 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
                                 bio: controllerList[7].text.trim());
                             Map<String, dynamic> userJSON = individual.toJSON();
                             await db.postIndividualProfileData(userJSON).then(
-                                (value) => Navigator.of(context)
-                                    .pushReplacement(MaterialPageRoute(
-                                        builder: (context) =>
-                                            const HomePageIndividual())));
+                                (value) => Navigator.of(context).pushReplacementNamed(HomePageIndividual.routeName));
                           }
                         },
                         style: TextButton.styleFrom(
@@ -447,8 +401,8 @@ class _IndividualAccountSetupState extends State<IndividualAccountSetup> {
     );
   }
 
-  Container getInputTextField(TextEditingController controller, String hintText,
-      TextInputType inputType, String? Function(String?) validator) {
+  Container getInputTextField(
+      TextEditingController controller, String hintText, TextInputType inputType, String? Function(String?) validator) {
     return Container(
       width: 365.w,
       decoration: BoxDecoration(

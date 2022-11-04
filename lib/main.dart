@@ -1,9 +1,13 @@
-import 'package:cura/individual/health.dart';
-import 'package:cura/individual/home_page_individual.dart';
+
+ import 'package:cura/individual/home_page_individual.dart';
+import 'package:cura/individual/spend_time.dart';
+
 import 'package:cura/startup_screens/preview_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:cura/shared/screens/create_post.dart';
 import 'package:flutter/material.dart';
 import 'shared/services/firebase_authentication.dart';
+import 'package:cura/shared/services/RouteGenerator.dart';
 
 Future<void> main() async {
   //Don't change the following code
@@ -25,9 +29,14 @@ class ScreenDecider extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: auth.getCurrentUser() == null
-          ? const health() // directly access by substituting in place of PreviewPage()
-          : const HomePageIndividual(),
+
+     
+
+      initialRoute: auth.getCurrentUser() == null
+          ? PreviewPage.routeName
+          : HomePageIndividual.routeName,
+      onGenerateRoute: RouteGenerator.generateRoute,
+
     );
   }
 }

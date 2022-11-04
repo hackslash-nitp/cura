@@ -16,12 +16,12 @@ class Otp {
 }
 
 class UserLogin extends StatefulWidget {
+  static const String routeName = '/UserLogin';
   final bool isPhoneLogin;
   const UserLogin({Key? key, required this.isPhoneLogin}) : super(key: key);
 
   @override
-  State<UserLogin> createState() =>
-      _UserLoginState(isPhoneVerification: isPhoneLogin);
+  State<UserLogin> createState() => _UserLoginState(isPhoneVerification: isPhoneLogin);
 }
 
 class _UserLoginState extends State<UserLogin> {
@@ -75,25 +75,6 @@ class _UserLoginState extends State<UserLogin> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(
-                      children: <Widget>[
-                        IconButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            icon: Icon(
-                              Icons.arrow_back_ios_new,
-                              size: 15.h,
-                            )),
-                        Text(
-                          _isLogin ? "Log In" : "Sign Up",
-                          style: TextStyle(
-                            fontSize: 24.sp,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 50.w),
                       child: Column(
@@ -102,17 +83,14 @@ class _UserLoginState extends State<UserLogin> {
                           SizedBox(
                             height: 44.h,
                           ),
-                          Image.asset('assets/cura_logo.png',
-                              height: 160.h, width: 256.w),
+                          Image.asset('assets/cura_logo.png', height: 160.h, width: 256.w),
                           Text(
                             "Hello! ",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w700, fontSize: 16.sp),
+                            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16.sp),
                           ),
                           Text(
                             "Welcome Back to Cura",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400, fontSize: 16.sp),
+                            style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16.sp),
                           ),
                           SizedBox(
                             height: 55.h,
@@ -124,16 +102,13 @@ class _UserLoginState extends State<UserLogin> {
                                 height: 40.h,
                                 width: 141.w,
                                 decoration: BoxDecoration(
-                                  color: isPhoneVerification
-                                      ? _primaryColor
-                                      : _secondaryColor,
-                                  borderRadius:
-                                      const BorderRadiusDirectional.only(
-                                          topStart: Radius.circular(10),
-                                          bottomStart: Radius.circular(10)),
+                                  color: isPhoneVerification ? _primaryColor : _secondaryColor,
+                                  borderRadius: const BorderRadiusDirectional.only(
+                                      topStart: Radius.circular(10), bottomStart: Radius.circular(10)),
                                 ),
                                 child: MaterialButton(
                                   onPressed: () {
+                                    FocusManager.instance.primaryFocus?.unfocus();
                                     setState(() {
                                       isPhoneVerification = true;
                                     });
@@ -152,16 +127,13 @@ class _UserLoginState extends State<UserLogin> {
                                 height: 40.h,
                                 width: 141.w,
                                 decoration: BoxDecoration(
-                                  color: isPhoneVerification
-                                      ? _secondaryColor
-                                      : _primaryColor,
-                                  borderRadius:
-                                      const BorderRadiusDirectional.only(
-                                          topEnd: Radius.circular(10),
-                                          bottomEnd: Radius.circular(10)),
+                                  color: isPhoneVerification ? _secondaryColor : _primaryColor,
+                                  borderRadius: const BorderRadiusDirectional.only(
+                                      topEnd: Radius.circular(10), bottomEnd: Radius.circular(10)),
                                 ),
                                 child: MaterialButton(
                                   onPressed: () {
+                                    FocusManager.instance.primaryFocus?.unfocus();
                                     setState(() {
                                       isPhoneVerification = false;
                                     });
@@ -181,15 +153,11 @@ class _UserLoginState extends State<UserLogin> {
                           SizedBox(
                             height: 22.h,
                           ),
-                          isPhoneVerification
-                              ? phoneInputField()
-                              : emailInputField(),
+                          isPhoneVerification ? phoneInputField() : emailInputField(),
                           SizedBox(
                             height: 40.h,
                           ),
-                          isPhoneVerification
-                              ? passField(context, "OTP: ")
-                              : passField(context, "Password: "),
+                          isPhoneVerification ? passField(context, "OTP: ") : passField(context, "Password: "),
                           SizedBox(
                             height: 21.h,
                           ),
@@ -205,35 +173,21 @@ class _UserLoginState extends State<UserLogin> {
                                 if (isPhoneVerification) {
                                   if (_inputValue == null) {
                                     CustomSnackbar.showSnackBar(
-                                        context,
-                                        "Please enter phone number",
-                                        const Color.fromARGB(
-                                            255, 219, 112, 112));
+                                        context, "Please enter phone number", const Color.fromARGB(255, 219, 112, 112));
                                     return;
                                   }
-                                  await auth.loginUserWithPhoneNumber(
-                                      "$_dropDownValue$_inputValue",
-                                      context,
-                                      _isLogin);
-                                } else if (_inputValue != null &&
-                                    _password != null) {
+                                  await auth.loginUserWithPhoneNumber("$_dropDownValue$_inputValue", context, _isLogin);
+                                } else if (_inputValue != null && _password != null) {
                                   if (_isLogin) {
-                                    await auth.loginUserWithEmail(
-                                        _inputValue!, _password!, context);
+                                    await auth.loginUserWithEmail(_inputValue!, _password!, context);
                                   } else {
-                                    await auth.signupUser(
-                                        _inputValue!, _password!, context);
+                                    await auth.signupUser(_inputValue!, _password!, context);
                                   }
                                 } else if (_password!.length < 6) {
                                   CustomSnackbar.showSnackBar(
-                                      context,
-                                      "Password should be atleast 6 characters long",
-                                      Colors.redAccent);
+                                      context, "Password should be atleast 6 characters long", Colors.redAccent);
                                 } else {
-                                  CustomSnackbar.showSnackBar(
-                                      context,
-                                      "Please fill all the fields",
-                                      Colors.redAccent);
+                                  CustomSnackbar.showSnackBar(context, "Please fill all the fields", Colors.redAccent);
                                 }
                               },
                               child: Text(
@@ -255,10 +209,8 @@ class _UserLoginState extends State<UserLogin> {
                           ),
                           Text(
                             _isLogin ? "New User?" : "Existing User?",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 13.sp,
-                                color: const Color(0xFF006FF0)),
+                            style:
+                                TextStyle(fontWeight: FontWeight.w600, fontSize: 13.sp, color: const Color(0xFF006FF0)),
                           ),
                           GestureDetector(
                             onTap: () {
@@ -271,9 +223,7 @@ class _UserLoginState extends State<UserLogin> {
                               child: Text(
                                 _isLogin ? "Sign Up Now" : "Log In Now",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 14.sp,
-                                    color: const Color(0xFF006FF0)),
+                                    fontWeight: FontWeight.w600, fontSize: 14.sp, color: const Color(0xFF006FF0)),
                               ),
                             ),
                           ),
@@ -293,9 +243,7 @@ class _UserLoginState extends State<UserLogin> {
   TextField passField(BuildContext context, String text) {
     return TextField(
       controller: isPhoneVerification ? _otpController : passwordText,
-      keyboardType: isPhoneVerification
-          ? TextInputType.number
-          : TextInputType.emailAddress,
+      keyboardType: isPhoneVerification ? TextInputType.number : TextInputType.emailAddress,
       onChanged: (value) {
         setState(() {
           _password = value.trim();
@@ -307,21 +255,19 @@ class _UserLoginState extends State<UserLogin> {
         contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
         label: Text(
           text,
-          style: TextStyle(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w700,
-              color: Colors.black),
+          style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w700, color: Colors.black),
         ),
         floatingLabelBehavior: FloatingLabelBehavior.always,
         floatingLabelAlignment: FloatingLabelAlignment.start,
         suffixIcon: isPhoneVerification
             ? IconButton(
-                onPressed: () => CustomSnackbar.showSnackBar(
-                    context, "OTP has been resent", Colors.black),
+                onPressed: () => CustomSnackbar.showSnackBar(context, "OTP has been resent", Colors.black),
                 iconSize: 25.h,
                 icon: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Icon(Icons.refresh),
+                    const Expanded(child: Icon(Icons.refresh)),
                     Text(
                       "Resend",
                       style: TextStyle(fontSize: 8.sp),
@@ -329,7 +275,7 @@ class _UserLoginState extends State<UserLogin> {
                   ],
                 ),
               )
-            : const SizedBox(),
+            : null,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.r),
         ),
