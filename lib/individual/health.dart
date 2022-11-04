@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 import 'package:flutter/material.dart';
@@ -217,5 +218,20 @@ class _healthState extends State<health> {
                     ),
               )
             );
+=======
+import 'package:flutter/material.dart';
+
+class HealthPage extends StatefulWidget {
+  const HealthPage({super.key});
+
+  @override
+  State<HealthPage> createState() => _HealthPageState();
+}
+
+class _HealthPageState extends State<HealthPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+>>>>>>> 5bde0a63adc39c18c4d6fd8f94346537afb47bf0
   }
 }

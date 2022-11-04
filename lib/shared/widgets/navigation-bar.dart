@@ -1,41 +1,60 @@
+import 'package:cura/individual/home_page_individual.dart';
+import 'package:cura/individual/info_page.dart';
+import 'package:cura/individual/user_chats_menu.dart';
+import 'package:cura/organization/postfeed.dart';
 import 'package:flutter/material.dart';
 
-class navigationbar extends StatefulWidget {
-  const navigationbar({Key? key}) : super(key: key);
+class CustomNavigationBar extends StatefulWidget {
+  final int currentIndex;
+  const CustomNavigationBar({Key? key, required this.currentIndex})
+      : super(key: key);
 
   @override
-  State<navigationbar> createState() => _navigationbarState();
+  State<CustomNavigationBar> createState() => _CustomNavigationBarState();
 }
 
-class _navigationbarState extends State<navigationbar> {
+class _CustomNavigationBarState extends State<CustomNavigationBar> {
   @override
   Widget build(BuildContext context) {
-    return (Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: Color.fromARGB(255, 22, 115, 121),
-          unselectedItemColor: Colors.black,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'home',
-              backgroundColor: Color.fromARGB(255, 193, 236, 239),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add),
-              label: 'add',
-              backgroundColor: Color.fromARGB(255, 193, 236, 239),
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.chat_bubble_outline),
-              label: 'chat',
-              backgroundColor: Color.fromARGB(255, 193, 236, 239),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.people),
-              label: 'profile',
-              backgroundColor: Color.fromARGB(255, 193, 236, 239),
-            ),
-          ]),
-    ));
+    List<Widget> navItems = [
+      const HomePageIndividual(),
+      const postfeed(),
+      const UserChatsScreen(),
+      const IndividualInfoPage()
+    ];
+
+    return BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: const Color.fromARGB(255, 22, 115, 121),
+        unselectedItemColor: Colors.black,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        currentIndex: widget.currentIndex,
+        onTap: ((value) {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => navItems[value]));
+        }),
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+            backgroundColor: Color(0xFFC7E2E4),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_box_outlined),
+            label: "Add",
+            backgroundColor: Color(0xFFC7E2E4),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat_bubble_outline),
+            label: "Chats",
+            backgroundColor: Color(0xFFC7E2E4),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            label: "Profile",
+            backgroundColor: Color(0xFFC7E2E4),
+          ),
+        ]);
   }
 }
