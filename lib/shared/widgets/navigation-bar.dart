@@ -1,3 +1,4 @@
+import 'package:cura/individual/health1.dart';
 import 'package:cura/individual/home_page_individual.dart';
 import 'package:cura/individual/info_page.dart';
 import 'package:cura/individual/user_chats_menu.dart';
@@ -20,7 +21,8 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
       const HomePageIndividual(),
       const postfeed(),
       const UserChatsScreen(),
-      const IndividualInfoPage()
+      const IndividualInfoPage(),
+      const health1()
     ];
 
     return BottomNavigationBar(

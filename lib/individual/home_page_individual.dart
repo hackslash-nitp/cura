@@ -1,6 +1,6 @@
 import 'package:cura/individual/adopt.dart';
 import 'package:cura/individual/donation_page.dart';
-import 'package:cura/individual/health.dart';
+import 'package:cura/individual/health1.dart';
 import 'package:cura/individual/spend_time.dart';
 import 'package:cura/organization/postfeed.dart';
 import 'package:cura/shared/widgets/gradient_background.dart';
@@ -48,7 +48,7 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
   Widget build(BuildContext context) {
     List navRoutes = [
       const AdoptPage(),
-      const HealthPage(),
+      // const HealthPage(),
       const DonationPage(),
       const SpendTime(),
       const postfeed()
