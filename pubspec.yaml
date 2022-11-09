@@ -83,6 +83,7 @@ flutter:
     - assets/startup_assets/preview_splash_assets/
     - assets/startup_assets/individual_assets/donation.png
     - assets/health1.png
+    - assets/main_assets/Completed.png
     
   #   - images/a_dot_burr.jpeg
 

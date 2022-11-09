@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:cura/shared/widgets/navigation-bar.dart';
 
@@ -12,6 +14,9 @@ class HealthPage extends StatefulWidget {
 }
 
 class _HealthPageState extends State<HealthPage> {
+  TimeOfDay _timeOfDay = TimeOfDay(hour: 10, minute: 30);
+
+  TextEditingController _date = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -74,7 +79,7 @@ class _HealthPageState extends State<HealthPage> {
                         Image.asset('assets/health1.png',
                             width: double.infinity),
                         Container(
-                          height: 370.h,
+                          height: 400.h,
                           width: 330.w,
                           decoration: BoxDecoration(
                             color: Color.fromARGB(255, 215, 246, 248),
@@ -104,6 +109,9 @@ class _HealthPageState extends State<HealthPage> {
                                       'organization 6',
                                     ],
                                     searchInputDecoration: InputDecoration(
+                                      // ignore: prefer_const_constructors
+                                      contentPadding: EdgeInsets.only(
+                                          top: 0, bottom: 0, left: 5, right: 0),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                             color: Colors.grey, width: 2.w),
@@ -124,7 +132,7 @@ class _HealthPageState extends State<HealthPage> {
                                       suffixIcon: const Icon(
                                         Icons.arrow_drop_down,
                                         color: Colors.grey,
-                                        size: 40,
+                                        size: 30,
                                       ),
                                     ),
                                   ),
@@ -141,22 +149,77 @@ class _HealthPageState extends State<HealthPage> {
                                           fontWeight: FontWeight.w500,
                                           fontSize: 20.sp),
                                     ),
-                                    // SizedBox(
-                                    //   width: 130.w,
-                                    // ),
-                                    // Text(
-                                    //   "Time",
-                                    //   style: TextStyle(
-                                    //       fontWeight: FontWeight.w500,
-                                    //       fontSize: 20.sp),
-                                    // ),
                                     SizedBox(
                                       width: 40.w,
                                     ),
-                                    // SizedBox(
-                                    //   height: 10.h,
-                                    // )
-                                    //
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
+                                    ),
+                                    Expanded(
+                                      child: TextField(
+                                        controller: _date,
+                                        decoration: InputDecoration(
+                                            // ignore: prefer_const_constructors
+                                            contentPadding: EdgeInsets.only(
+                                                top: 0,
+                                                bottom: 0,
+                                                left: 5,
+                                                right: 0),
+                                            fillColor: const Color.fromARGB(
+                                                255, 186, 231, 235),
+                                            filled: true,
+                                            suffixIcon: const Icon(
+                                              Icons.arrow_drop_down,
+                                              color: Colors.grey,
+                                              size: 30,
+                                            ),
+                                            hintText: 'Date',
+                                            border: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.grey,
+                                                    width: 2.w),
+                                                borderRadius:
+                                                    BorderRadius.circular(80))),
+                                        onTap: () async {
+                                          DateTime? pickeddate =
+                                              await showDatePicker(
+                                                  context: context,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime(2000),
+                                                  lastDate: DateTime(2101));
+                                          if (pickeddate != null) {
+                                            setState(() {
+                                              _date.text =
+                                                  DateFormat('yyyy-mm-dd')
+                                                      .format(pickeddate);
+                                            });
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: 40.w,
+                                    ),
+                                    Text(
+                                      "Time",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 20.sp),
+                                    ),
+                                    SizedBox(
+                                      width: 40.w,
+                                    ),
                                   ],
                                 ),
                                 Row(
@@ -169,21 +232,38 @@ class _HealthPageState extends State<HealthPage> {
                                     Expanded(
                                       child: TextField(
                                         decoration: InputDecoration(
+                                            // ignore: prefer_const_constructors
+                                            contentPadding: EdgeInsets.only(
+                                                top: 0,
+                                                bottom: 0,
+                                                left: 5,
+                                                right: 0),
                                             fillColor: const Color.fromARGB(
                                                 255, 186, 231, 235),
                                             filled: true,
                                             suffixIcon: const Icon(
                                               Icons.arrow_drop_down,
                                               color: Colors.grey,
-                                              size: 40,
+                                              size: 30,
                                             ),
-                                            hintText: 'Date',
+                                            hintText: 'Time',
                                             border: OutlineInputBorder(
                                                 borderSide: BorderSide(
                                                     color: Colors.grey,
                                                     width: 2.w),
                                                 borderRadius:
                                                     BorderRadius.circular(80))),
+                                        onTap: () async {
+                                          DateTime? pickedtime =
+                                              await showTimePicker(
+                                            context: context,
+                                            initialTime: TimeOfDay.now(),
+                                          ).then((value) {
+                                            setState(() {
+                                              _timeOfDay = value!;
+                                            });
+                                          });
+                                        },
                                       ),
                                     )
                                   ],
@@ -203,24 +283,28 @@ class _HealthPageState extends State<HealthPage> {
                                     ),
                                     Expanded(
                                         child: TextField(
-                                            decoration: InputDecoration(
-                                                fillColor: const Color.fromARGB(
-                                                    255, 186, 231, 235),
-                                                filled: true,
-                                                suffixIcon: const Icon(
-                                                  Icons.arrow_drop_down,
+                                      decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.only(
+                                              top: 0,
+                                              bottom: 0,
+                                              left: 5,
+                                              right: 0),
+                                          fillColor: const Color.fromARGB(
+                                              255, 186, 231, 235),
+                                          filled: true,
+                                          suffixIcon: const Icon(
+                                            Icons.arrow_drop_down,
+                                            color: Colors.grey,
+                                            size: 30,
+                                          ),
+                                          hintText: 'Type of health checkup',
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide(
                                                   color: Colors.grey,
-                                                  size: 40,
-                                                ),
-                                                hintText:
-                                                    'type of health checkup',
-                                                border: OutlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                        color: Colors.grey,
-                                                        width: 2.w),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            80)))))
+                                                  width: 2.w),
+                                              borderRadius:
+                                                  BorderRadius.circular(100))),
+                                    ))
                                   ],
                                 ),
                                 SizedBox(
@@ -228,28 +312,111 @@ class _HealthPageState extends State<HealthPage> {
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: 
-                    [TextButton(
-                      style: TextButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.r),
-                        ),
-                        primary: Colors.white,
-                        backgroundColor: const Color.fromARGB(255, 137, 184, 189),
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        "submit",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ),
-                  ],
+                                  children: [
+                                    TextButton(
+                                      style: TextButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30.r),
+                                        ),
+                                        primary: Colors.white,
+                                        backgroundColor: const Color.fromARGB(
+                                            255, 137, 184, 189),
+                                      ),
+                                      onPressed: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return Center(
+                                                child: Material(
+                                                  type:
+                                                      MaterialType.transparency,
+                                                  child: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadiusDirectional
+                                                                .circular(10),
+                                                        color: Colors.white,
+                                                      ),
+                                                      padding:
+                                                          EdgeInsets.all(15),
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.7,
+                                                      height: 350,
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5),
+                                                            child: Image.asset(
+                                                              'assets/main_assets/Completed.png',
+                                                              width: 200,
+                                                              height: 200,
+                                                            ),
+                                                          ),
+                                                          // ignore: prefer_const_constructors
+                                                          SizedBox(height: 10),
+
+                                                          // ignore: prefer_const_constructors
+                                                          Text(
+                                                            'Thank You !!',
+                                                            style: const TextStyle(
+                                                                fontSize: 25,
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        137,
+                                                                        184,
+                                                                        189),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          // ignore: prefer_const_constructors
+                                                          SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          // ignore: prefer_const_constructors
+                                                          Text(
+                                                            'Thank You for free health checkup',
+                                                            style: const TextStyle(
+                                                                fontSize: 20,
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        0,
+                                                                        10,
+                                                                        11),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                          ),
+                                                        ],
+                                                      )),
+                                                ),
+                                              );
+                                            });
+                                      },
+                                      child: Text(
+                                        "submit",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.sp,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    ),
+                                  ],
                                 )
-
-
                               ]),
                         )
                       ],
@@ -257,7 +424,6 @@ class _HealthPageState extends State<HealthPage> {
                   )
                 ]),
               ),
-            )))
-    );
+            ))));
   }
 }
