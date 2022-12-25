@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:cura/shared/widgets/navigation-bar.dart';
 
@@ -193,9 +194,7 @@ class _HealthPageState extends State<HealthPage> {
                                                   lastDate: DateTime(2101));
                                           if (pickeddate != null) {
                                             setState(() {
-                                              _date.text =
-                                                  DateFormat('yyyy-mm-dd')
-                                                      .format(pickeddate);
+                                              _date.text = DateFormat('yyyy-mm-dd').format(pickeddate);
                                             });
                                           }
                                         },

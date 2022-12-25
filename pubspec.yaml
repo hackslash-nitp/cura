@@ -45,6 +45,8 @@ dependencies:
   favorite_button: ^0.0.4
   share: ^2.0.4
   social_share: ^2.2.1
+  cached_network_image: ^3.2.3
+  optimized_cached_image: ^3.0.1
 
 
 dev_dependencies:

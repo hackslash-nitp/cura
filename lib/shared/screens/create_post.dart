@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cura/shared/services/firebase_database.dart';
 import "package:flutter/material.dart";
 import 'package:image_picker/image_picker.dart';
 
@@ -112,8 +113,8 @@ class _CreatePostState extends State<CreatePost> {
                   ]),
                   TextButton(
                     onPressed: () {
-                      //_images stores all the text so export them by this variable
-                      print(postText.text);
+                      Navigator.pop(context);
+                      FirestoreDatabase().addPost(_images,postText.text);
                     },
                     style: TextButton.styleFrom(
                       elevation: 2.0,
