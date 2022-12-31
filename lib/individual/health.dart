@@ -193,9 +193,7 @@ class _HealthPageState extends State<HealthPage> {
                                                   lastDate: DateTime(2101));
                                           if (pickeddate != null) {
                                             setState(() {
-                                              _date.text =
-                                                  DateFormat('yyyy-mm-dd')
-                                                      .format(pickeddate);
+                                              _date.text = DateFormat('yyyy-mm-dd') .format(pickeddate);
                                             });
                                           }
                                         },
