@@ -1,4 +1,3 @@
-
 import 'package:cura/individual/home_page_individual.dart';
 import 'package:cura/organization/postfeed.dart';
 import 'package:cura/startup_screens/preview_page.dart';
@@ -27,7 +26,9 @@ class ScreenDecider extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: postfeed.routeName,
+      initialRoute: auth.getCurrentUser() == null
+          ? PreviewPage.routeName
+          : HomePageIndividual.routeName,
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
