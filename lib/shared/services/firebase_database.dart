@@ -47,13 +47,18 @@ class FirestoreDatabase {
         .set(profileData);
   }
 
-  Future<Map> getIndividualProfileData (String id) async{
-    DocumentReference user = _db.collection("users").doc("individualUsers").collection("profileData").doc(id);
+  Future<Map> getIndividualProfileData(String id) async {
+    DocumentReference user = _db
+        .collection("users")
+        .doc("individualUsers")
+        .collection("profileData")
+        .doc(id);
     DocumentSnapshot userData = await user.get();
     return userData.data() as Map;
   }
 
-  Future<void> postOrganizationProfileData(Map<String, dynamic> profileData) async {
+  Future<void> postOrganizationProfileData(
+      Map<String, dynamic> profileData) async {
     String? uid;
     final currentUser = _auth.getCurrentUser();
     if (currentUser == null) {
@@ -68,24 +73,26 @@ class FirestoreDatabase {
         .set(profileData);
   }
 
-  Future<List> getOrganisationProfileData() async{
-    final orgUsers = _db.collection("users").doc("organisationUsers").collection("profileData");
+  Future<List> getOrganisationProfileData() async {
+    final orgUsers = _db
+        .collection("users")
+        .doc("organisationUsers")
+        .collection("profileData");
     QuerySnapshot snap = await orgUsers.get();
     List allData = snap.docs;
     List orgProfiles = [];
-    for(var d in allData){
+    for (var d in allData) {
       orgProfiles.add(d.data());
     }
     return orgProfiles;
   }
-  
-  Future<void> postVolunteerData(Map<String,dynamic> volunteerData) async{
-    await _db.collection("users")
+
+  Future<void> postVolunteerData(Map<String, dynamic> volunteerData) async {
+    await _db
+        .collection("users")
         .doc("individualUsers")
         .collection("volunteerDetails")
         .doc()
         .set(volunteerData);
   }
-
 }
-

@@ -1,4 +1,5 @@
 
+// import 'package:cura/individual/health.dart';
 import 'package:cura/individual/home_page_individual.dart';
 import 'package:cura/individual/spend_time.dart';
 import 'package:cura/startup_screens/preview_page.dart';
