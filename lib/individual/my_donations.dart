@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -10,26 +12,30 @@ class MyDonationsScreen extends StatefulWidget {
 }
 
 class _MyDonationsScreenState extends State<MyDonationsScreen> {
-  final List<Map<String, String>> _donations = [
-    {
-      'donationAmount': '2500.0',
-      'date': 'March 18, 2021',
-      'time': '12:39 PM',
-      'status': 'Completed',
-    },
-    {
-      'donationAmount': '3500.0',
-      'date': 'April 13, 2021',
-      'time': '01:23 PM',
-      'status': 'Completed',
-    },
-    {
-      'donationAmount': '8000.0',
-      'date': 'January 12, 2022',
-      'time': '03:47 PM',
-      'status': 'Completed',
-    },
-  ];
+  List _donations = [];
+
+  String userId = FirebaseAuth.instance.currentUser!.uid;
+
+  var db = FirebaseFirestore.instance;
+  var donat = FirebaseFirestore.instance
+      .collection("Donation")
+      .doc(FirebaseAuth.instance.currentUser!.uid);
+
+  @override
+  void initState() {
+    super.initState();
+    db
+        .collection("Donation")
+        .doc(userId)
+        .collection("Individual")
+        .get()
+        .then((value) {
+      setState(() {
+        _donations = value.docs;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -152,15 +158,11 @@ class _MyDonationsScreenState extends State<MyDonationsScreen> {
                                 itemBuilder: (context, index) {
                                   return MyDonationInfo(
                                     index: index,
-                                    donationAmount: _donations[index]
-                                            ['donationAmount'] ??
-                                        "Not Available",
-                                    date: _donations[index]['date'] ??
-                                        "Not Available",
-                                    time: _donations[index]['time'] ??
-                                        "Not Available",
-                                    status: _donations[index]['status'] ??
-                                        "Not Available",
+                                    donationAmount:
+                                        "${_donations[index]["donationAmount"]}",
+                                    date: "${_donations[index]["date"]}",
+                                    time: "${_donations[index]["time"]}",
+                                    status: "${_donations[index]["Status"]}",
                                   );
                                 }),
                           ),
