@@ -23,7 +23,7 @@ class _HealthPageState extends State<HealthPage> {
   final controllerorganizationname = TextEditingController();
 
   final controllercheckuptype = TextEditingController();
-
+//1.
   CollectionReference user = FirebaseFirestore.instance.collection('user');
   @override
   Widget build(BuildContext context) {
@@ -262,6 +262,8 @@ class _HealthPageState extends State<HealthPage> {
                                                     width: 2.w),
                                                 borderRadius:
                                                     BorderRadius.circular(80))),
+
+                                        //
                                         onTap: () async {
                                           DateTime? pickedtime =
                                               await showTimePicker(
@@ -270,6 +272,8 @@ class _HealthPageState extends State<HealthPage> {
                                           ).then((value) {
                                             setState(() {
                                               _timeOfDay = value!;
+
+                                              //
                                             });
                                           });
                                         },
@@ -294,7 +298,7 @@ class _HealthPageState extends State<HealthPage> {
                                         child: TextField(
                                       controller: controllercheckuptype,
                                       decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.only(
+                                          contentPadding: const EdgeInsets.only(
                                               top: 0,
                                               bottom: 0,
                                               left: 5,
@@ -341,6 +345,7 @@ class _HealthPageState extends State<HealthPage> {
                                           'checkuptype': 'fever',
                                         });
 
+                                        // ignore: use_build_context_synchronously
                                         showDialog(
                                             context: context,
                                             builder: (context) {
@@ -422,7 +427,9 @@ class _HealthPageState extends State<HealthPage> {
                                                       )),
                                                 ),
                                               );
-                                            });
+                                            }
+                                            )
+                                            ;
                                       },
                                       child: Text(
                                         "submit",

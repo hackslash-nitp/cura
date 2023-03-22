@@ -26,11 +26,12 @@ class FirestoreDatabase {
   Future<void> postReview(int rating, String review) async {
     final Map<String, dynamic> userReview = {
       'rating': rating,
-      'review': review
+      'review': review,
     };
     await _db.collection('reviews').doc().set(userReview);
   }
 
+//
   Future<void> postIndividualProfileData(
       Map<String, dynamic> profileData) async {
     String? uid;
@@ -47,6 +48,8 @@ class FirestoreDatabase {
         .set(profileData);
   }
 
+  //
+//
   Future<Map> getIndividualProfileData(String id) async {
     DocumentReference user = _db
         .collection("users")
@@ -57,6 +60,7 @@ class FirestoreDatabase {
     return userData.data() as Map;
   }
 
+//
   Future<void> postOrganizationProfileData(
       Map<String, dynamic> profileData) async {
     String? uid;
@@ -94,5 +98,22 @@ class FirestoreDatabase {
         .collection("volunteerDetails")
         .doc()
         .set(volunteerData);
+  }
+
+  // spend time backend
+
+  Future<void> spendtime(Map<String, dynamic> spendData) async {
+    String? uid;
+    final currentUser = _auth.getCurrentUser();
+    if (currentUser == null) {
+      print("User is not logged in!");
+    }
+    uid = currentUser!.uid;
+    await _db
+        .collection('spend')
+        .doc('individualUsers')
+        .collection('spendData')
+        .doc(uid)
+        .set(spendData);
   }
 }
