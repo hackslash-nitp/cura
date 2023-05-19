@@ -1,6 +1,27 @@
-import 'package:cura/shared/widgets/gradient_background.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Firebase Chat',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: OrgChatScreen(userName: 'John Doe', imgUrl: ''),
+    );
+  }
+}
 
 class OrgChatScreen extends StatefulWidget {
   static const String routeName = '/OrgChatScreen';
@@ -13,6 +34,7 @@ class OrgChatScreen extends StatefulWidget {
 
 class _OrgChatScreenState extends State<OrgChatScreen> {
   final TextEditingController messageController = TextEditingController();
+  final CollectionReference messagesCollection = FirebaseFirestore.instance.collection('messages');
 
   final List<String> months = [
     "January",
@@ -27,23 +49,6 @@ class _OrgChatScreenState extends State<OrgChatScreen> {
     "October",
     "November",
     "December"
-  ];
-  final List<Map<String, dynamic>> msgList = [
-    {'msg': 'Hey!', 'time': '4:00 pm', 'isMe': true, 'date': '18 August 2022'},
-    {'msg': 'Hello sir! How can we help you ?', 'time': '4:01 pm', 'isMe': true, 'date': '18 August 2022'},
-    {
-      'msg': 'I want to come to your foundation. What’s the time allowed for outsiders to come?',
-      'time': '4:02 pm',
-      'isMe': false,
-      'date': '18 August 2022'
-    },
-    {
-      'msg': 'Sir, you can come anytime between 09:00 a.m. to 05:00 p.m.',
-      'time': '4:03 pm',
-      'isMe': true,
-      'date': '19 August 2022'
-    },
-    {'msg': 'Okay! Thank you.', 'time': '4:04 pm', 'isMe': false, 'date': '20 August 2022'},
   ];
 
   @override
@@ -72,38 +77,53 @@ class _OrgChatScreenState extends State<OrgChatScreen> {
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10.r),
-                            topRight: Radius.circular(10.r),
-                          )),
-                      child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: msgList.length,
-                        itemBuilder: (context, index) {
-                          String currentDate = msgList[index]['date'];
-                          bool showDate = false;
-                          if (index == 0) {
-                            return DateMsgTile(
-                              convDate: msgList[0]['date'],
-                            );
-                          } else if (index != msgList.length - 1 && currentDate != msgList[index + 1]['date']) {
-                            showDate = true;
-                            return MessageWidget(
-                              isMe: msgList[index]['isMe'],
-                              msg: msgList[index]['msg'],
-                              time: msgList[index]['time'],
-                              showDate: showDate,
-                              nextDate: msgList[index + 1]['date'],
-                              orgImgUrl: widget.imgUrl,
-                            );
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10.r),
+                          topRight: Radius.circular(10.r),
+                        ),
+                      ),
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: messagesCollection.orderBy('time').snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
                           }
-                          return MessageWidget(
-                            isMe: msgList[index]['isMe'],
-                            msg: msgList[index]['msg'],
-                            time: msgList[index]['time'],
-                            showDate: showDate,
-                            orgImgUrl: widget.imgUrl,
+
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return CircularProgressIndicator();
+                          }
+
+                          final List<QueryDocumentSnapshot> documents = snapshot.data!.docs;
+
+                          return ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: documents.length,
+                            itemBuilder: (context, index) {
+                              final document = documents[index];
+                              String currentDate = document['date'];
+                              bool showDate = false;
+                              if (index == 0) {
+                                return DateMsgTile(convDate: document['date']);
+                              } else if (index != documents.length - 1 && currentDate != documents[index + 1]['date']) {
+                                showDate = true;
+                                return MessageWidget(
+                                  isMe: document['isMe'],
+                                  msg: document['msg'],
+                                  time: document['time'],
+                                  showDate: showDate,
+                                  nextDate: documents[index + 1]['date'],
+                                  orgImgUrl: widget.imgUrl,
+                                );
+                              }
+                              return MessageWidget(
+                                isMe: document['isMe'],
+                                msg: document['msg'],
+                                time: document['time'],
+                                showDate: showDate,
+                                orgImgUrl: widget.imgUrl,
+                              );
+                            },
                           );
                         },
                       ),
@@ -151,33 +171,10 @@ class _OrgChatScreenState extends State<OrgChatScreen> {
                           IconButton(onPressed: () {}, iconSize: 28.h, icon: const Icon(Icons.add_photo_alternate)),
                           IconButton(onPressed: () {}, iconSize: 28.h, icon: const Icon(Icons.mic)),
                           IconButton(
-                              onPressed: () {
-                                //The following code is for formatting purposes to display date.
-                                //--------------------------------------------------------------------
-                                final time = DateTime.now();
-                                int hour = time.hour;
-                                String meridian = hour < 11 ? "am" : "pm";
-                                hour = hour % 11;
-                                hour = hour == 0 ? 12 : hour - 1;
-                                String timeInHours = hour < 10 ? "0$hour" : hour.toString();
-                                //--------------------------------------------------------------------
-                                int minutes = time.minute;
-                                String minute = minutes < 10 ? "0$minutes" : minutes.toString();
-                                //--------------------------------------------------------------------
-                                String month = months[time.month - 1];
-                                setState(() {
-                                  msgList.add({
-                                    'msg': messageController.text.trim(),
-                                    'isMe': true,
-                                    'time': "$timeInHours:$minute $meridian",
-                                    'date': "${time.day} $month ${time.year}"
-                                  });
-                                });
-                                messageController.clear();
-                                FocusScope.of(context).unfocus();
-                              },
-                              iconSize: 28.h,
-                              icon: const Icon(Icons.send)),
+                            onPressed: () => sendMessage(messageController.text),
+                            iconSize: 28.h,
+                            icon: const Icon(Icons.send),
+                          ),
                         ],
                       ),
                     ),
@@ -206,9 +203,10 @@ class _OrgChatScreenState extends State<OrgChatScreen> {
                       backgroundColor: Colors.transparent,
                       radius: 30.w,
                       child: Image(
-                          image: widget.imgUrl == ""
-                              ? const AssetImage('assets/startup_assets/create_account_assets/profile_primary.png')
-                              : AssetImage(widget.imgUrl)),
+                        image: widget.imgUrl == ""
+                            ? const AssetImage('assets/startup_assets/create_account_assets/profile_primary.png')
+                            : AssetImage(widget.imgUrl),
+                      ),
                     ),
                     SizedBox(
                       width: 20.w,
@@ -229,127 +227,163 @@ class _OrgChatScreenState extends State<OrgChatScreen> {
       ),
     );
   }
+
+  Future<void> sendMessage(String message) async {
+    if (message.isNotEmpty) {
+      final time = DateTime.now();
+      int hour = time.hour;
+      String meridian = hour < 11 ? "am" : "pm";
+      hour = hour % 11;
+      hour = hour == 0 ? 12 : hour - 1;
+      String timeInHours = hour < 10 ? "0$hour" : hour.toString();
+      int minutes = time.minute;
+      String minute = minutes < 10 ? "0$minutes" : minutes.toString();
+      String month = months[time.month - 1];
+
+      await messagesCollection.add({
+        'msg': message.trim(),
+        'isMe': true,
+        'time': "$timeInHours:$minute $meridian",
+        'date': "${time.day} $month ${time.year}"
+      });
+
+      messageController.clear();
+    }
+  }
 }
 
-class DateMsgTile extends StatelessWidget {
-  final String convDate;
-
-  const DateMsgTile({
-    Key? key,
-    required this.convDate,
-  }) : super(key: key);
+class UniDirectionalBackground extends StatelessWidget {
+  const UniDirectionalBackground({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Container(
-            width: 118.w,
-            height: 25.h,
-            decoration: BoxDecoration(
-              color: const Color.fromRGBO(130, 113, 228, 0.5),
-              borderRadius: BorderRadius.circular(10.r),
-            ),
-            child: Center(
-              child: Text(
-                convDate,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          )
-        ],
+    return Container(
+      height: 220.h,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Color(0xFF8E9EAB),
+            Color(0xFFeef2f3),
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
       ),
     );
   }
 }
 
 class MessageWidget extends StatelessWidget {
-  final bool isMe, showDate;
-  final String msg, time, orgImgUrl;
-  final String? nextDate;
+  final bool isMe;
+  final String msg, time;
+  final bool showDate;
+  final String nextDate;
+  final String orgImgUrl;
 
-  final Color myMsgColor = const Color(0xFFE0EEEF);
-  final Color senderMsgColor = const Color(0xFFD9D9D9);
-
-  const MessageWidget(
-      {Key? key,
-      required this.isMe,
-      required this.msg,
-      required this.time,
-      required this.showDate,
-      this.nextDate,
-      required this.orgImgUrl})
-      : super(key: key);
+  const MessageWidget({
+    Key? key,
+    required this.isMe,
+    required this.msg,
+    required this.time,
+    required this.showDate,
+    required this.nextDate,
+    required this.orgImgUrl,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final dpUrl = isMe ? "assets/startup_assets/create_account_assets/profile_primary.png" : orgImgUrl;
-    const BorderRadius myBorderRadius = BorderRadius.only(
-      topLeft: Radius.circular(20),
-      topRight: Radius.circular(20),
-      bottomLeft: Radius.circular(20),
-    );
-    const BorderRadius senderBorderRadius = BorderRadius.only(
-      topLeft: Radius.circular(20),
-      topRight: Radius.circular(20),
-      bottomRight: Radius.circular(20),
-    );
-
-    final List<Widget> rowItems = <Widget>[
-      CircleAvatar(
-        backgroundColor: Colors.transparent,
-        radius: 25.w,
-        child: Image(image: AssetImage(dpUrl)),
-      ),
-      SizedBox(
-        width: 10.w,
-      ),
-      Container(
-        width: MediaQuery.of(context).size.width * 0.5,
-        decoration: BoxDecoration(
-          color: isMe ? myMsgColor : senderMsgColor,
-          borderRadius: isMe ? myBorderRadius : senderBorderRadius,
+    return Column(
+      crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      children: <Widget>[
+        if (showDate)
+          Padding(
+            padding: EdgeInsets.only(top: 10.h),
+            child: DateMsgTile(convDate: nextDate),
+          ),
+        Row(
+          mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+          children: <Widget>[
+            if (!isMe)
+              CircleAvatar(
+                backgroundColor: Colors.transparent,
+                radius: 22.w,
+                child: Image(
+                  image: orgImgUrl == ""
+                      ? AssetImage('assets/startup_assets/create_account_assets/profile_primary.png')
+                      : AssetImage(orgImgUrl),
+                ),
+              ),
+            Flexible(
+              child: Container(
+                constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width * 0.65,
+                ),
+                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+                margin: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
+                decoration: BoxDecoration(
+                  color: isMe ? Colors.blue : Colors.white,
+                  borderRadius: BorderRadius.circular(15.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 2), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Text(
+                  msg,
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w400,
+                    color: isMe ? Colors.white : Colors.black,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: Text(
-            msg,
+            time,
             style: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w400,
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class DateMsgTile extends StatelessWidget {
+  final String convDate;
+
+  const DateMsgTile({Key? key, required this.convDate}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 10.h),
+      child: Center(
+        child: Container(
+          padding: EdgeInsets.all(6.r),
+          decoration: BoxDecoration(
+            color: Colors.blue[200],
+            borderRadius: BorderRadius.circular(5.r),
+          ),
+          child: Text(
+            convDate,
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),
       ),
-      Text(
-        time,
-        style: TextStyle(
-          fontSize: 8.sp,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-    ];
-
-    return Column(
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-          children: isMe ? rowItems.reversed.toList() : rowItems,
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        if (showDate) DateMsgTile(convDate: nextDate!),
-      ],
     );
   }
 }
