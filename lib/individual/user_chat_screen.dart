@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cura/shared/widgets/gradient_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,7 +14,6 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController messageController = TextEditingController();
-
   final List<String> months = [
     "January",
     "February",
@@ -28,23 +28,19 @@ class _ChatScreenState extends State<ChatScreen> {
     "November",
     "December"
   ];
-  final List<Map<String, dynamic>> msgList = [
-    {'msg': 'Hey!', 'time': '4:00 pm', 'isMe': true, 'date': '18 August 2022'},
-    {'msg': 'Hello sir! How can we help you ?', 'time': '4:01 pm', 'isMe': false, 'date': '18 August 2022'},
-    {
-      'msg': 'I want to come to your foundation. What’s the time allowed for outsiders to come?',
-      'time': '4:02 pm',
-      'isMe': true,
-      'date': '18 August 2022'
-    },
-    {
-      'msg': 'Sir, you can come anytime between 09:00 a.m. to 05:00 p.m.',
-      'time': '4:03 pm',
-      'isMe': false,
-      'date': '19 August 2022'
-    },
-    {'msg': 'Okay! Thank you.', 'time': '4:04 pm', 'isMe': true, 'date': '20 August 2022'},
-  ];
+  List<Map<String, dynamic>> msgList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadMessages();
+  }
+
+  Future<void> loadMessages() async {
+    final querySnapshot = await FirebaseFirestore.instance.collection('messages').get();
+    msgList = querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+    setState(() {});
+  }
 
   @override
   void dispose() {
@@ -72,11 +68,12 @@ class _ChatScreenState extends State<ChatScreen> {
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10.r),
-                            topRight: Radius.circular(10.r),
-                          )),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10.r),
+                          topRight: Radius.circular(10.r),
+                        ),
+                      ),
                       child: ListView.builder(
                         physics: const BouncingScrollPhysics(),
                         itemCount: msgList.length,
@@ -125,7 +122,11 @@ class _ChatScreenState extends State<ChatScreen> {
                         children: <Widget>[
                           Transform.rotate(
                             angle: 45.0 * 3.14159 / 180,
-                            child: IconButton(onPressed: () {}, iconSize: 28.h, icon: const Icon(Icons.attach_file)),
+                            child: IconButton(
+                              onPressed: () {},
+                              iconSize: 28.h,
+                              icon: const Icon(Icons.attach_file),
+                            ),
                           ),
                           Expanded(
                             child: TextField(
@@ -148,36 +149,40 @@ class _ChatScreenState extends State<ChatScreen> {
                               ),
                             ),
                           ),
-                          IconButton(onPressed: () {}, iconSize: 28.h, icon: const Icon(Icons.add_photo_alternate)),
-                          IconButton(onPressed: () {}, iconSize: 28.h, icon: const Icon(Icons.mic)),
                           IconButton(
-                              onPressed: () {
-                                //The following code is for formatting purposes to display date.
-                                //--------------------------------------------------------------------
-                                final time = DateTime.now();
-                                int hour = time.hour;
-                                String meridian = hour < 11 ? "am" : "pm";
-                                hour = hour % 11;
-                                hour = hour == 0 ? 12 : hour - 1;
-                                String timeInHours = hour < 10 ? "0$hour" : hour.toString();
-                                //--------------------------------------------------------------------
-                                int minutes = time.minute;
-                                String minute = minutes < 10 ? "0$minutes" : minutes.toString();
-                                //--------------------------------------------------------------------
-                                String month = months[time.month - 1];
-                                setState(() {
-                                  msgList.add({
-                                    'msg': messageController.text.trim(),
-                                    'isMe': true,
-                                    'time': "$timeInHours:$minute $meridian",
-                                    'date': "${time.day} $month ${time.year}"
-                                  });
-                                });
-                                messageController.clear();
-                                FocusScope.of(context).unfocus();
-                              },
-                              iconSize: 28.h,
-                              icon: const Icon(Icons.send)),
+                            onPressed: () {},
+                            iconSize: 28.h,
+                            icon: const Icon(Icons.add_photo_alternate),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            iconSize: 28.h,
+                            icon: const Icon(Icons.mic),
+                          ),
+                          IconButton(
+                            onPressed: () async {
+                              final time = DateTime.now();
+                              int hour = time.hour;
+                              String meridian = hour < 11 ? "am" : "pm";
+                              hour = hour % 11;
+                              hour = hour == 0 ? 12 : hour - 1;
+                              String timeInHours = hour < 10 ? "0$hour" : hour.toString();
+                              int minutes = time.minute;
+                              String minute = minutes < 10 ? "0$minutes" : minutes.toString();
+                              String month = months[time.month - 1];
+                              await FirebaseFirestore.instance.collection('messages').add({
+                                'msg': messageController.text.trim(),
+                                'isMe': true,
+                                'time': "$timeInHours:$minute $meridian",
+                                'date': "${time.day} $month ${time.year}"
+                              });
+                              messageController.clear();
+                              loadMessages();
+                              FocusScope.of(context).unfocus();
+                            },
+                            iconSize: 28.h,
+                            icon: const Icon(Icons.send),
+                          ),
                         ],
                       ),
                     ),
@@ -206,9 +211,10 @@ class _ChatScreenState extends State<ChatScreen> {
                       backgroundColor: Colors.transparent,
                       radius: 30.w,
                       child: Image(
-                          image: widget.imgUrl == ""
-                              ? const AssetImage('assets/startup_assets/create_account_assets/profile_primary.png')
-                              : AssetImage(widget.imgUrl)),
+                        image: widget.imgUrl == ""
+                            ? const AssetImage('assets/startup_assets/create_account_assets/profile_primary.png')
+                            : AssetImage(widget.imgUrl),
+                      ),
                     ),
                     SizedBox(
                       width: 20.w,
@@ -243,28 +249,16 @@ class DateMsgTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        children: [
-          Container(
-            width: 118.w,
-            height: 25.h,
-            decoration: BoxDecoration(
-              color: const Color.fromRGBO(130, 113, 228, 0.5),
-              borderRadius: BorderRadius.circular(10.r),
-            ),
-            child: Center(
-              child: Text(
-                convDate,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+        children: <Widget>[
+          SizedBox(height: 20.h),
+          Text(
+            convDate,
+            style: TextStyle(
+              color: Colors.black.withOpacity(0.5),
+              fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(
-            height: 30,
-          )
+          SizedBox(height: 20.h),
         ],
       ),
     );
@@ -272,84 +266,97 @@ class DateMsgTile extends StatelessWidget {
 }
 
 class MessageWidget extends StatelessWidget {
-  final bool isMe, showDate;
-  final String msg, time, orgImgUrl;
+  final bool isMe;
+  final String msg;
+  final String time;
+  final bool showDate;
   final String? nextDate;
+  final String orgImgUrl;
 
-  final Color myMsgColor = const Color(0xFFE0EEEF);
-  final Color senderMsgColor = const Color(0xFFD9D9D9);
-
-  const MessageWidget(
-      {Key? key,
-      required this.isMe,
-      required this.msg,
-      required this.time,
-      required this.showDate,
-      this.nextDate,
-      required this.orgImgUrl})
-      : super(key: key);
+  const MessageWidget({
+    Key? key,
+    required this.isMe,
+    required this.msg,
+    required this.time,
+    required this.showDate,
+    this.nextDate,
+    required this.orgImgUrl,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final dpUrl = isMe ? "assets/startup_assets/create_account_assets/profile_primary.png" : orgImgUrl;
-    const BorderRadius myBorderRadius = BorderRadius.only(
-      topLeft: Radius.circular(20),
-      topRight: Radius.circular(20),
-      bottomLeft: Radius.circular(20),
-    );
-    const BorderRadius senderBorderRadius = BorderRadius.only(
-      topLeft: Radius.circular(20),
-      topRight: Radius.circular(20),
-      bottomRight: Radius.circular(20),
-    );
-
-    final List<Widget> rowItems = <Widget>[
-      CircleAvatar(
-        backgroundColor: Colors.transparent,
-        radius: 25.w,
-        child: Image(image: AssetImage(dpUrl)),
-      ),
-      SizedBox(
-        width: 10.w,
-      ),
-      Container(
-        width: MediaQuery.of(context).size.width * 0.5,
-        decoration: BoxDecoration(
-          color: isMe ? myMsgColor : senderMsgColor,
-          borderRadius: isMe ? myBorderRadius : senderBorderRadius,
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
-          child: Text(
-            msg,
-            style: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w400,
-            ),
+    return Column(
+      crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      children: <Widget>[
+        if (showDate)
+          DateMsgTile(
+            convDate: nextDate!,
+          ),
+        Container(
+          width: 260.w,
+          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
+          decoration: BoxDecoration(
+            color: isMe ? const Color(0xFFC2E8DC) : const Color(0xFFE8E8E8),
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                msg,
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              SizedBox(height: 5.h),
+              Text(
+                time,
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.black.withOpacity(0.6),
+                ),
+              ),
+            ],
           ),
         ),
-      ),
-      Text(
-        time,
-        style: TextStyle(
-          fontSize: 8.sp,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-    ];
-
-    return Column(
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-          children: isMe ? rowItems.reversed.toList() : rowItems,
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        if (showDate) DateMsgTile(convDate: nextDate!),
+        SizedBox(height: 10.h),
       ],
+    );
+  }
+}
+
+class UniDirectionalBackground extends StatelessWidget {
+  const UniDirectionalBackground({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GradientBackground(
+      gradientColor: const LinearGradient(
+        colors: [
+          Color(0xFF92B7C0),
+          Color(0xFFA8CEBF),
+          Color(0xFFCCE7BA),
+        ],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ),
+    );
+  }
+}
+
+class GradientBackground extends StatelessWidget {
+  final Gradient gradientColor;
+
+  const GradientBackground({Key? key, required this.gradientColor}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: gradientColor,
+      ),
     );
   }
 }

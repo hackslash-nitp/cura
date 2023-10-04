@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cura/shared/widgets/gradient_background.dart';
 import 'package:cura/shared/widgets/navigation-bar.dart';
 import 'package:flutter/material.dart';
 import 'package:searchfield/searchfield.dart';
 import 'package:cura/shared/services/firebase_database.dart';
 import 'package:intl/intl.dart';
-import 'package:cura/shared/widgets/message_dialog.dart';
+//import 'package:cura/shared/widgets/message_dialog.dart';
 
 class SpendTime extends StatefulWidget {
   static const String routeName = '/SpendTime';
@@ -22,6 +23,8 @@ class _SpendTimeState extends State<SpendTime> {
 
   FirestoreDatabase fd = FirestoreDatabase();
   List<String> organisationNames = [];
+
+  CollectionReference spend = FirebaseFirestore.instance.collection('spend');
 
   @override
   void initState() {
@@ -73,7 +76,8 @@ class _SpendTimeState extends State<SpendTime> {
                 child: Image.asset("assets/spendTime.png"),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 15.0, vertical: 10.0),
                 child: Container(
                   padding: const EdgeInsets.all(15.0),
                   decoration: BoxDecoration(
@@ -232,7 +236,15 @@ class _SpendTimeState extends State<SpendTime> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF729CA3),
                           ),
-                          onPressed: (() {
+                          onPressed: (()
+                          // async 
+                           {
+                            // await spend.add({
+                            //   'organizationname': orgName.text,
+                            //   date: date.text,
+                            //   time: time.toString(),
+                            // });
+
                             Map<String, dynamic> vData = {
                               "orgName": orgName.text,
                               "date": date.text,
@@ -245,12 +257,97 @@ class _SpendTimeState extends State<SpendTime> {
                             } else {
                               fd.postVolunteerData(vData);
                             }
-                            const MessageDialog(
-                              title: 'Thank you!',
-                              contentText:
-                                  'Thank you,for giving your precious time',
-                              imageUrl: 'images/imageUrl.jpeg',
-                            );
+                            // const MessageDialog(
+                            //   title: 'Thank you!',
+                            //   contentText:
+                            //       'Thank you,for giving your precious time',
+                            //   imageUrl: 'images/imageUrl.jpeg',
+                            // );
+
+                            showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return Center(
+                                                child: Material(
+                                                  type:
+                                                      MaterialType.transparency,
+                                                  child: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadiusDirectional
+                                                                .circular(10),
+                                                        color: Colors.white,
+                                                      ),
+                                                      padding:
+                                                          EdgeInsets.all(15),
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.7,
+                                                      height: 350,
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5),
+                                                            child: Image.asset(
+                                                              'assets/main_assets/Completed.png',
+                                                              width: 200,
+                                                              height: 200,
+                                                            ),
+                                                          ),
+                                                          // ignore: prefer_const_constructors
+                                                          SizedBox(height: 10),
+
+                                                          // ignore: prefer_const_constructors
+                                                          Text(
+                                                            'Thank You !!',
+                                                            style: const TextStyle(
+                                                                fontSize: 25,
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        137,
+                                                                        184,
+                                                                        189),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                          // ignore: prefer_const_constructors
+                                                          SizedBox(
+                                                            height: 10,
+                                                          ),
+                                                          // ignore: prefer_const_constructors
+                                                          Text(
+                                                            'Thank You for giving your precious time',
+                                                            style: const TextStyle(
+                                                                fontSize: 20,
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                        255,
+                                                                        0,
+                                                                        10,
+                                                                        11),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                          ),
+                                                        ],
+                                                      )),
+                                                ),
+                                              );
+                                            }
+                                            )
+                                            ;
                           }),
                           child: const Text(
                             'Submit',
