@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cura/shared/services/firebase_authentication.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 
 class Storage {
   final FirebaseStorage _storage = FirebaseStorage.instance;
@@ -100,7 +101,40 @@ class FirestoreDatabase {
         .set(volunteerData);
   }
 
-  // spend time backend
+  Future<void> addPost(List<File> images,String postText) async{
+    try {
+      final currentUserUid = _auth.getCurrentUser()!.uid;
+      Map data = await getIndividualProfileData(currentUserUid);
+      List<String> imagesUrl = [];
+      for (final imgFile in images) {
+        imagesUrl.add(
+            await Storage().postFile(imgFile,
+                'postImages/${data['individualEmail']}${imgFile.hashCode}')
+        );
+      }
+
+      Map<String, dynamic> postData = {
+        'userImgUrl': data['imgUrl'],
+        'name': data['individualName'],
+        'uid': currentUserUid,
+        'imagesUrl': imagesUrl,
+        'createdOn': DateTime.now().toString(),
+        'postText': postText,
+      };
+
+      await _db.collection('posts/').add(postData);
+    }
+    catch(e)
+    {
+      print(e);
+      return;
+    }
+  }
+
+  Stream getPostData() {
+    return _db.collection('posts/').snapshots();
+  }
+}
 
   Future<void> spendtime(Map<String, dynamic> spendData) async {
     String? uid;
