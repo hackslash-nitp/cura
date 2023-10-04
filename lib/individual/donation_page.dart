@@ -1,8 +1,13 @@
 import 'package:cura/shared/widgets/gradient_background.dart';
 import 'package:flutter/material.dart';
 
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:searchfield/searchfield.dart';
+import 'package:intl/intl.dart';
 
 class DonationPage extends StatefulWidget {
   static const String routeName = '/DonationPage';
@@ -12,8 +17,29 @@ class DonationPage extends StatefulWidget {
   State<DonationPage> createState() => _DonationPageState();
 }
 
+firebase_storage.FirebaseStorage storage =
+    firebase_storage.FirebaseStorage.instance;
+
 class _DonationPageState extends State<DonationPage> {
   bool isChecked = false;
+  bool isLoading = false;
+  String? amount, userId;
+  // String? orgName;
+  // String? orgAdd;
+  final orgName = TextEditingController();
+  final orgAdd = TextEditingController();
+
+  final now = new DateTime.now();
+  String date = new DateFormat.yMMMMd('en_US').toString();
+  String time = new DateFormat.Hm().toString();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    orgName.dispose();
+    orgAdd.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +73,10 @@ class _DonationPageState extends State<DonationPage> {
                           padding: EdgeInsets.fromLTRB(110.w, 0, 0, 0),
                           child: Text(
                             "Donation",
-                            style: TextStyle(color: Colors.black, fontSize: 25.w, fontWeight: FontWeight.w500),
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 25.w,
+                                fontWeight: FontWeight.w500),
                             softWrap: true,
                           ),
                         ),
@@ -88,10 +117,13 @@ class _DonationPageState extends State<DonationPage> {
                           Row(
                             children: [
                               Padding(
-                                padding: EdgeInsets.fromLTRB(35.w, 10.h, 10.w, 10.h),
+                                padding:
+                                    EdgeInsets.fromLTRB(35.w, 10.h, 10.w, 10.h),
                                 child: Text(
                                   "Enter the Amount",
-                                  style: TextStyle(fontSize: 18.w, fontWeight: FontWeight.w700),
+                                  style: TextStyle(
+                                      fontSize: 18.w,
+                                      fontWeight: FontWeight.w700),
                                 ),
                               ),
                             ],
@@ -101,7 +133,8 @@ class _DonationPageState extends State<DonationPage> {
                             child: TextFormField(
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
-                                fillColor: const Color.fromARGB(255, 172, 220, 226),
+                                fillColor:
+                                    const Color.fromARGB(255, 172, 220, 226),
                                 filled: true,
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.r),
@@ -112,16 +145,25 @@ class _DonationPageState extends State<DonationPage> {
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.r),
-                                  borderSide: BorderSide(color: const Color.fromARGB(255, 120, 194, 204), width: 3.w),
+                                  borderSide: BorderSide(
+                                      color: const Color.fromARGB(
+                                          255, 120, 194, 204),
+                                      width: 3.w),
                                 ),
                                 hintText: 'Amount',
                               ),
+                              onChanged: (value) {
+                                setState(() {
+                                  amount = value.trim();
+                                });
+                              },
                             ),
                           ),
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Padding(
-                              padding: EdgeInsets.fromLTRB(40.w, 10.w, 10.w, 10.w),
+                              padding:
+                                  EdgeInsets.fromLTRB(40.w, 10.w, 10.w, 10.w),
                               child: Text(
                                 "To",
                                 textAlign: TextAlign.left,
@@ -146,14 +188,19 @@ class _DonationPageState extends State<DonationPage> {
                               ],
                               searchInputDecoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey, width: 2.w),
+                                  borderSide: BorderSide(
+                                      color: Colors.grey, width: 2.w),
                                   borderRadius: BorderRadius.circular(30.r),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.r),
-                                  borderSide: BorderSide(color: const Color.fromARGB(255, 137, 184, 189), width: 2.w),
+                                  borderSide: BorderSide(
+                                      color: const Color.fromARGB(
+                                          255, 137, 184, 189),
+                                      width: 2.w),
                                 ),
-                                fillColor: const Color.fromARGB(255, 186, 231, 235),
+                                fillColor:
+                                    const Color.fromARGB(255, 186, 231, 235),
                                 filled: true,
                                 suffixIcon: const Icon(
                                   Icons.arrow_drop_down,
@@ -161,12 +208,14 @@ class _DonationPageState extends State<DonationPage> {
                                   size: 30,
                                 ),
                               ),
+                              controller: orgName,
                             ),
                           ),
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Padding(
-                              padding: EdgeInsets.fromLTRB(40.w, 10.h, 10.w, 10.h),
+                              padding:
+                                  EdgeInsets.fromLTRB(40.w, 10.h, 10.w, 10.h),
                               child: Text(
                                 "Address",
                                 textAlign: TextAlign.left,
@@ -182,10 +231,10 @@ class _DonationPageState extends State<DonationPage> {
                             child: SearchField(
                               hint: "Enter Organisation's Address",
                               suggestions: const [
+                                'India',
                                 'United States',
                                 'America',
                                 'Washington',
-                                'India',
                                 'Paris',
                                 'Jakarta',
                                 'Australia',
@@ -193,14 +242,19 @@ class _DonationPageState extends State<DonationPage> {
                               ],
                               searchInputDecoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey, width: 2.w),
+                                  borderSide: BorderSide(
+                                      color: Colors.grey, width: 2.w),
                                   borderRadius: BorderRadius.circular(30.r),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(30.r),
-                                  borderSide: BorderSide(color: const Color.fromARGB(255, 137, 184, 189), width: 2.w),
+                                  borderSide: BorderSide(
+                                      color: const Color.fromARGB(
+                                          255, 137, 184, 189),
+                                      width: 2.w),
                                 ),
-                                fillColor: const Color.fromARGB(255, 186, 231, 235),
+                                fillColor:
+                                    const Color.fromARGB(255, 186, 231, 235),
                                 filled: true,
                                 suffixIcon: const Icon(
                                   Icons.arrow_drop_down,
@@ -208,6 +262,7 @@ class _DonationPageState extends State<DonationPage> {
                                   size: 30,
                                 ),
                               ),
+                              controller: orgAdd,
                             ),
                           ),
                         ],
@@ -233,7 +288,8 @@ class _DonationPageState extends State<DonationPage> {
                         padding: EdgeInsets.fromLTRB(8.w, 0, 0, 5.h),
                         child: Text(
                           "Donate as Anonymous",
-                          style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15.sp),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400, fontSize: 15.sp),
                         ),
                       )
                     ],
@@ -250,10 +306,114 @@ class _DonationPageState extends State<DonationPage> {
                       primary: Colors.white,
                       backgroundColor: const Color.fromARGB(255, 137, 184, 189),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (isLoading) return;
+                      setState(() {
+                        isLoading = true;
+                      });
+
+                      if (amount == "" ||
+                          orgName.text.isEmpty ||
+                          orgAdd.text.isEmpty) {
+                        setState(() {
+                          isLoading = false;
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Please enter all fields")));
+                      }
+
+                      if (isChecked) {
+                        userId = "Anonymous";
+                      } else {
+                        userId = FirebaseAuth.instance.currentUser!.uid;
+                      }
+                      await FirebaseFirestore.instance
+                          .collection("Donation")
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .collection("Individual")
+                          .add({
+                        "userUid": userId,
+                        "donationAmount": amount,
+                        "Organisation name": orgName,
+                        "Organisation Address": orgAdd,
+                        "date": date,
+                        "time": time,
+                        "Receipt url": "No receipt Available",
+                        "status": "Completed"
+                      });
+
+                      setState(() {
+                        isLoading = false;
+                      });
+
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Center(
+                              child: Material(
+                                type: MaterialType.transparency,
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadiusDirectional.circular(10),
+                                      color: Colors.white,
+                                    ),
+                                    padding: EdgeInsets.all(15),
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.7,
+                                    height: 350,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          child: Image.asset(
+                                            'assets/main_assets/Completed.png',
+                                            width: 200,
+                                            height: 200,
+                                          ),
+                                        ),
+                                        // ignore: prefer_const_constructors
+                                        SizedBox(height: 10),
+
+                                        // ignore: prefer_const_constructors
+                                        Text(
+                                          'Thank You !!',
+                                          style: const TextStyle(
+                                              fontSize: 25,
+                                              color: Color.fromARGB(
+                                                  255, 137, 184, 189),
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        // ignore: prefer_const_constructors
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        // ignore: prefer_const_constructors
+                                        Text(
+                                          'Thank You for Donation',
+                                          style: const TextStyle(
+                                              fontSize: 20,
+                                              color: Color.fromARGB(
+                                                  255, 0, 10, 11),
+                                              fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    )),
+                              ),
+                            );
+                          });
+                    },
                     child: Text(
                       "Continue",
-                      style: TextStyle(color: Colors.white, fontSize: 20.sp, fontWeight: FontWeight.w700),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w700),
                     ),
                   ),
                 ),
