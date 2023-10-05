@@ -3,7 +3,7 @@ import 'package:cura/shared/widgets/navigation-bar.dart';
 import 'package:flutter/material.dart';
 import 'package:cura/individual/home_page_individual.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../shared/widgets/gradient_background.dart' as shared;
+import '../shared/widgets/gradient_background.dart';
 import 'package:cura/shared/services/stringScreenArguments.dart';
 
 class UserChatsScreen extends StatefulWidget {
@@ -66,7 +66,7 @@ class _UserChatsScreenState extends State<UserChatsScreen> {
         designSize: const Size(428, 926),
         builder: (context, child) => Stack(
           children: <Widget>[
-            const shared.UniDirectionalBackground(),
+            const UniDirectionalBackground(),
             SafeArea(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
