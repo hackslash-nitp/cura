@@ -1,32 +1,13 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cura/shared/widgets/gradient_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Firebase Chat',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: OrgChatScreen(userName: 'John Doe', imgUrl: ''),
-    );
-  }
-}
 
 class OrgChatScreen extends StatefulWidget {
   static const String routeName = '/OrgChatScreen';
   final String userName, imgUrl;
-  const OrgChatScreen({Key? key, required this.userName, required this.imgUrl}) : super(key: key);
+  const OrgChatScreen({Key? key, required this.userName, required this.imgUrl})
+      : super(key: key);
 
   @override
   State<OrgChatScreen> createState() => _OrgChatScreenState();
@@ -34,7 +15,8 @@ class OrgChatScreen extends StatefulWidget {
 
 class _OrgChatScreenState extends State<OrgChatScreen> {
   final TextEditingController messageController = TextEditingController();
-  final CollectionReference messagesCollection = FirebaseFirestore.instance.collection('messages');
+  final CollectionReference messagesCollection =
+      FirebaseFirestore.instance.collection('messages');
 
   final List<String> months = [
     "January",
@@ -75,7 +57,8 @@ class _OrgChatScreenState extends State<OrgChatScreen> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -90,11 +73,13 @@ class _OrgChatScreenState extends State<OrgChatScreen> {
                             return Text('Error: ${snapshot.error}');
                           }
 
-                          if (snapshot.connectionState == ConnectionState.waiting) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
                             return CircularProgressIndicator();
                           }
 
-                          final List<QueryDocumentSnapshot> documents = snapshot.data!.docs;
+                          final List<QueryDocumentSnapshot> documents =
+                              snapshot.data!.docs;
 
                           return ListView.builder(
                             physics: const BouncingScrollPhysics(),
@@ -105,7 +90,8 @@ class _OrgChatScreenState extends State<OrgChatScreen> {
                               bool showDate = false;
                               if (index == 0) {
                                 return DateMsgTile(convDate: document['date']);
-                              } else if (index != documents.length - 1 && currentDate != documents[index + 1]['date']) {
+                              } else if (index != documents.length - 1 &&
+                                  currentDate != documents[index + 1]['date']) {
                                 showDate = true;
                                 return MessageWidget(
                                   isMe: document['isMe'],
@@ -122,6 +108,7 @@ class _OrgChatScreenState extends State<OrgChatScreen> {
                                 time: document['time'],
                                 showDate: showDate,
                                 orgImgUrl: widget.imgUrl,
+                                nextDate: '',
                               );
                             },
                           );
@@ -145,7 +132,10 @@ class _OrgChatScreenState extends State<OrgChatScreen> {
                         children: <Widget>[
                           Transform.rotate(
                             angle: 45.0 * 3.14159 / 180,
-                            child: IconButton(onPressed: () {}, iconSize: 28.h, icon: const Icon(Icons.attach_file)),
+                            child: IconButton(
+                                onPressed: () {},
+                                iconSize: 28.h,
+                                icon: const Icon(Icons.attach_file)),
                           ),
                           Expanded(
                             child: TextField(
@@ -168,10 +158,17 @@ class _OrgChatScreenState extends State<OrgChatScreen> {
                               ),
                             ),
                           ),
-                          IconButton(onPressed: () {}, iconSize: 28.h, icon: const Icon(Icons.add_photo_alternate)),
-                          IconButton(onPressed: () {}, iconSize: 28.h, icon: const Icon(Icons.mic)),
                           IconButton(
-                            onPressed: () => sendMessage(messageController.text),
+                              onPressed: () {},
+                              iconSize: 28.h,
+                              icon: const Icon(Icons.add_photo_alternate)),
+                          IconButton(
+                              onPressed: () {},
+                              iconSize: 28.h,
+                              icon: const Icon(Icons.mic)),
+                          IconButton(
+                            onPressed: () =>
+                                sendMessage(messageController.text),
                             iconSize: 28.h,
                             icon: const Icon(Icons.send),
                           ),
@@ -204,7 +201,8 @@ class _OrgChatScreenState extends State<OrgChatScreen> {
                       radius: 30.w,
                       child: Image(
                         image: widget.imgUrl == ""
-                            ? const AssetImage('assets/startup_assets/create_account_assets/profile_primary.png')
+                            ? const AssetImage(
+                                'assets/startup_assets/create_account_assets/profile_primary.png')
                             : AssetImage(widget.imgUrl),
                       ),
                     ),
@@ -252,27 +250,6 @@ class _OrgChatScreenState extends State<OrgChatScreen> {
   }
 }
 
-class UniDirectionalBackground extends StatelessWidget {
-  const UniDirectionalBackground({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 220.h,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color(0xFF8E9EAB),
-            Color(0xFFeef2f3),
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
-    );
-  }
-}
-
 class MessageWidget extends StatelessWidget {
   final bool isMe;
   final String msg, time;
@@ -293,7 +270,8 @@ class MessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      crossAxisAlignment:
+          isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: <Widget>[
         if (showDate)
           Padding(
@@ -301,7 +279,8 @@ class MessageWidget extends StatelessWidget {
             child: DateMsgTile(convDate: nextDate),
           ),
         Row(
-          mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+          mainAxisAlignment:
+              isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
           children: <Widget>[
             if (!isMe)
               CircleAvatar(
@@ -309,7 +288,8 @@ class MessageWidget extends StatelessWidget {
                 radius: 22.w,
                 child: Image(
                   image: orgImgUrl == ""
-                      ? AssetImage('assets/startup_assets/create_account_assets/profile_primary.png')
+                      ? AssetImage(
+                          'assets/startup_assets/create_account_assets/profile_primary.png')
                       : AssetImage(orgImgUrl),
                 ),
               ),
