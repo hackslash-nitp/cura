@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cura/shared/widgets/gradient_background.dart';
 import 'package:flutter/material.dart';
 
@@ -43,6 +45,33 @@ class _DonationPageState extends State<DonationPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<String> organizationAddress = [
+      'India',
+      'United States',
+      'America',
+      'Washington',
+      'Paris',
+      'Jakarta',
+      'Australia',
+      'Lorem Ipsum'
+    ];
+
+    List<SearchFieldListItem> newAddSuggestions = organizationAddress
+        .map((orgAdd) => SearchFieldListItem(orgAdd, item: orgName))
+        .toList();
+
+    List<String> organizationSuggestions = [
+      'Organisation 1',
+      'Organisation 2',
+      'Organisation 3',
+      'Organisation 4',
+      'Organisation 5',
+      'Organisation 6',
+    ];
+
+    List<SearchFieldListItem> newSuggestions = organizationSuggestions
+        .map((orgName) => SearchFieldListItem(orgName, item: orgName))
+        .toList();
     return ScreenUtilInit(
       designSize: const Size(428, 926),
       builder: (context, child) => Scaffold(
@@ -178,14 +207,7 @@ class _DonationPageState extends State<DonationPage> {
                             padding: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
                             child: SearchField(
                               hint: " Enter organisation's name",
-                              suggestions: const [
-                                'Organisation 1',
-                                'Organisation 2',
-                                'Organisation 3',
-                                'Organisation 4',
-                                'Organisation 5',
-                                'Organisation 6',
-                              ],
+                              suggestions: newSuggestions,
                               searchInputDecoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -230,16 +252,7 @@ class _DonationPageState extends State<DonationPage> {
                             padding: EdgeInsets.fromLTRB(30.w, 0, 30.w, 0),
                             child: SearchField(
                               hint: "Enter Organisation's Address",
-                              suggestions: const [
-                                'India',
-                                'United States',
-                                'America',
-                                'Washington',
-                                'Paris',
-                                'Jakarta',
-                                'Australia',
-                                'Lorem Ipsum'
-                              ],
+                              suggestions: newAddSuggestions,
                               searchInputDecoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
@@ -359,7 +372,7 @@ class _DonationPageState extends State<DonationPage> {
                                           BorderRadiusDirectional.circular(10),
                                       color: Colors.white,
                                     ),
-                                    padding: EdgeInsets.all(15),
+                                    padding: const EdgeInsets.all(15),
                                     width:
                                         MediaQuery.of(context).size.width * 0.7,
                                     height: 350,

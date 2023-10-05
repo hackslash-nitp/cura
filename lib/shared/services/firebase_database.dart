@@ -101,16 +101,14 @@ class FirestoreDatabase {
         .set(volunteerData);
   }
 
-  Future<void> addPost(List<File> images,String postText) async{
+  Future<void> addPost(List<File> images, String postText) async {
     try {
       final currentUserUid = _auth.getCurrentUser()!.uid;
       Map data = await getIndividualProfileData(currentUserUid);
       List<String> imagesUrl = [];
       for (final imgFile in images) {
-        imagesUrl.add(
-            await Storage().postFile(imgFile,
-                'postImages/${data['individualEmail']}${imgFile.hashCode}')
-        );
+        imagesUrl.add(await Storage().postFile(imgFile,
+            'postImages/${data['individualEmail']}${imgFile.hashCode}'));
       }
 
       Map<String, dynamic> postData = {
@@ -123,9 +121,7 @@ class FirestoreDatabase {
       };
 
       await _db.collection('posts/').add(postData);
-    }
-    catch(e)
-    {
+    } catch (e) {
       print(e);
       return;
     }
@@ -134,7 +130,6 @@ class FirestoreDatabase {
   Stream getPostData() {
     return _db.collection('posts/').snapshots();
   }
-}
 
   Future<void> spendtime(Map<String, dynamic> spendData) async {
     String? uid;

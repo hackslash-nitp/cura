@@ -29,26 +29,26 @@ environment:
 dependencies:
   anim_search_bar: ^2.0.2
   carousel_slider: ^4.1.1
-  cloud_firestore: ^3.4.4
+  cloud_firestore: ^4.9.3
   cupertino_icons: ^1.0.2
   file_picker: ^5.0.1
-  firebase_auth: ^3.6.2
-  firebase_core: ^1.21.1
-  firebase_storage: ^10.3.5
+  firebase_auth: ^4.10.1
+  firebase_core: ^2.17.0
+  firebase_storage: ^11.2.8
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.5.3+2
-  image_picker: ^0.8.5+3
-  searchfield: ^0.5.3
+  image_picker: ^1.0.4
+  searchfield: ^0.8.4
   smooth_page_indicator: ^1.0.0+2
-  intl: ^0.17.0
+  intl: ^0.18.1
   favorite_button: ^0.0.4
   share: ^2.0.4
   social_share: ^2.2.1
   cached_network_image: ^3.2.3
   optimized_cached_image: ^3.0.1
-  firebase_core_platform_interface: 4.5.1
-  firebase_messaging: ^13.0.4 
+  firebase_core_platform_interface: ^4.8.0
+  firebase_messaging: ^14.6.9 
 
 
 
@@ -59,7 +59,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_launcher_icons: "^0.10.0"
+  flutter_launcher_icons: ^0.11.0
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
