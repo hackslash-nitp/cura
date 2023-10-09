@@ -51,7 +51,7 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
 
     TextEditingController searchController = TextEditingController();
     return ScreenUtilInit(
-      designSize: const Size(428, 900),
+      designSize: const Size(428, 926),
       builder: (context, child) => Scaffold(
         bottomNavigationBar: const CustomNavigationBar(currentIndex: 0),
         extendBodyBehindAppBar: true,
@@ -65,7 +65,7 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
                 children: <Widget>[
                   Image(
                     image: const AssetImage("assets/Mobile life-amico 2.png"),
-                    height: 280.h,
+                    height: 300.h,
                     width: double.infinity,
                   ),
                   Padding(
@@ -96,8 +96,8 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
                           ),
                         ),
                         style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18.sp, // Increase the font size here (adjust as needed)
+                          color: Colors.blueGrey,
+                          fontSize: 20.sp, // Increase the font size here (adjust as needed)
                           fontWeight: FontWeight.w400,
                         ),
                       ),
