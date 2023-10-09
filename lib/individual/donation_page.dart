@@ -137,7 +137,7 @@ class _DonationPageState extends State<DonationPage> {
                         ),
                         borderRadius: BorderRadius.circular(30)),
                     width: double.infinity,
-                    height: 200.sp,
+                    height: 360.sp,
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.vertical,
@@ -424,6 +424,7 @@ class _DonationPageState extends State<DonationPage> {
                     child: Text(
                       "Continue",
                       style: TextStyle(
+
                           color: Colors.white,
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w700),
