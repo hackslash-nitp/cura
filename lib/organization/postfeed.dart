@@ -32,7 +32,7 @@ class _postfeedState extends State<postfeed> {
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 25.w,
+                  fontSize: 23.w,
                   fontWeight: FontWeight.w500),
               softWrap: true,
             ),
@@ -51,7 +51,7 @@ class _postfeedState extends State<postfeed> {
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               icon: const Icon(
                 Icons.add_circle,
-                size: 45.0,
+                size: 36.0,
                 color: Colors.white70,
               ),
               onPressed: () {
@@ -127,7 +127,7 @@ class PostWidget extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30.w),
+          padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -137,8 +137,8 @@ class PostWidget extends StatelessWidget {
                      image:CachedNetworkImageProvider(postData['userImgUrl'] != ''
                           ? postData['userImgUrl']
                           : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png',),
-                      height: 45.h,
-                      width: 45.w),
+                      height: 43.h,
+                      width: 40.w,),
                   SizedBox(
                     width: 10.w,
                   ),
@@ -171,19 +171,31 @@ class PostWidget extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            postData["imagesUrl"].isEmpty?const SizedBox():Image(width:372.w,height:372.w,fit:BoxFit.cover,image:CachedNetworkImageProvider(postData["imagesUrl"][0])),
+            postData["imagesUrl"].isEmpty
+                ? SizedBox()
+                : ClipRRect(
+              borderRadius: BorderRadius.circular(10.0), // Adjust the radius as per your requirement
+              child: Image(
+                width: 360.w,
+                height: 360.w,
+                fit: BoxFit.cover,
+                image: CachedNetworkImageProvider(postData["imagesUrl"][0]),
+              ),
+            ),
+
             Container(
               height: 50.h,
-              width: 372.w,
+              width: 360.w,
               decoration: BoxDecoration(
                   color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
                   border: Border.all(
                     color: Color(0xFF6CAFB4),
                   )),
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 FavoriteButton(
-                  iconSize: 60.r,
+                  iconSize: 40,
                   valueChanged: (_) {},
                 ),
                 SizedBox(
@@ -202,7 +214,7 @@ class PostWidget extends StatelessWidget {
               ]),
             ),
             SizedBox(
-              height: 5.h,
+              height: 10.h,
             ),
             Text(
               postData['postText'],
