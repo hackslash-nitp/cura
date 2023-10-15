@@ -26,6 +26,7 @@ class _postfeedState extends State<postfeed> {
         builder: (context, child) => Scaffold(
           appBar: AppBar(
             centerTitle: true,
+            elevation: 0,
             backgroundColor: const Color(0xFF6CAFB4),
             title: Text(
               "Posts Feed",
@@ -133,12 +134,17 @@ class PostWidget extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Image(
-                     image:CachedNetworkImageProvider(postData['userImgUrl'] != ''
-                          ? postData['userImgUrl']
-                          : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png',),
-                      height: 43.h,
-                      width: 40.w,),
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: CircleAvatar(
+                      radius: 25.w, // Adjust the radius as per your requirement
+                      backgroundImage: CachedNetworkImageProvider(
+                        postData['userImgUrl'] != ''
+                            ? postData['userImgUrl']
+                            : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png',
+                      ),
+                    ),
+                  ),
                   SizedBox(
                     width: 10.w,
                   ),
@@ -174,7 +180,10 @@ class PostWidget extends StatelessWidget {
             postData["imagesUrl"].isEmpty
                 ? SizedBox()
                 : ClipRRect(
-              borderRadius: BorderRadius.circular(10.0), // Adjust the radius as per your requirement
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10.0),
+                topRight: Radius.circular(10.0),
+              ),// Adjust the radius as per your requirement
               child: Image(
                 width: 360.w,
                 height: 360.w,
@@ -188,7 +197,10 @@ class PostWidget extends StatelessWidget {
               width: 360.w,
               decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(10.0),
+                bottomRight: Radius.circular(10.0),
+                  ),
                   border: Border.all(
                     color: Color(0xFF6CAFB4),
                   )),
