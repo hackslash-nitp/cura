@@ -84,6 +84,7 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
                         boxShadow: const [BoxShadow(blurRadius: 5.0, offset: Offset(0, 2), color: Colors.grey)],
                       ),
                       child: TextField(
+                        
                         controller: searchController,
                         keyboardType: TextInputType.text,
                         maxLines: null,
@@ -102,8 +103,13 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
                           ),
                         ),
                         style: TextStyle(
+<<<<<<< HEAD
                           color: Colors.blueGrey,
                           fontSize: 20.sp, // Increase the font size here (adjust as needed)
+=======
+                          color: Colors.black,
+                          fontSize: 18.sp,
+>>>>>>> 219bfa7 (Made changes to he UI of the Chat Bubble and Background Color of User Chat Screen)
                           fontWeight: FontWeight.w400,
                         ),
                       ),
