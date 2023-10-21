@@ -71,7 +71,11 @@ class _ChatScreenState extends State<ChatScreen> {
                   Expanded(
                     child: Container(
                       padding:
+<<<<<<< HEAD
+                          EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+=======
                           EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h,),
+>>>>>>> 219bfa7 (Made changes to he UI of the Chat Bubble and Background Color of User Chat Screen)
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10.r),
@@ -348,6 +352,8 @@ class MessageWidget extends StatelessWidget {
   }
 }
 
+<<<<<<< HEAD
+=======
 class UniDirectionalBackground extends StatelessWidget {
   const UniDirectionalBackground({Key? key}) : super(key: key);
 
@@ -367,6 +373,7 @@ class UniDirectionalBackground extends StatelessWidget {
   }
 }
 
+>>>>>>> 219bfa7 (Made changes to he UI of the Chat Bubble and Background Color of User Chat Screen)
 class GradientBackground extends StatelessWidget {
   final Gradient gradientColor;
 
