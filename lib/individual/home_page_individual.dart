@@ -103,13 +103,8 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
                           ),
                         ),
                         style: TextStyle(
-<<<<<<< HEAD
-                          color: Colors.blueGrey,
-                          fontSize: 20.sp, // Increase the font size here (adjust as needed)
-=======
                           color: Colors.black,
                           fontSize: 18.sp,
->>>>>>> 219bfa7 (Made changes to he UI of the Chat Bubble and Background Color of User Chat Screen)
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -265,7 +260,7 @@ class TextPart extends StatelessWidget {
         ),
         Text(
           subHeading,
-          style: TextStyle(fontSize: 18.sp, color: const Color.fromRGBO(0, 0, 0, 0.58), fontWeight: FontWeight.w700),
+          style: TextStyle(fontSize: 14.sp, color: const Color.fromRGBO(0, 0, 0, 0.58), fontWeight: FontWeight.w700),
         ),
       ],
     );
