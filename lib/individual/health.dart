@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cura/shared/services/firebase_database.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:searchfield/searchfield.dart';
-import 'package:cura/shared/widgets/navigation-bar.dart';
 
 class HealthPage extends StatefulWidget {
   static const String routeName = '/HealthPage';
@@ -16,9 +13,9 @@ class HealthPage extends StatefulWidget {
 }
 
 class _HealthPageState extends State<HealthPage> {
-  TimeOfDay _timeOfDay = TimeOfDay(hour: 10, minute: 30);
+  TimeOfDay _timeOfDay = const TimeOfDay(hour: 10, minute: 30);
 
-  TextEditingController _date = TextEditingController();
+  final TextEditingController _date = TextEditingController();
 
   final controllerorganizationname = TextEditingController();
 
@@ -27,26 +24,39 @@ class _HealthPageState extends State<HealthPage> {
   CollectionReference user = FirebaseFirestore.instance.collection('user');
   @override
   Widget build(BuildContext context) {
+    List<String> organizationSuggestions = [
+      'Organisation 1',
+      'Organisation 2',
+      'Organisation 3',
+      'Organisation 4',
+      'Organisation 5',
+      'Organisation 6',
+    ];
+
+    List<SearchFieldListItem> newSuggestions = organizationSuggestions
+        .map((orgName) => SearchFieldListItem(orgName, item: orgName))
+        .toList();
     return ScreenUtilInit(
-        designSize: const Size(428, 926),
-        builder: (context, child) => Scaffold(
-                body: SafeArea(
-                    child: SizedBox(
-              width: double.infinity,
-              child: Container(
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                  colors: [
-                    Color(0xFF6CAFB4),
-                    Colors.white,
-                    Colors.white,
-                    Color(0xFF6CAFB4),
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  tileMode: TileMode.clamp,
-                )),
-                child: Stack(children: [
+      designSize: const Size(428, 926),
+      builder: (context, child) => Scaffold(
+        body: SafeArea(
+          child: SizedBox(
+            width: double.infinity,
+            child: Container(
+              decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                colors: [
+                  Color(0xFF6CAFB4),
+                  Colors.white,
+                  Colors.white,
+                  Color(0xFF6CAFB4),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                tileMode: TileMode.clamp,
+              )),
+              child: Stack(
+                children: [
                   Container(
                     padding: EdgeInsets.all(0.5.sp),
                     // height: 100.h,
@@ -90,7 +100,7 @@ class _HealthPageState extends State<HealthPage> {
                           height: 400.h,
                           width: 330.w,
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 215, 246, 248),
+                            color: const Color.fromARGB(255, 215, 246, 248),
                             borderRadius: BorderRadius.circular(10.r),
                           ),
                           child: Column(
@@ -108,14 +118,7 @@ class _HealthPageState extends State<HealthPage> {
                                       EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
                                   child: SearchField(
                                     hint: "Enter Organization's name",
-                                    suggestions: const [
-                                      'organization 1',
-                                      'organization 2',
-                                      'organization 3',
-                                      'organization 4',
-                                      'organization 5',
-                                      'organization 6',
-                                    ],
+                                    suggestions: newSuggestions,
                                     searchInputDecoration: InputDecoration(
                                       // ignore: prefer_const_constructors
                                       contentPadding: EdgeInsets.only(
@@ -203,7 +206,9 @@ class _HealthPageState extends State<HealthPage> {
                                                   lastDate: DateTime(2101));
                                           if (pickeddate != null) {
                                             setState(() {
-                                              _date.text = DateFormat('yyyy-mm-dd').format(pickeddate);
+                                              _date.text =
+                                                  DateFormat('yyyy-mm-dd')
+                                                      .format(pickeddate);
                                             });
                                           }
                                         },
@@ -352,82 +357,82 @@ class _HealthPageState extends State<HealthPage> {
                                                   type:
                                                       MaterialType.transparency,
                                                   child: Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadiusDirectional
-                                                                .circular(10),
-                                                        color: Colors.white,
-                                                      ),
-                                                      padding:
-                                                          EdgeInsets.all(15),
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.7,
-                                                      height: 350,
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5),
-                                                            child: Image.asset(
-                                                              'assets/main_assets/Completed.png',
-                                                              width: 200,
-                                                              height: 200,
-                                                            ),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadiusDirectional
+                                                              .circular(10),
+                                                      color: Colors.white,
+                                                    ),
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            15),
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.7,
+                                                    height: 350,
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5),
+                                                          child: Image.asset(
+                                                            'assets/main_assets/Completed.png',
+                                                            width: 200,
+                                                            height: 200,
                                                           ),
-                                                          // ignore: prefer_const_constructors
-                                                          SizedBox(height: 10),
+                                                        ),
+                                                        // ignore: prefer_const_constructors
+                                                        SizedBox(height: 10),
 
-                                                          // ignore: prefer_const_constructors
-                                                          Text(
-                                                            'Thank You !!',
-                                                            style: const TextStyle(
-                                                                fontSize: 25,
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        137,
-                                                                        184,
-                                                                        189),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                        // ignore: prefer_const_constructors
+                                                        Text(
+                                                          'Thank You !!',
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 25,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    137,
+                                                                    184,
+                                                                    189),
+                                                            fontWeight:
+                                                                FontWeight.bold,
                                                           ),
-                                                          // ignore: prefer_const_constructors
-                                                          SizedBox(
-                                                            height: 10,
-                                                          ),
-                                                          // ignore: prefer_const_constructors
-                                                          Text(
-                                                            'Thank You for free health checkup',
-                                                            style: const TextStyle(
-                                                                fontSize: 20,
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        0,
-                                                                        10,
-                                                                        11),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                          ),
-                                                        ],
-                                                      )),
+                                                        ),
+                                                        // ignore: prefer_const_constructors
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        // ignore: prefer_const_constructors
+                                                        Text(
+                                                          'Thank You for free health checkup',
+                                                          style: const TextStyle(
+                                                              fontSize: 20,
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      255,
+                                                                      0,
+                                                                      10,
+                                                                      11),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ),
                                               );
-                                            }
-                                            )
-                                            ;
+                                            });
                                       },
                                       child: Text(
                                         "submit",
@@ -440,12 +445,16 @@ class _HealthPageState extends State<HealthPage> {
                                   ],
                                 )
                               ]),
-                        )
+                        ),
                       ],
                     ),
-                  )
-                ]),
+                  ),
+                ],
               ),
-            ))));
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

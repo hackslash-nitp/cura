@@ -22,7 +22,7 @@ class _SpendTimeState extends State<SpendTime> {
   TextEditingController orgName = TextEditingController();
 
   FirestoreDatabase fd = FirestoreDatabase();
-  List<String> organisationNames = [];
+  List<SearchFieldListItem<dynamic>> organisationNames = [];
 
   CollectionReference spend = FirebaseFirestore.instance.collection('spend');
 
@@ -237,8 +237,8 @@ class _SpendTimeState extends State<SpendTime> {
                             backgroundColor: const Color(0xFF729CA3),
                           ),
                           onPressed: (()
-                          // async 
-                           {
+                              // async
+                              {
                             // await spend.add({
                             //   'organizationname': orgName.text,
                             //   date: date.text,
@@ -265,89 +265,70 @@ class _SpendTimeState extends State<SpendTime> {
                             // );
 
                             showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return Center(
-                                                child: Material(
-                                                  type:
-                                                      MaterialType.transparency,
-                                                  child: Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadiusDirectional
-                                                                .circular(10),
-                                                        color: Colors.white,
-                                                      ),
-                                                      padding:
-                                                          EdgeInsets.all(15),
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.7,
-                                                      height: 350,
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5),
-                                                            child: Image.asset(
-                                                              'assets/main_assets/Completed.png',
-                                                              width: 200,
-                                                              height: 200,
-                                                            ),
-                                                          ),
-                                                          // ignore: prefer_const_constructors
-                                                          SizedBox(height: 10),
-
-                                                          // ignore: prefer_const_constructors
-                                                          Text(
-                                                            'Thank You !!',
-                                                            style: const TextStyle(
-                                                                fontSize: 25,
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        137,
-                                                                        184,
-                                                                        189),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                          // ignore: prefer_const_constructors
-                                                          SizedBox(
-                                                            height: 10,
-                                                          ),
-                                                          // ignore: prefer_const_constructors
-                                                          Text(
-                                                            'Thank You for giving your precious time',
-                                                            style: const TextStyle(
-                                                                fontSize: 20,
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                        255,
-                                                                        0,
-                                                                        10,
-                                                                        11),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                          ),
-                                                        ],
-                                                      )),
+                                context: context,
+                                builder: (context) {
+                                  return Center(
+                                    child: Material(
+                                      type: MaterialType.transparency,
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadiusDirectional
+                                                    .circular(10),
+                                            color: Colors.white,
+                                          ),
+                                          padding: EdgeInsets.all(15),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.7,
+                                          height: 350,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                child: Image.asset(
+                                                  'assets/main_assets/Completed.png',
+                                                  width: 200,
+                                                  height: 200,
                                                 ),
-                                              );
-                                            }
-                                            )
-                                            ;
+                                              ),
+                                              // ignore: prefer_const_constructors
+                                              SizedBox(height: 10),
+
+                                              // ignore: prefer_const_constructors
+                                              Text(
+                                                'Thank You !!',
+                                                style: const TextStyle(
+                                                    fontSize: 25,
+                                                    color: Color.fromARGB(
+                                                        255, 137, 184, 189),
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              // ignore: prefer_const_constructors
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              // ignore: prefer_const_constructors
+                                              Text(
+                                                'Thank You for giving your precious time',
+                                                style: const TextStyle(
+                                                    fontSize: 20,
+                                                    color: Color.fromARGB(
+                                                        255, 0, 10, 11),
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ],
+                                          )),
+                                    ),
+                                  );
+                                });
                           }),
                           child: const Text(
                             'Submit',
