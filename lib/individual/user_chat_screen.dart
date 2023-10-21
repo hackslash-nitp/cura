@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cura/shared/widgets/gradient_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -55,7 +56,6 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     bool isKeyboardActive = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
-      
       resizeToAvoidBottomInset: false,
       body: ScreenUtilInit(
         designSize: const Size(428, 926),
@@ -73,6 +73,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
                       decoration: BoxDecoration(
+                        color: Colors.white,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10.r),
                           topRight: Radius.circular(10.r),
@@ -116,8 +117,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   Center(
                     child: Container(
-                      height: 70.h,
-                      width: 420.w,
+                      height: 80.h,
+                      width: 400.w,
                       decoration: BoxDecoration(
                         color: const Color(0xFF92B7C0),
                         borderRadius: BorderRadius.circular(40.r),
@@ -305,23 +306,14 @@ class MessageWidget extends StatelessWidget {
             convDate: nextDate!,
           ),
         Container(
-          // width: 260.w,
+          width: 260.w,
           padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
           decoration: BoxDecoration(
             color: isMe ? const Color(0xFFC2E8DC) : const Color(0xFFE8E8E8),
-            borderRadius: isMe ? const BorderRadius.only(
-              topLeft: Radius.circular(25.0),
-              bottomLeft: Radius.circular(25.0),
-              bottomRight: Radius.circular(25.0),
-            )
-            : const BorderRadius.only(
-              topRight: Radius.circular(25.0),
-              bottomLeft: Radius.circular(25.0),
-              bottomRight: Radius.circular(25.0),
-            ),
+            borderRadius: BorderRadius.circular(10.r),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
                 msg,
@@ -344,25 +336,6 @@ class MessageWidget extends StatelessWidget {
         ),
         SizedBox(height: 10.h),
       ],
-    );
-  }
-}
-
-class UniDirectionalBackground extends StatelessWidget {
-  const UniDirectionalBackground({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const GradientBackground(
-      gradientColor: LinearGradient(
-        colors: [
-          Color(0xFF92B7C0),
-          Color(0xFFA8CEBF),
-          Color(0xFFCCE7BA),
-        ],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      ),
     );
   }
 }
