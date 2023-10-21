@@ -332,7 +332,7 @@ class MessageWidget extends StatelessWidget {
                   ),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               Text(
                 msg,
