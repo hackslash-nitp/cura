@@ -6,7 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class ChatScreen extends StatefulWidget {
   static const String routeName = '/ChatScreen';
   final String orgName, imgUrl;
-  const ChatScreen({Key? key, required this.orgName, required this.imgUrl}) : super(key: key);
+  const ChatScreen({Key? key, required this.orgName, required this.imgUrl})
+      : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -37,8 +38,11 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<void> loadMessages() async {
-    final querySnapshot = await FirebaseFirestore.instance.collection('messages').get();
-    msgList = querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+    final querySnapshot =
+        await FirebaseFirestore.instance.collection('messages').get();
+    msgList = querySnapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .toList();
     setState(() {});
   }
 
@@ -66,7 +70,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -84,7 +89,8 @@ class _ChatScreenState extends State<ChatScreen> {
                             return DateMsgTile(
                               convDate: msgList[0]['date'],
                             );
-                          } else if (index != msgList.length - 1 && currentDate != msgList[index + 1]['date']) {
+                          } else if (index != msgList.length - 1 &&
+                              currentDate != msgList[index + 1]['date']) {
                             showDate = true;
                             return MessageWidget(
                               isMe: msgList[index]['isMe'],
@@ -166,11 +172,16 @@ class _ChatScreenState extends State<ChatScreen> {
                               String meridian = hour < 11 ? "am" : "pm";
                               hour = hour % 11;
                               hour = hour == 0 ? 12 : hour - 1;
-                              String timeInHours = hour < 10 ? "0$hour" : hour.toString();
+                              String timeInHours =
+                                  hour < 10 ? "0$hour" : hour.toString();
                               int minutes = time.minute;
-                              String minute = minutes < 10 ? "0$minutes" : minutes.toString();
+                              String minute = minutes < 10
+                                  ? "0$minutes"
+                                  : minutes.toString();
                               String month = months[time.month - 1];
-                              await FirebaseFirestore.instance.collection('messages').add({
+                              await FirebaseFirestore.instance
+                                  .collection('messages')
+                                  .add({
                                 'msg': messageController.text.trim(),
                                 'isMe': true,
                                 'time': "$timeInHours:$minute $meridian",
@@ -212,7 +223,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       radius: 30.w,
                       child: Image(
                         image: widget.imgUrl == ""
-                            ? const AssetImage('assets/startup_assets/create_account_assets/profile_primary.png')
+                            ? const AssetImage(
+                                'assets/startup_assets/create_account_assets/profile_primary.png')
                             : AssetImage(widget.imgUrl),
                       ),
                     ),
@@ -286,7 +298,8 @@ class MessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      crossAxisAlignment:
+          isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: <Widget>[
         if (showDate)
           DateMsgTile(
@@ -327,29 +340,11 @@ class MessageWidget extends StatelessWidget {
   }
 }
 
-class UniDirectionalBackground extends StatelessWidget {
-  const UniDirectionalBackground({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GradientBackground(
-      gradientColor: const LinearGradient(
-        colors: [
-          Color(0xFF92B7C0),
-          Color(0xFFA8CEBF),
-          Color(0xFFCCE7BA),
-        ],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      ),
-    );
-  }
-}
-
 class GradientBackground extends StatelessWidget {
   final Gradient gradientColor;
 
-  const GradientBackground({Key? key, required this.gradientColor}) : super(key: key);
+  const GradientBackground({Key? key, required this.gradientColor})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -9,7 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import '../shared/services/firebase_authentication.dart';
 
-//This is a temporary Home Screen, to be used for testing purposes
+// This is a temporary Home Screen, to be used for testing purposes
 class HomePageIndividual extends StatefulWidget {
   static const String routeName = '/HomePageIndividual';
   const HomePageIndividual({Key? key}) : super(key: key);
@@ -75,19 +75,13 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
                     width: double.infinity,
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    padding: EdgeInsets.symmetric(horizontal: 5.w),
                     child: Container(
-                      height: 45.h,
+                      height: 50.h,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(30.r),
-                        boxShadow: const [
-                          BoxShadow(
-                            blurRadius: 5.0,
-                            offset: Offset(0, 3),
-                            color: Colors.grey,
-                          )
-                        ],
+                        boxShadow: const [BoxShadow(blurRadius: 5.0, offset: Offset(0, 2), color: Colors.grey)],
                       ),
                       child: TextField(
                         controller: searchController,
@@ -96,9 +90,9 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
                         minLines: null,
                         expands: true,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20.w, vertical: 10.h),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h), // Adjust vertical padding
                           border: InputBorder.none,
+                          hintText: 'Search here...', // Add the hintText here
                           suffixIcon: IconButton(
                             onPressed: () {},
                             icon: const Icon(
@@ -108,8 +102,8 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
                           ),
                         ),
                         style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 10.sp,
+                          color: Colors.blueGrey,
+                          fontSize: 20.sp, // Increase the font size here (adjust as needed)
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -134,6 +128,7 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
                       }),
                       separatorBuilder: ((context, index) =>
                           SizedBox(height: 23.h)),
+
                     ),
                   ),
                 ],
@@ -152,15 +147,15 @@ class HomePageContent extends StatelessWidget {
   final bool isOdd;
   final String widget;
 
-  const HomePageContent(
-      {Key? key,
-      required this.imgUrl,
-      required this.heading,
-      required this.subHeading,
-      required this.index,
-      required this.widget,
-      required this.isOdd})
-      : super(key: key);
+  const HomePageContent({
+    Key? key,
+    required this.imgUrl,
+    required this.heading,
+    required this.subHeading,
+    required this.index,
+    required this.widget,
+    required this.isOdd,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +191,7 @@ class HomePageContent extends StatelessWidget {
                   child: isOdd
                       ? ImagePart(imgUrl: imgUrl, index: index)
                       : TextPart(heading: heading, subHeading: subHeading),
-                )
+                ),
               ],
             ),
           ),
@@ -220,12 +215,11 @@ class ImagePart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: const Color(0xFFC7E2E4),
-          borderRadius: BorderRadius.circular(25.r),
-          boxShadow: const [
-            BoxShadow(
-                color: Color(0x55000000), offset: Offset(0, 2), blurRadius: 2.0)
-          ]),
+
+        color: const Color(0xFFC7E2E4),
+        borderRadius: BorderRadius.circular(25.r),
+        boxShadow: const [BoxShadow(color: Color(0x55000000), offset: Offset(0, 2), blurRadius: 2.0)],
+      ),
       child: Center(
         child: Image(
           image: AssetImage(imgUrl),
@@ -265,12 +259,8 @@ class TextPart extends StatelessWidget {
         ),
         Text(
           subHeading,
-          style: TextStyle(
-            fontSize: 14.sp,
-            color: const Color.fromRGBO(0, 0, 0, 0.58),
-            fontWeight: FontWeight.w700,
-          ),
-        )
+          style: TextStyle(fontSize: 18.sp, color: const Color.fromRGBO(0, 0, 0, 0.58), fontWeight: FontWeight.w700),
+        ),
       ],
     );
   }

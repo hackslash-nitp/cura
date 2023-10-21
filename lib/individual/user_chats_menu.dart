@@ -88,7 +88,8 @@ class _UserChatsScreenState extends State<UserChatsScreen> {
                         minLines: null,
                         expands: true,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 20.w, vertical: 10.h),
                           border: InputBorder.none,
                           suffixIcon: IconButton(
                             onPressed: () {},
@@ -170,7 +171,8 @@ class _ContactTileState extends State<ContactTile> {
       },
       onTap: () {
         Navigator.of(context).pushNamed(ChatScreen.routeName,
-            arguments: StringScreenArguments(nameProvided: widget.orgName, imgUrl: widget.imgUrl));
+            arguments: StringScreenArguments(
+                nameProvided: widget.orgName, imgUrl: widget.imgUrl));
       },
       child: Container(
         height: 65.h,
@@ -193,7 +195,8 @@ class _ContactTileState extends State<ContactTile> {
                   backgroundColor: Colors.transparent,
                   child: Image(
                     image: widget.imgUrl == ''
-                        ? const AssetImage("assets/startup_assets/create_account_assets/profile_primary.png")
+                        ? const AssetImage(
+                            "assets/startup_assets/create_account_assets/profile_primary.png")
                         : AssetImage(widget.imgUrl),
                   ),
                 ),
