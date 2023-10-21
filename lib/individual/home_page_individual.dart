@@ -29,7 +29,13 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
     "assets/Social share-bro 1.png"
   ];
 
-  List<String> headings = ["Adopt", "Health", "Donate", "Spend Time", "Posts Feed"];
+  List<String> headings = [
+    "Adopt",
+    "Health",
+    "Donate",
+    "Spend Time",
+    "Posts Feed"
+  ];
 
   List<String> subHeadings = [
     "Adopt an old person or a child",
@@ -73,9 +79,16 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
                     child: Container(
                       height: 45.h,
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30.r),
-                          boxShadow: const [BoxShadow(blurRadius: 5.0, offset: Offset(0, 3), color: Colors.grey)]),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30.r),
+                        boxShadow: const [
+                          BoxShadow(
+                            blurRadius: 5.0,
+                            offset: Offset(0, 3),
+                            color: Colors.grey,
+                          )
+                        ],
+                      ),
                       child: TextField(
                         controller: searchController,
                         keyboardType: TextInputType.text,
@@ -83,7 +96,8 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
                         minLines: null,
                         expands: true,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 20.w, vertical: 10.h),
                           border: InputBorder.none,
                           suffixIcon: IconButton(
                             onPressed: () {},
@@ -105,20 +119,23 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
                     height: 30.h,
                   ),
                   Expanded(
-                      child: ListView.separated(
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: imgUrls.length,
-                          itemBuilder: ((context, index) {
-                            return HomePageContent(
-                              imgUrl: imgUrls[index],
-                              heading: headings[index],
-                              subHeading: subHeadings[index],
-                              index: index,
-                              widget: navRoutes[index],
-                              isOdd: index % 2 == 0,
-                            );
-                          }),
-                          separatorBuilder: ((context, index) => SizedBox(height: 23.h))))
+                    child: ListView.separated(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: imgUrls.length,
+                      itemBuilder: ((context, index) {
+                        return HomePageContent(
+                          imgUrl: imgUrls[index],
+                          heading: headings[index],
+                          subHeading: subHeadings[index],
+                          index: index,
+                          widget: navRoutes[index],
+                          isOdd: index % 2 == 0,
+                        );
+                      }),
+                      separatorBuilder: ((context, index) =>
+                          SizedBox(height: 23.h)),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -157,7 +174,10 @@ class HomePageContent extends StatelessWidget {
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(25.r),
-              boxShadow: const [BoxShadow(blurRadius: 5, color: Colors.grey, offset: Offset(0, 3))]),
+              boxShadow: const [
+                BoxShadow(
+                    blurRadius: 5, color: Colors.grey, offset: Offset(0, 3))
+              ]),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
             child: Row(
@@ -202,7 +222,10 @@ class ImagePart extends StatelessWidget {
       decoration: BoxDecoration(
           color: const Color(0xFFC7E2E4),
           borderRadius: BorderRadius.circular(25.r),
-          boxShadow: const [BoxShadow(color: Color(0x55000000), offset: Offset(0, 2), blurRadius: 2.0)]),
+          boxShadow: const [
+            BoxShadow(
+                color: Color(0x55000000), offset: Offset(0, 2), blurRadius: 2.0)
+          ]),
       child: Center(
         child: Image(
           image: AssetImage(imgUrl),
@@ -227,15 +250,26 @@ class TextPart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Text(
           heading,
-          style: TextStyle(fontSize: 32.sp, fontWeight: FontWeight.w700, color: const Color(0xFF92B7C0)),
+          style: TextStyle(
+            fontSize: 28.sp,
+            fontWeight: FontWeight.w700,
+            color: const Color(0xFF92B7C0),
+          ),
+        ),
+        const SizedBox(
+          height: 8,
         ),
         Text(
           subHeading,
-          style: TextStyle(fontSize: 18.sp, color: const Color.fromRGBO(0, 0, 0, 0.58), fontWeight: FontWeight.w700),
+          style: TextStyle(
+            fontSize: 14.sp,
+            color: const Color.fromRGBO(0, 0, 0, 0.58),
+            fontWeight: FontWeight.w700,
+          ),
         )
       ],
     );

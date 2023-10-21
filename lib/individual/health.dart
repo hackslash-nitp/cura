@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cura/shared/services/firebase_database.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:searchfield/searchfield.dart';
-import 'package:cura/shared/widgets/navigation-bar.dart';
+
 
 class HealthPage extends StatefulWidget {
   static const String routeName = '/HealthPage';
@@ -27,6 +25,18 @@ class _HealthPageState extends State<HealthPage> {
   CollectionReference user = FirebaseFirestore.instance.collection('user');
   @override
   Widget build(BuildContext context) {
+    List<String> organizationSuggestions = [
+      'Organisation 1',
+      'Organisation 2',
+      'Organisation 3',
+      'Organisation 4',
+      'Organisation 5',
+      'Organisation 6',
+    ];
+
+    List<SearchFieldListItem> newSuggestions = organizationSuggestions
+        .map((orgName) => SearchFieldListItem(orgName, item: orgName))
+        .toList();
     return ScreenUtilInit(
         designSize: const Size(428, 926),
         builder: (context, child) => Scaffold(
@@ -108,14 +118,7 @@ class _HealthPageState extends State<HealthPage> {
                                       EdgeInsets.fromLTRB(15.w, 0, 15.w, 0),
                                   child: SearchField(
                                     hint: "Enter Organization's name",
-                                    suggestions: const [
-                                      'organization 1',
-                                      'organization 2',
-                                      'organization 3',
-                                      'organization 4',
-                                      'organization 5',
-                                      'organization 6',
-                                    ],
+                                    suggestions: newSuggestions,
                                     searchInputDecoration: InputDecoration(
                                       // ignore: prefer_const_constructors
                                       contentPadding: EdgeInsets.only(
@@ -203,7 +206,9 @@ class _HealthPageState extends State<HealthPage> {
                                                   lastDate: DateTime(2101));
                                           if (pickeddate != null) {
                                             setState(() {
-                                              _date.text = DateFormat('yyyy-mm-dd').format(pickeddate);
+                                              _date.text =
+                                                  DateFormat('yyyy-mm-dd')
+                                                      .format(pickeddate);
                                             });
                                           }
                                         },
@@ -425,9 +430,7 @@ class _HealthPageState extends State<HealthPage> {
                                                       )),
                                                 ),
                                               );
-                                            }
-                                            )
-                                            ;
+                                            });
                                       },
                                       child: Text(
                                         "submit",
