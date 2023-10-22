@@ -29,7 +29,13 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
     "assets/Social share-bro 1.png"
   ];
 
-  List<String> headings = ["Adopt", "Health", "Donate", "Spend Time", "Posts Feed"];
+  List<String> headings = [
+    "Adopt",
+    "Health",
+    "Donate",
+    "Spend Time",
+    "Posts Feed"
+  ];
 
   List<String> subHeadings = [
     "Adopt an old person or a child",
@@ -78,6 +84,7 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
                         boxShadow: const [BoxShadow(blurRadius: 5.0, offset: Offset(0, 2), color: Colors.grey)],
                       ),
                       child: TextField(
+                        
                         controller: searchController,
                         keyboardType: TextInputType.text,
                         maxLines: null,
@@ -96,8 +103,13 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
                           ),
                         ),
                         style: TextStyle(
+<<<<<<< HEAD
                           color: Colors.blueGrey,
                           fontSize: 20.sp, // Increase the font size here (adjust as needed)
+=======
+                          color: Colors.black,
+                          fontSize: 18.sp,
+>>>>>>> 219bfa7 (Made changes to he UI of the Chat Bubble and Background Color of User Chat Screen)
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -120,7 +132,9 @@ class _HomePageIndividualState extends State<HomePageIndividual> {
                           isOdd: index % 2 == 0,
                         );
                       }),
-                      separatorBuilder: ((context, index) => SizedBox(height: 23.h)),
+                      separatorBuilder: ((context, index) =>
+                          SizedBox(height: 23.h)),
+
                     ),
                   ),
                 ],
@@ -159,10 +173,12 @@ class HomePageContent extends StatelessWidget {
           height: 200.h,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(25.r),
-            boxShadow: const [BoxShadow(blurRadius: 5, color: Colors.grey, offset: Offset(0, 3))],
-          ),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(25.r),
+              boxShadow: const [
+                BoxShadow(
+                    blurRadius: 5, color: Colors.grey, offset: Offset(0, 3))
+              ]),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
             child: Row(
@@ -205,6 +221,7 @@ class ImagePart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+
         color: const Color(0xFFC7E2E4),
         borderRadius: BorderRadius.circular(25.r),
         boxShadow: const [BoxShadow(color: Color(0x55000000), offset: Offset(0, 2), blurRadius: 2.0)],
@@ -233,11 +250,18 @@ class TextPart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Text(
           heading,
-          style: TextStyle(fontSize: 32.sp, fontWeight: FontWeight.w700, color: const Color(0xFF92B7C0)),
+          style: TextStyle(
+            fontSize: 28.sp,
+            fontWeight: FontWeight.w700,
+            color: const Color(0xFF92B7C0),
+          ),
+        ),
+        const SizedBox(
+          height: 8,
         ),
         Text(
           subHeading,

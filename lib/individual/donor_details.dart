@@ -14,18 +14,18 @@ class DonorPage extends StatelessWidget {
              children: [
                IconButton(
                    onPressed: () {},
-                   icon: Icon(
+                   icon:const  Icon(
                      Icons.arrow_back_ios_new,
                      size: 15.0,
-                   )),
-               Text(
+                   ),),
+               const Text(
                  "Donor Detail",
                  style: TextStyle(
                    fontSize: 22.0,
                    fontWeight: FontWeight.w700,
                  ),
                ),
-               SizedBox(
+               const SizedBox(
                  width: 48.0,
                ),
              ],
@@ -34,15 +34,15 @@ class DonorPage extends StatelessWidget {
                radius: 50.0,
                child: Image.asset("assets/Heart.png"),
            ),
-           SizedBox(height: 10.0),
-           Text(
+           const  SizedBox(height: 10.0),
+           const  Text(
              "Shazeb",
              style:TextStyle(
                fontSize: 24.0,
                fontWeight: FontWeight.w700,
              ),
            ),
-           Text(
+           const Text(
                "Last Connected 1 month ago",
                style:TextStyle(
                  color: Color(0xFF777474),
@@ -53,29 +53,29 @@ class DonorPage extends StatelessWidget {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      color:Color(0xFFE0EEEF),
+                      color:const Color(0xFFE0EEEF),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    padding:EdgeInsets.all(10.0),
-                    margin:EdgeInsets.all(10.0),
-                    child: Text("+1 879 944-4489",textAlign: TextAlign.center,),
+                    padding:const EdgeInsets.all(10.0),
+                    margin:const EdgeInsets.all(10.0),
+                    child:const  Text("+1 879 944-4489",textAlign: TextAlign.center,),
                   ),
                 ),
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      color:Color(0xFFE0EEEF),
+                      color:const Color(0xFFE0EEEF),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    padding:EdgeInsets.all(10.0),
-                    margin:EdgeInsets.all(10.0),
-                    child: Text("shazeb12@gmail.com",textAlign: TextAlign.center,),
+                    padding:const EdgeInsets.all(10.0),
+                    margin:const EdgeInsets.all(10.0),
+                    child: const Text("shazeb12@gmail.com",textAlign: TextAlign.center,),
                   ),
                 ),
               ],
             ),
-           SizedBox(height: 10.0),
-           Text(
+           const SizedBox(height: 10.0),
+           const Text(
              "Personal Information",
              style:TextStyle(
                fontSize: 20.0,
@@ -85,10 +85,10 @@ class DonorPage extends StatelessWidget {
             Expanded(
               flex:3,
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 15.0),
-                margin: EdgeInsets.all(10.0),
+                padding:const  EdgeInsets.symmetric(horizontal: 10.0,vertical: 15.0),
+                margin: const EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
-                  color: Color(0xFFE0EEEF),
+                  color: const Color(0xFFE0EEEF),
                   borderRadius: BorderRadius.circular(15.0),
                 ),
                 child: Column(children: [
@@ -103,7 +103,7 @@ class DonorPage extends StatelessWidget {
                 ),
               ),
             ),
-           Text(
+          const  Text(
              "Administrative Details",
              style:TextStyle(
                fontSize: 20.0,
@@ -112,10 +112,10 @@ class DonorPage extends StatelessWidget {
            ),
            Expanded(
              child: Container(
-               padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 15.0),
-               margin: EdgeInsets.all(10.0),
+               padding:const  EdgeInsets.symmetric(horizontal: 10.0,vertical: 15.0),
+               margin: const EdgeInsets.all(10.0),
                decoration: BoxDecoration(
-                 color: Color(0xFFE0EEEF),
+                 color:const  Color(0xFFE0EEEF),
                  borderRadius: BorderRadius.circular(15.0),
                ),
                child: Column(children: [
@@ -149,7 +149,7 @@ class TwoTexts extends StatelessWidget {
           Expanded(
             child: Text(
               heading,
-              style: TextStyle(
+              style:const  TextStyle(
                 fontSize: 14.0,
                 fontWeight: FontWeight.w700,
               ),
@@ -159,7 +159,7 @@ class TwoTexts extends StatelessWidget {
             child: Text(
               text,
       textAlign: TextAlign.end,
-              style: TextStyle(
+              style:const  TextStyle(
                 fontSize: 14.0,
                 fontWeight: FontWeight.w400,
               ),
