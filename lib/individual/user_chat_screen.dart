@@ -116,8 +116,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   Center(
                     child: Container(
-                      height: 80.h,
-                      width: 400.w,
+                      height: 70.h,
+                      width: 420.w,
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 157, 220, 200),
                         borderRadius: BorderRadius.circular(40.r),
@@ -321,14 +321,14 @@ class MessageWidget extends StatelessWidget {
             color: isMe ? const Color(0xFFC2E8DC) : const Color(0xFFE8E8E8),
             borderRadius: isMe
                 ? const BorderRadius.only(
-                    topLeft: Radius.circular(25.0),
-                    bottomLeft: Radius.circular(25.0),
-                    bottomRight: Radius.circular(25.0),
+                    topLeft: Radius.circular(18.0),
+                    bottomLeft: Radius.circular(18.0),
+                    bottomRight: Radius.circular(18.0),
                   )
                 : const BorderRadius.only(
-                    topRight: Radius.circular(25.0),
-                    bottomLeft: Radius.circular(25.0),
-                    bottomRight: Radius.circular(25.0),
+                    topRight: Radius.circular(18.0),
+                    bottomLeft: Radius.circular(18.0),
+                    bottomRight: Radius.circular(18.0),
                   ),
           ),
           child: Column(
@@ -345,7 +345,7 @@ class MessageWidget extends StatelessWidget {
               Text(
                 time,
                 style: TextStyle(
-                  fontSize: 12.sp,
+                  fontSize: 10.sp,
                   fontWeight: FontWeight.w300,
                   color: Colors.black.withOpacity(0.6),
                 ),

@@ -37,7 +37,7 @@ class UniDirectionalBackground extends StatelessWidget {
           gradient: LinearGradient(
         colors: [
           Color(0xFF6CAFB4),
-          Color.fromARGB(255, 223, 242, 187),
+          Colors.white,
         ],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
